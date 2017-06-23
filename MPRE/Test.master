@@ -1,0 +1,501 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="Test.master.cs" Inherits="Test" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title>多维度精神康复评估系统</title>
+    <meta name="description" content="多维度精神康复评估系统" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta content="always" name="referrer" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="shortcut icon" href="#" type="image/x-icon" />
+
+    <!--Basic Styles-->
+    <link href="assets/css/bootstrap2.min.css" rel="stylesheet" />
+    <link href="assets/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="assets/css/weather-icons.min.css" rel="stylesheet" />
+
+    <!--Beyond styles-->
+    <link href="assets/css/beyond2.min.css" rel="stylesheet" />
+    <link href="assets/css/demo.min.css" rel="stylesheet" />
+    <link href="assets/css/typicons.min.css" rel="stylesheet" />
+    <link href="assets/css/animate.min.css" rel="stylesheet" />
+    <link href="assets/css/style.css" rel="stylesheet" />
+
+    <!--[if lte IE 8]>
+        <script>
+            alert("为获得最佳效果，建议使用IE9、Chrome10或更高版本的浏览器。");
+        </script>
+    <![endif]-->
+
+    <!--Skin Script: Place this script in head to load scripts for skins and rtl support-->
+    <script src="assets/js/skins.min.js"></script>
+
+    <script type="text/javascript">
+        var b = 0;
+        var c = 0;
+        var t;
+        function jishi() {
+            if (c < 10) {
+                document.getElementById('tt').innerHTML ="0" + c
+            }
+            else {
+                document.getElementById('tt').innerHTML =c
+            }
+            c = c + 1
+            t = setTimeout("jishi()", 1000)
+            if (c == 60) {
+                c = 0;
+                b = b + 1;
+                if (b < 10) {
+                    xs.innerHTML = "0" + b
+                    document.getElementById('tt').innerHTML = "0" + c
+                }
+                else {
+                    xs.innerHTML = b
+                    document.getElementById('tt').innerHTML = "0" + c
+                }
+            }
+        }
+    </script>
+    <%-- 页面放大缩小js --%>
+    <script type="text/javascript">
+        var onr = 3;
+        document.onkeyup = function () {
+            var IEKey = event.keyCode;
+            if (IEKey == 187) {
+                onr++;
+                document.body.style.zoom = 1 + onr / 10;
+            }
+            if (IEKey == 189) {
+                onr--;
+                document.body.style.zoom = 1 + onr / 10;
+            }
+            if (IEKey == 82) {
+                document.body.style.zoom = 1.3;
+                onr = 3;
+            }
+        }
+    </script>
+    <%-- 文章字体放大缩小js --%>
+    <script>
+        window.onload = function () {
+
+
+            var cookieCount1 = {};
+            cookieCount1.count1 = function () {
+                var num = parseInt(this.getCount1('myCount1'));
+                var oP = document.getElementById('ASET');
+                var x = document.getElementsByTagName("span");
+                var oBnt1 = document.getElementById('Abtn1');
+                var oBnt2 = document.getElementById('Abtn2');
+                var oBnt3 = document.getElementById('Abtn3');
+                oBnt3.onclick = function () {
+                    //num = 13;
+                    //oP.style.fontSize = num + 'px';
+                    //for (var i = 4; i < x.length; i++)
+                    //{
+                    //    x[i].style.fontSize = num + 'px';
+                    //}
+                    //document.cookie = 'myCount1=' + num + '';
+                    document.body.style.zoom = 1.3;
+                    onr = 3;
+
+                }
+
+                oBnt1.onclick = function () {
+                    if (onr < 5) {
+                        //num++;
+                        //oP.style.fontSize = num + 'px';
+                        //for (var i = 4; i < x.length; i++) {
+                        //    x[i].style.fontSize = num + 'px';
+                        //}
+                        //document.cookie = 'myCount1=' + num + '';
+                        onr++;
+                        document.body.style.zoom = 1 + onr / 10;
+
+                    }
+                }
+                oBnt2.onclick = function () {
+                    if (onr > -2) {
+                        //num--;
+                        //oP.style.fontSize = num + 'px';
+                        //for (var i = 4; i < x.length; i++) {
+                        //    x[i].style.fontSize = num + 'px';
+                        //}
+                        //document.cookie = 'myCount1=' + num + '';
+                        if (onr == 1) {
+                            onr = 0;
+                        }
+                        onr--;
+                        document.body.style.zoom = 1 + onr / 10;
+
+                    }
+                }
+
+                oP.style.fontSize = num + 'px';
+                for (var i = 4; i < x.length; i++) {
+                    x[i].style.fontSize = num + 'px';
+                }
+
+            }
+
+            cookieCount1.setCount1 = function () {
+                //首先得创建一个名为myCount的cookie
+                var expireDate = new Date();
+                expireDate.setDate(expireDate.getDate() + 1);
+                document.cookie = 'myCount1=' + '15' + ';expires=' + expireDate.toGMTString();
+            }
+            cookieCount1.getCount1 = function (countName1) {
+                //获取名为计数cookie,为其加1
+                var arrCookie = document.cookie.split('; ');
+                var arrLength = arrCookie.length;
+                var ini = true;
+                for (var i = 0; i < arrLength; i++) {
+                    if (countName1 == arrCookie[i].split('=')[0]) {
+                        return parseInt(arrCookie[i].split('=')[1]);
+                        break;
+                    } else {
+                        ini = false;
+                    }
+                }
+                if (ini == false) this.setCount1();
+                return 15;
+            }
+            cookieCount1.count1();
+
+
+
+
+
+
+
+
+
+        };
+
+    </script> 
+
+            <meta name="keywords" content="Javascript" />
+
+<script type="text/javascript" src="assets/js/jquery-1.4.2.min.js"></script>
+    <script>
+        var jq = $.noConflict();
+        jq("#a").click(function () {
+            jq(this).html("aaaa");
+        })
+
+</script>
+    <script type="text/javascript">
+
+        (function (jq) {
+            jq.extend({
+
+                mouseCoords: function (ev) {
+
+                    if (ev.pageX || ev.pageY) {
+
+                        return { x: ev.pageX, y: ev.pageY };
+
+                    }
+
+                    return {
+
+                        x: ev.clientX + document.body.scrollLeft - document.body.clientLeft,
+
+                        y: ev.clientY + document.body.scrollTop - document.body.clientTop
+
+                    };
+
+                },
+
+                getStyle: function (obj, styleName) {
+
+                    return obj.currentStyle ? obj.currentStyle[styleName] : document.defaultView.getComputedStyle(obj, null)[styleName];
+
+                    //				return obj.currentStyle ? obj.currentStyle[styleName] : document.defaultView.getComputedStyle(obj,null).getPropertyValue(styleName);
+
+                }
+
+            });
+
+
+
+            jq.fn.dragDrop = function (options) {
+
+                var opts = jq.extend({}, jq.fn.dragDrop.defaults, options);
+
+
+
+                return this.each(function () {
+
+
+
+                    var bDraging = false;
+
+                    var moveEle = jq(this);
+
+                    var focuEle = opts.focuEle ? jq(opts.focuEle, moveEle) : moveEle;
+
+                    if (!focuEle || focuEle.length <= 0) {
+
+                        alert('focuEle is not found! the element must be a child of ' + this.id);
+
+                        return false;
+
+                    }
+
+                    var dragParams = { initDiffX: '', initDiffY: '', moveX: '', moveY: '' };
+
+
+
+                    moveEle.css({ 'position': 'absolute', 'left': '0', 'top': '0' });
+
+
+
+                    focuEle.bind('mousedown', function (e) {
+
+
+
+                        bDraging = true;
+
+
+
+                        moveEle.css({ 'cursor': 'move' });
+
+                        if (moveEle.get(0).setCapture) {
+
+                            moveEle.get(0).setCapture();
+
+                        }
+
+
+
+                        dragParams.initDiffX = jq.mouseCoords(e).x - moveEle.position().left;
+
+                        dragParams.initDiffY = jq.mouseCoords(e).y - moveEle.position().top;
+
+                    });
+
+
+
+                    focuEle.bind('mousemove', function (e) {
+
+                        if (bDraging) {
+
+
+
+                            dragParams.moveX = jq.mouseCoords(e).x - dragParams.initDiffX;
+
+                            dragParams.moveY = jq.mouseCoords(e).y - dragParams.initDiffY;
+
+
+
+
+
+                            if (opts.fixarea) {
+
+                                if (dragParams.moveX < opts.fixarea[0]) {
+
+                                    dragParams.moveX = opts.fixarea[0]
+
+                                }
+
+                                if (dragParams.moveX > opts.fixarea[1]) {
+
+                                    dragParams.moveX = opts.fixarea[1]
+
+                                }
+
+
+
+                                if (dragParams.moveY < opts.fixarea[2]) {
+
+                                    dragParams.moveY = opts.fixarea[2]
+
+                                }
+
+                                if (dragParams.moveY > opts.fixarea[3]) {
+
+                                    dragParams.moveY = opts.fixarea[3]
+
+                                }
+
+                            }
+
+
+
+                            if (opts.dragDirection == 'all') {
+
+                                moveEle.css({ 'left': dragParams.moveX, 'top': dragParams.moveY });
+
+                            }
+
+                            else if (opts.dragDirection == 'vertical') {
+
+                                moveEle.css({ 'top': dragParams.moveY });
+
+                            }
+
+                            else if (opts.dragDirection == 'horizontal') {
+
+                                moveEle.css({ 'left': dragParams.moveX });
+
+                            }
+
+
+
+
+
+                            if (opts.callback) {
+
+                                opts.callback.call(opts.callback, dragParams);
+
+                            }
+
+                        }
+
+                    });
+
+
+
+                    focuEle.bind('mouseup', function (e) {
+
+                        bDraging = false;
+
+                        moveEle.css({ 'cursor': 'default' });
+
+                        if (moveEle.get(0).releaseCapture) {
+
+                            moveEle.get(0).releaseCapture();
+
+                        }
+
+                    });
+
+                });
+
+            };
+
+
+
+            jq.fn.dragDrop.defaults =
+
+            {
+
+                focuEle: null,
+
+                callback: null,
+
+                dragDirection: 'all',
+
+                fixarea: null
+
+            };
+
+
+
+        })(jQuery);
+
+
+
+
+
+        // test 
+
+        jq(function () {
+
+            jq('#dragDiv').dragDrop({
+                fixarea: [0, jq('#ASET').width() - 50, 0, jq('#ASET').height() - 50], callback: function (params) {
+
+                    jq('#span1').text('X:' + params.moveX + ' Y:' + params.moveY);
+
+                }
+            });
+
+
+
+
+        });
+
+</script>
+
+</head>
+<body onload="jishi()" style="zoom: 1.3;">
+    <form id="form1" runat="server">
+        <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
+        <asp:UpdatePanel ID="UpdatePanel2" runat="server">  
+            <ContentTemplate>
+                <asp:Timer ID="Timer1" runat="server" Interval="25000"></asp:Timer><!-- 用于强制更新，防止session过期，每25秒更新一次-->
+            </ContentTemplate>                  
+        </asp:UpdatePanel>
+    <asp:Label ID="IDLabel" runat="server"  Visible="false"></asp:Label>
+         
+    <div class="navbar">
+            <div class="navbar-inner">
+                <div class="navbar-container"  style="max-width:960px;margin:0 auto 0;color:#fff;line-height:3;font-size:15px;">
+                    <div class="row">
+                        <div class="col-lg-2 col-sm-2 col-xs-4" style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
+                            <i class="fa fa-user"></i>
+                            姓名：<asp:Label ID="PatientNameLabel" runat="server"></asp:Label>
+                        </div>
+                        <div class="col-lg-2 col-sm-2 col-xs-4" style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
+                            <i class="fa fa-strikethrough"></i>
+                            性别：<asp:Label ID="SexLabel" runat="server"></asp:Label>
+                        </div>
+                        <div class="col-lg-3 col-sm-3 col-xs-4" style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
+                            <i class="fa fa-credit-card"></i>
+                            卡号：<asp:Label ID="Num1Label" runat="server"></asp:Label>
+                        </div>
+
+    <div class="col-lg-3 col-sm-2 col-xs-6" style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
+        
+            <i class="fa fa-clock-o"></i>
+            时间：<label id="xs">00</label>：<label id="tt">00</label>
+  
+    </div>
+
+
+                        <div class="col-lg-2 col-sm-3 col-xs-6" style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
+                            <input id="Abtn2" type="button" value="A-" />
+                            <input id="Abtn3" type="button" value="A" />
+                            <input id="Abtn1" type="button" value="A+" />
+                        </div>
+                     </div>
+                </div>
+            </div>
+        </div>
+        <!-- /Navbar -->
+        <!-- Footer -->
+        <footer id="footer">
+            <!-- Lower Footer -->
+            <div id="lower-footer">
+
+                <div class="row">
+
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="footer">
+                            <p>版权所有<span style="font-size:14px; font-family:Verdana;">&copy;</span>2016 广州康泽医疗有限公司&nbsp;&nbsp;&nbsp;&nbsp;技术支持：020-85537930</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!-- /Lower Footer -->
+        </footer>
+        <!-- /Footer -->
+        <div id="ASET">
+            <asp:ContentPlaceHolder id="ContentPlaceHolder1" runat="server">
+        </asp:ContentPlaceHolder>
+        </div>
+    </form>
+    <!--Basic Scripts-->
+    <script src="assets/js/jquery-2.0.3.min.js"></script>
+    <script src="assets/js/bootstrap.min.js"></script>
+
+    <!--Beyond Scripts-->
+    <script src="assets/js/beyond.min.js"></script>
+</body>
+</html>

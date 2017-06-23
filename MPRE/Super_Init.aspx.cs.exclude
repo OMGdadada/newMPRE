@@ -1,0 +1,235 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using System.Management;
+using System.Data.SqlClient;
+using System.IO;
+using System.Text;
+using System.Configuration;
+
+public partial class Super_Init : System.Web.UI.Page
+{
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        if (!IsPostBack)
+        {
+            if (Session["Super"] == null)
+            {
+                Util.ShowMessage("用户登录超时，请重新登录！", "Login.aspx");
+                Response.End();
+            }
+            else
+            {
+                string Hash = Util.GetSuperPassword();
+                if (Session["Super"].ToString() != Hash)
+                {
+                    Util.ShowMessage("密码错误，请重新登录！", "Login.aspx");
+                    Response.End();
+                }
+                
+            }
+        }
+        
+    }
+    
+    protected void UploadBtn_Click(object sender, EventArgs e)
+    {
+        if (FileUpload1.HasFile)
+        {
+            ResultLabel.Text = "";
+            try
+            {
+                string fileName = FileUpload1.FileName;
+                string extension = System.IO.Path.GetExtension(fileName).ToLower();
+                string photoExtension = ConfigurationManager.AppSettings["PhotoExtension"].ToString();
+                string[] ss = photoExtension.Split(',');
+                bool success = false;
+                foreach (string s in ss)
+                {
+                    if (extension.Equals(s.Trim()))
+                    {
+                        success = true;
+                        break;
+                    }
+                }
+                if (success)
+                {
+                    string now = DateTime.Now.ToString("yyyyMMddHHmmss");
+                    string number = new Random().Next(1000).ToString();
+
+                    // 头像的路径统一为根目录下的assets/img/avatars目录下，这个文件夹，已经存在，不需要检查是否存在
+                    string avatar = "assets/img/avatars/" + now + "-" + number + extension;
+                    FileUpload1.SaveAs(Server.MapPath("~/" + avatar));
+                    if (File.Exists(Server.MapPath(avatar)))
+                    {
+                        Image1.ImageUrl = avatar;
+                        Image AvatarImage = Master.FindControl("AvatarImage") as Image;
+                        AvatarImage.ImageUrl = avatar;
+                        ResultLabel.Text = "恭喜，头像上传成功！";
+                    }
+                    else
+                    {
+                        ResultLabel.Text = "头像上传失败，请重试或与管理员联系！";
+                    }
+
+                }
+                else
+                {
+                    ResultLabel.Text = "头像文件的格式只能是 .jpg 、.png 或者.gif ！";
+
+                }
+            }
+            catch (Exception exc)
+            {
+                // ResultLabel.Text = "上传文件失败。请重试！或者与管理员联系！<br>" + exc.ToString();
+                // ResultLabel.Visible = true;
+            }
+        }
+        else
+        {
+            ResultLabel.Text = "所选文件格式不符合要求";
+        }
+
+    }
+
+    public string GetProcessor()
+    {
+        try
+        {
+            ManagementObjectSearcher searcher = new ManagementObjectSearcher("Select * From Win32_Processor");
+            string sCPUSerialNumber = "";
+            foreach (ManagementObject mo in searcher.Get())
+            {
+                sCPUSerialNumber = mo["ProcessorId"].ToString().Trim();
+            }
+            return sCPUSerialNumber;
+        }
+        catch
+        {
+            return "";
+        }
+    }
+
+    protected void InitBtn_Click(object sender, EventArgs e)
+    {
+        if (Password.Text != Password1.Text)
+        {
+            ResultLabel.Text = "密码不相等！";
+        }
+        else
+        {
+            Init();
+        }
+    }
+
+    private void Init()
+    {
+        string strGUID = System.Guid.NewGuid().ToString();
+        GUID.Text = strGUID;
+        Processor.Text = GetProcessor();
+        if (Licenses.Text != "")
+        {
+            string str = "GZKZYL_201";
+            Licenses.Text = str + Licenses.Text;
+        }
+        using (SqlConnection conn = new DB().GetConnection())
+        {
+            StringBuilder sb = new StringBuilder("insert into [Hospital]( GUID,HospitalName,Introduction,Avatar,Processor,Licenses)");
+            sb.Append(" values ( @GUID,@HospitalName,@Introduction,@Avatar,@Processor,@Licenses) ");
+            SqlCommand cmd = new SqlCommand(sb.ToString(), conn);
+            cmd.Parameters.AddWithValue("@GUID", GUID.Text);
+            cmd.Parameters.AddWithValue("@HospitalName", HospitalName.Text);
+            cmd.Parameters.AddWithValue("@Introduction", Introduction.Text);
+            cmd.Parameters.AddWithValue("@Avatar", Image1.ImageUrl);
+            cmd.Parameters.AddWithValue("@Processor", Util.AESEncrypt(Processor.Text));
+            cmd.Parameters.AddWithValue("@Licenses", Util.AESEncrypt(Licenses.Text));
+            conn.Open();
+            cmd.ExecuteNonQuery();
+
+            sb = new StringBuilder("insert into [Doctor]( GUID,DoctorName,Password,IDCard,HospitalGUID,IsAdmin)");
+            sb.Append(" values ( @GUID,@DoctorName,@Password,@IDCard,@HospitalGUID,@IsAdmin) ");
+            cmd = new SqlCommand(sb.ToString(), conn);
+            cmd.Parameters.AddWithValue("@GUID", GUID.Text+"a");
+            cmd.Parameters.AddWithValue("@DoctorName", "管理员");
+            cmd.Parameters.AddWithValue("@Password", Util.GetHash(Password.Text.Trim()));
+            cmd.Parameters.AddWithValue("@IDCard", Util.AESEncrypt(IDCard.Text));
+            cmd.Parameters.AddWithValue("@HospitalGUID", GUID.Text);
+            cmd.Parameters.AddWithValue("@IsAdmin", Util.AESEncrypt("True"));
+            cmd.ExecuteNonQuery();
+
+            sb = new StringBuilder("insert into [PatientText]( GUID,PatientName,Initials,Sex,Birthday,Certificates,Department,Num1,Num2,Phone1,Phone2,EducationYears,EducationLevel,Handedness,Marriage,FMH,Working,Ethnicity,Career,AI,AHI,GrowingPlace,Residence)");
+            sb.Append(" values ( @GUID,@PatientName,@Initials,@Sex,@Birthday,@Certificates,@Department,@Num1,@Num2,@Phone1,@Phone2,@EducationYears,@EducationLevel,@Handedness,@Marriage,@FMH,@Working,@Ethnicity,@Career,@AI,@AHI,@GrowingPlace,@Residence) ");
+            cmd = new SqlCommand(sb.ToString(), conn);
+            cmd.Parameters.AddWithValue("@GUID", GUID.Text + "p");
+            cmd.Parameters.AddWithValue("@PatientName", "姓名");
+            cmd.Parameters.AddWithValue("@Initials", "姓名缩写");
+            cmd.Parameters.AddWithValue("@Sex", "性别");
+            cmd.Parameters.AddWithValue("@Birthday", "出生日期");
+            cmd.Parameters.AddWithValue("@Certificates", "证件");
+            cmd.Parameters.AddWithValue("@Department", "科室/来源");
+            cmd.Parameters.AddWithValue("@Num1", "门诊号");
+            cmd.Parameters.AddWithValue("@Num2", "住院号");
+            cmd.Parameters.AddWithValue("@Phone1", "联系电话1");
+            cmd.Parameters.AddWithValue("@Phone2", "联系电话2");
+            cmd.Parameters.AddWithValue("@EducationYears", "受教育年限");
+            cmd.Parameters.AddWithValue("@EducationLevel", "受教育程度");
+            cmd.Parameters.AddWithValue("@Handedness", "利手");
+            cmd.Parameters.AddWithValue("@Marriage", "婚姻状况");
+            cmd.Parameters.AddWithValue("@FMH", "家族史");
+            cmd.Parameters.AddWithValue("@Working", "工作状况");
+            cmd.Parameters.AddWithValue("@Ethnicity", "民族");
+            cmd.Parameters.AddWithValue("@Career", "职业");
+            cmd.Parameters.AddWithValue("@AI", "个人经济收入");
+            cmd.Parameters.AddWithValue("@AHI", "家庭经济收入");
+            cmd.Parameters.AddWithValue("@GrowingPlace", "长大地");
+            cmd.Parameters.AddWithValue("@Residence", "居住地");
+            cmd.ExecuteNonQuery();
+
+            sb = new StringBuilder("insert into [Format]( GUID,RF1Value,RF1Text,RF2Value,RF2Text,RF3Value,RF3Text,RF4Value,RF4Text,RF5Value,RF5Text,RF6Value,RF6Text)");
+            sb.Append(" values ( @GUID,@RF1Value,@RF1Text,@RF2Value,@RF2Text,@RF3Value,@RF3Text,@RF4Value,@RF4Text,@RF5Value,@RF5Text,@RF6Value,@RF6Text) ");
+            cmd = new SqlCommand(sb.ToString(), conn);
+            cmd.Parameters.AddWithValue("@GUID", GUID.Text + "f");
+            cmd.Parameters.AddWithValue("@RF1Value", "PatientName");
+            cmd.Parameters.AddWithValue("@RF1Text", "姓名");
+            cmd.Parameters.AddWithValue("@RF2Value", "Sex");
+            cmd.Parameters.AddWithValue("@RF2Text", "性别");
+            cmd.Parameters.AddWithValue("@RF3Value", "Birthday");
+            cmd.Parameters.AddWithValue("@RF3Text", "出生日期");
+            cmd.Parameters.AddWithValue("@RF4Value", "Department");
+            cmd.Parameters.AddWithValue("@RF4Text", "科室/来源");
+            cmd.Parameters.AddWithValue("@RF5Value", "Num1");
+            cmd.Parameters.AddWithValue("@RF5Text", "门诊号");
+            cmd.Parameters.AddWithValue("@RF6Value", "Num2");
+            cmd.Parameters.AddWithValue("@RF6Text", "住院号");
+
+            cmd.ExecuteNonQuery();
+
+            cmd.Dispose();
+            conn.Close();
+        }
+        string strFilePath = Server.MapPath("./Super_Init.aspx");
+        string strFilePathCs = Server.MapPath("./Super_Init.aspx.cs");
+        if (File.Exists(strFilePath))
+        {
+            File.Delete(strFilePath);
+            File.Delete(strFilePathCs);
+            if (!File.Exists(strFilePath))
+            {
+                Util.ShowMessage("系统初始化成功！", "Login.aspx");
+                Response.End();
+            }
+            else
+            {
+                Response.Write(" <script> alert(\"初始化失败！请重试！\"); </script> ");
+            }
+
+        }
+        else
+        {
+            Response.Write(" <script> alert(\"初始化失败！请重试！\"); </script> ");
+        }
+    }
+}
