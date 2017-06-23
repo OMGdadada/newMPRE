@@ -15,7 +15,7 @@ public partial class Test : System.Web.UI.MasterPage
 
             if (Session["DoctorGUID"] == null)
             {
-                Util.ShowMessage("用户登录超时，请重新登录！", "Login.aspx");
+                Util.ShowMessage("用户登录超时，请重新登录！", "../Login.aspx");
                 Response.End();
             }
             else

@@ -150,7 +150,7 @@
                     <ul class="nav sidebar-menu">
                         <!--Dashboard-->
                         <li class="active">
-                            <a href="Dashboard.aspx">
+                            <a href="../Dashboard.aspx">
                                 <i class="menu-icon glyphicon glyphicon-home"></i>
                                 <span class="menu-text">首页</span>
                             </a>
@@ -166,12 +166,12 @@
                             </a>
                             <ul class="submenu">
                                 <li>
-                                    <a href="Patient_Info.aspx">
+                                    <a href="../Patient_Info.aspx">
                                         <span class="menu-text">新增病人</span>
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="Patient_List.aspx">
+                                    <a href="../Patient_List.aspx">
                                         <span class="menu-text">病人列表</span>
                                     </a>
                                 </li>
@@ -226,13 +226,13 @@
 
                             <ul class="submenu">
                                 <li>
-                                    <a href="Report_List.aspx">
+                                    <a href="../Report_List.aspx">
                                         <span class="menu-text">报告单列表</span>
                                     </a>
                                 </li>
 
                                 <li>
-                                    <a href="ReportS_List.aspx">
+                                    <a href="../ReportS_List.aspx">
                                         <span class="menu-text">总报告单列表</span>
                                     </a>
                                 </li>
@@ -251,13 +251,13 @@
                             <ul class="submenu">
 
                                 <li>
-                                    <a href="User_Edit.aspx">
+                                    <a href="../User_Edit.aspx">
                                         <span class="menu-text">个人信息</span>
                                     </a>
                                 </li>
 
                                 <li>
-                                    <a href="User_Password.aspx">
+                                    <a href="../User_Password.aspx">
                                         <span class="menu-text">修改密码</span>
                                     </a>
                                 </li>
@@ -271,13 +271,13 @@
 
                                     <ul class="submenu">
                                         <li>
-                                            <a href="User_Add.aspx">
+                                            <a href="../User_Add.aspx">
                                                 <i class="menu-icon fa  fa-plus-square"></i>
                                                 <span class="menu-text">添加新医生</span>
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="User_Man.aspx">
+                                            <a href="../User_Man.aspx">
                                                 <i class="menu-icon fa fa-list"></i>
                                                 <span class="menu-text">医生列表 </span>
                                             </a>
@@ -300,13 +300,13 @@
 
                             <ul class="submenu">
                                 <li>
-                                    <a href="Department_Add.aspx">
+                                    <a href="../Department_Add.aspx">
                                         <%--<i class="menu-icon fa fa-plus-square"></i>--%>
                                         <span class="menu-text">添加科室</span>
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="Department_Man.aspx">
+                                    <a href="../Department_Man.aspx">
                                         <%--<i class="menu-icon fa fa-list"></i>--%>
                                         <span class="menu-text">科室列表</span>
                                     </a>
@@ -325,13 +325,13 @@
 
                             <ul class="submenu">
                                 <li>
-                                    <a href="Medicine_Add.aspx">
+                                    <a href="../Medicine_Add.aspx">
                                         <%--<i class="menu-icon fa fa-plus-square"></i>--%>
                                         <span class="menu-text">添加新药物</span>
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="Medicine_Man.aspx">
+                                    <a href="../Medicine_Man.aspx">
                                         <%--<i class="menu-icon fa fa-list"></i>--%>
                                         <span class="menu-text">药物列表</span>
                                     </a>
@@ -350,13 +350,13 @@
 
                             <ul class="submenu">
                                 <li>
-                                    <a href="CommonWord_Add.aspx">
+                                    <a href="../CommonWord_Add.aspx">
                                         <%--<i class="menu-icon fa fa-plus-square"></i>--%>
                                         <span class="menu-text">添加常用语</span>
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="CommonWord_Man.aspx">
+                                    <a href="../CommonWord_Man.aspx">
                                         <%--<i class="menu-icon fa fa-list"></i>--%>
                                         <span class="menu-text">常用语列表</span>
                                     </a>
@@ -374,23 +374,49 @@
                             <ul class="submenu">
 
                                 <li>
-                                    <a href="PatientText.aspx">
+                                    <a href="../PatientText.aspx">
                                         <span class="menu-text">名称设置</span>
                                     </a>
                                 </li>
 
                                 <li>
-                                    <a href="RFormat.aspx">
+                                    <a href="../RFormat.aspx">
                                         <span class="menu-text">报告单定制</span>
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="Hospital.aspx">
+                                    <a href="../Hospital.aspx">
                                         <span class="menu-text">医院信息</span>
                                     </a>
                                 </li>
                             </ul>
                         </li>
+
+                              <!--药物管理-->
+                        <li>
+                            <a href="#" class="menu-dropdown">
+                                <i class="menu-icon fa fa-medkit"></i>
+                                <span class="menu-text">试题库
+                                </span>
+                                <i class="menu-expand"></i>
+                            </a>
+
+                            <ul class="submenu">
+                                <li>
+                                    <a href="../NewPage/ItemBank.aspx">
+                                        <%--<i class="menu-icon fa fa-plus-square"></i>--%>
+                                        <span class="menu-text">试题库维护</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="../NewPage/GaugeBank.aspx">
+                                        <%--<i class="menu-icon fa fa-list"></i>--%>
+                                        <span class="menu-text">量表库维护</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+
                         <li>
                             <a href="#" class="menu-dropdown">
                                 <i class="menu-icon fa fa-question-circle"></i>
@@ -400,12 +426,12 @@
                             </a>
                             <ul class="submenu">
                                 <li>
-                                    <a href="Readme_TestList.aspx">
+                                    <a href="../Readme_TestList.aspx">
                                         <span class="menu-text">量表测试说明</span>
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="Readme_System.aspx">
+                                    <a href="../Readme_System.aspx">
                                         <span class="menu-text">系统操作说明</span>
                                     </a>
                                </li>
@@ -425,12 +451,12 @@
                                 </a>
                                 <ul class="submenu">
                                 <li>
-                                    <a href="Super_Edit.aspx">
+                                    <a href="../Super_Edit.aspx">
                                         <span class="menu-text">导入导出</span>
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="Super_Licenses.aspx">
+                                    <a href="../Super_Licenses.aspx">
                                         <span class="menu-text">修改授权登录数</span>
                                     </a>
                                </li>
