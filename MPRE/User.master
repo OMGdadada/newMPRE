@@ -409,7 +409,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="../NewPage/GaugeBank.aspx">
+                                    <a href="../NewPage/Gauge_Library.aspx">
                                         <%--<i class="menu-icon fa fa-list"></i>--%>
                                         <span class="menu-text">量表库维护</span>
                                     </a>

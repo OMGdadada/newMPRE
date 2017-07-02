@@ -17,7 +17,7 @@ public partial class CommonWord_Add : System.Web.UI.Page
         {
             if (Session["DoctorGUID"] == null)
             {
-                Util.ShowMessage("用户登录超时，请重新登录！", "Login.aspx");
+                Util.ShowMessage("用户登录超时，请重新登录！", "../Login.aspx");
                 Response.End();
             }
          
