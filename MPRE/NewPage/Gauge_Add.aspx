@@ -84,8 +84,11 @@
                             <th id="td1">序号：</th>
                             <th id="td2">
                                 <asp:TextBox ID="Serial" runat="server"></asp:TextBox></th>
-                            <th id="td1"></th>
-                            <th id="td2"></th>
+                            <th id="td1"> 所属测试</th>
+                            <th id="td2"> <asp:DropDownList ID="DDLDimension1name" runat="server">
+                                    <asp:ListItem  Value="1" >多维度量表</asp:ListItem>
+                                    <asp:ListItem Value="2" >常规量表</asp:ListItem>
+                                </asp:DropDownList></th>
                         </tr>
                     </table>
                     

@@ -131,7 +131,7 @@
                                                                                     <ItemStyle Width="30px" HorizontalAlign="Left" />
                                                                                 </asp:TemplateField>
                                                                                 <asp:HyperLinkField DataNavigateUrlFields="TestUrl" DataNavigateUrlFormatString="{0}" DataTextField="TestName" HeaderText="量表名称" ItemStyle-Width="300" HeaderStyle-HorizontalAlign="Left" ItemStyle-HorizontalAlign="Left" Target="_blank"></asp:HyperLinkField>
-                                                                                <asp:BoundField DataField="Dimension1name" HeaderText="所属测试" ><ItemStyle CssClass="CategoryID"></ItemStyle></asp:BoundField>
+                                                                                <asp:BoundField DataField="Dimension1name" HeaderText="所属测试" ></asp:BoundField>
                                                                                 <asp:BoundField DataField="Price" HeaderText="价格"  />
                                                                             </Columns>
                                                                         </asp:GridView>
@@ -415,29 +415,5 @@
                     </div>
                 </div>
                 <!-- /Page Body -->
-    <script type="text/javascript">
-        $(function () {
-            var n = 0;
-            for (n = 0; n <= $(".CategoryID").length-1; n++) {
-                switch ($(".CategoryID")[n].innerHTML) {
-                    case "1":
-                        $(".CategoryID")[n].innerHTML = "多维度量表";
-                        break;
-                    case "2":
-                        $(".CategoryID")[n].innerHTML = "心理测评量表";
-                        break;
-                    default:
-                        $(".CategoryID")[n].innerHTML = "出错";
-
-                        break;
-                }
-            }
-            
-            for (n = 0; n <= 10; n++) {
-                $(".ID")[n].innerHTML = n + 1;
-            }
-            
-	    
-        });
-        </script>
+   
 </asp:Content>

@@ -1,10 +1,11 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/User.master" AutoEventWireup="true" CodeFile="Gauge_Library.aspx.cs" Inherits="NewPage_Gauge_Library" %>
+﻿<%@ Page  Language="C#" MasterPageFile="~/User.master" AutoEventWireup="true" CodeFile="Gauge_Library.aspx.cs" Inherits="NewPage_Gauge_Library" %>
 
 <%@ Register Assembly="AspNetPager" Namespace="Wuqi.Webdiyer" TagPrefix="webdiyer" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
+         
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
-    
+ 
      <div id="CurrentPosition">当前位置：<a href="Gauge_Library.aspx">  量表管理 </a> >> 量表列表 </div>
          <div class="page-body">
                 <div class="row">
@@ -101,7 +102,7 @@
                                            <asp:BoundField DataField="Price" HeaderText="价格" />
                                    
                                             <asp:BoundField DataField="Serial" HeaderText="序号"  />                                        
-                                            <asp:BoundField DataField="IsMultiDimension" HeaderText="多维度"  />
+                                            <asp:BoundField DataField="Dimension1name" HeaderText="所属测试" ></asp:BoundField>
                                             <asp:BoundField DataField="Valid" HeaderText="有效性"  />
                                     
                                         </Columns>
@@ -117,16 +118,12 @@
     </asp:UpdatePanel>
 
 
-
-
-
-
-
-
                                 </div>
                         </div>
                     </div>
                 </div>
             </div>
+ 
+
 </asp:Content>
 

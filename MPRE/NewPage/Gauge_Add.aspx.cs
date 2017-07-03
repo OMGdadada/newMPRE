@@ -114,13 +114,26 @@ public partial class NewPage_Gauge_Add : System.Web.UI.Page
                 Price.Text = rd["Price"].ToString();
                 Description.Text = rd["Description"].ToString();
                 Serial.Text = rd["Serial"].ToString();
+               // string  Dimension1name =rd["Dimension1name"].ToString();
+             //   DDLDimension1name.Items.FindByText(rd["Dimension1name"].ToString().Trim()).Selected = true;
+
+                string Dimension1name = rd["Dimension1name"].ToString().Trim();
+
+                if (DDLDimension1name.Items.FindByText(Dimension1name) != null)
+                {
+                    DDLDimension1name.ClearSelection();
+                    DDLDimension1name.Items.FindByText(Dimension1name).Selected = true;
+                }
+
                 string PageType = rd["IsPageType"].ToString();
                 if (PageType == "False")
                 {
                     IsPageType.Items.FindByValue("0").Selected = true;
                 }
                 else
-                { IsPageType.Items.FindByValue("1").Selected = true; }
+                { 
+                    IsPageType.Items.FindByValue("1").Selected = true; 
+                }
 
                 string IsValid1 = rd["Valid"].ToString();
                 if (IsValid1 == "False")
@@ -128,7 +141,11 @@ public partial class NewPage_Gauge_Add : System.Web.UI.Page
                     IsValid.Items.FindByValue("0").Selected = true;
                 }
                 else
-                { IsValid.Items.FindByValue("1").Selected = true; }
+                { 
+                    IsValid.Items.FindByValue("1").Selected = true; 
+                }
+           
+
             }
             rd.Close();
             conn.Close();
@@ -140,8 +157,8 @@ public partial class NewPage_Gauge_Add : System.Web.UI.Page
         using (SqlConnection conn = new DB().GetConnection())
         {
 
-            StringBuilder sb = new StringBuilder("insert into Test(TestName,Orders,Price,Description,IsPageType,Valid,Serial )");
-            sb.Append(" values (@TestName,@Orders,@Price,@Description,@IsPageType,@Valid,@Serial ) ");
+            StringBuilder sb = new StringBuilder("insert into Test(TestName,Orders,Price,Description,IsPageType,Valid,Serial，Dimension1name )");
+            sb.Append(" values (@TestName,@Orders,@Price,@Description,@IsPageType,@Valid,@Serial，@Dimension1name ) ");
             SqlCommand cmd = new SqlCommand(sb.ToString(), conn);
             cmd.Parameters.AddWithValue("@TestName", TestName.Text);
             cmd.Parameters.AddWithValue("@Orders", Orders.Text);
@@ -149,6 +166,7 @@ public partial class NewPage_Gauge_Add : System.Web.UI.Page
             cmd.Parameters.AddWithValue("@Description", Description.Text);
             cmd.Parameters.AddWithValue("@IsPageType", IsPageType.SelectedValue);
             cmd.Parameters.AddWithValue("@Valid", IsValid.SelectedValue);
+            cmd.Parameters.AddWithValue("@Dimension1name", DDLDimension1name.SelectedItem.Text);
             cmd.Parameters.AddWithValue("@Serial", Serial.Text);
             conn.Open();
             i = cmd.ExecuteNonQuery();
@@ -163,7 +181,7 @@ public partial class NewPage_Gauge_Add : System.Web.UI.Page
         int i = 0;
         using (SqlConnection conn = new DB().GetConnection())
         {
-            StringBuilder sb = new StringBuilder("Update Test set TestName=@TestName,Orders=@Orders,Price=@Price,Description=@Description,IsPageType=@IsPageType,Valid=@Valid,Serial=@Serial where ID=@ID ");
+            StringBuilder sb = new StringBuilder("Update Test set TestName=@TestName,Orders=@Orders,Price=@Price,Description=@Description,IsPageType=@IsPageType,Valid=@Valid,Serial=@Serial,Dimension1name=@Dimension1name where ID=@ID ");
             SqlCommand cmd = new SqlCommand(sb.ToString(), conn);
             cmd.Parameters.AddWithValue("@ID", Request.QueryString["ID"].ToString());
             cmd.Parameters.AddWithValue("@TestName", TestName.Text);
@@ -172,6 +190,7 @@ public partial class NewPage_Gauge_Add : System.Web.UI.Page
             cmd.Parameters.AddWithValue("@Description", Description.Text);
             cmd.Parameters.AddWithValue("@IsPageType", IsPageType.SelectedValue);
             cmd.Parameters.AddWithValue("@Valid", IsValid.SelectedValue);
+            cmd.Parameters.AddWithValue("@Dimension1name", DDLDimension1name.SelectedItem.Text);
             cmd.Parameters.AddWithValue("@Serial", Serial.Text);
             conn.Open();
             i = cmd.ExecuteNonQuery();
