@@ -46,6 +46,11 @@ public partial class NewPage_Gauge_Library : System.Web.UI.Page
         {
             whereStr.Append(" and [TestName] like '%").Append(Server.HtmlEncode(param.Trim().Replace("'", ""))).Append("%' ");
         }
+        if (Convert.ToInt16(DDLTest.SelectedValue) > 0)
+        {
+            whereStr.Append(" and Dimension0name = ").Append(DDLTest.SelectedValue);
+        }
+
         string sql = "select count(ID) as total from Test " + whereStr.ToString();
 
         using (SqlConnection conn = (SqlConnection)new DB().GetConnection())
@@ -113,7 +118,7 @@ public partial class NewPage_Gauge_Library : System.Web.UI.Page
         }
         if (!String.IsNullOrEmpty(ids))
         {
-            Response.Redirect(Server.HtmlEncode("Gauge_Add.aspx?ID=" + ids));
+            Response.Redirect(Server.HtmlEncode("Gauge_Add.aspx?GUID=" + ids));
         }
     }
     protected void OrderDDL_SelectedIndexChanged(object sender, EventArgs e)
@@ -121,6 +126,11 @@ public partial class NewPage_Gauge_Library : System.Web.UI.Page
         MyDataBind();
     }
     protected void SearchDDL_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        MyDataBind();
+    }
+
+    protected void DDLTest_SelectedIndexChanged(object sender, EventArgs e)
     {
         MyDataBind();
     }

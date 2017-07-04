@@ -32,6 +32,12 @@
                                     &nbsp;&nbsp;
                                     <asp:Button ID="SearchBtn" runat="server" Text="搜索" class="btn btn-info"
                                      />&nbsp;&nbsp;
+
+                                       <asp:DropDownList ID="DDLTest" runat="server" OnSelectedIndexChanged="DDLTest_SelectedIndexChanged" AutoPostBack="True">
+                                                                               <asp:ListItem Value="-1">总量表</asp:ListItem>
+                                                                            <asp:ListItem Value="1">多维度量表</asp:ListItem>
+                                                                            <asp:ListItem Value="2">心理测评量表</asp:ListItem>    
+                                                                        </asp:DropDownList>
     
                           
                                                                     &nbsp;&nbsp;
@@ -41,6 +47,7 @@
                                         <asp:ListItem Value=" Order by CDT Desc">最新记录</asp:ListItem>
                                         <asp:ListItem Value=" Order by Price Asc">价格从低到高</asp:ListItem> 
                                          <asp:ListItem Value=" Order by Price Desc">价格从高到低</asp:ListItem> 
+
                                                                
                                     </asp:DropDownList>
                                 </div>
@@ -76,7 +83,7 @@
                                 <br />
 
                            <div id="RightContent">
-                                    <asp:GridView ID="GridView1" runat="server" DataKeyNames="ID" AutoGenerateColumns="false" class="table table-striped table-bordered table-hover"
+                                    <asp:GridView ID="GridView1" runat="server" DataKeyNames="GUID" AutoGenerateColumns="false" class="table table-striped table-bordered table-hover"
                                         GridLines="Horizontal" Style="text-align: center;" ForeColor="#333333" HeaderStyle-HorizontalAlign="Center" Width="99%">
                                         <RowStyle BackColor="#F7F6F3" ForeColor="#333333" Height="30px" HorizontalAlign="Center" />
                                         <HeaderStyle HorizontalAlign="Center" />
@@ -96,8 +103,8 @@
                                                 <ItemStyle Width="30px" HorizontalAlign="Left" />
                                             </asp:TemplateField>
                 
-                                          <asp:HyperLinkField DataNavigateUrlFields="ID"
-                                                DataNavigateUrlFormatString="Gauge_Add.aspx?ID={0}" DataTextField="TestName"
+                                          <asp:HyperLinkField DataNavigateUrlFields="GUID"
+                                                DataNavigateUrlFormatString="Gauge_Add.aspx?GUID={0}" DataTextField="TestName"
                                                 HeaderText="量表名" ItemStyle-Width="200" HeaderStyle-HorizontalAlign="Left" ItemStyle-HorizontalAlign="Left" Target="_blank"></asp:HyperLinkField>
                                            <asp:BoundField DataField="Price" HeaderText="价格" />
                                    

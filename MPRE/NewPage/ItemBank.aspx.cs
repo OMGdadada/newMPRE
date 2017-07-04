@@ -63,7 +63,7 @@ public partial class NewPage_ItemBank : System.Web.UI.Page
     {
         AspNetPager1.PageSize = Convert.ToInt16(PageSizeDDL.SelectedValue);
         string param = SearchTB.Text;
-        StringBuilder whereStr = new StringBuilder("where IsQuestion = 1 ");
+        StringBuilder whereStr = new StringBuilder("where 1 = 1 ");
         if (!String.IsNullOrEmpty(param))
         {
             whereStr.Append("  and [QuestionText] like '%").Append(Server.HtmlEncode(param.Trim().Replace("'", ""))).Append("%' ");

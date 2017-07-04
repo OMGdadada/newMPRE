@@ -84,8 +84,8 @@
                                                                         
                                                                         <asp:DropDownList ID="OrderText" runat="server" OnSelectedIndexChanged="OrderText_SelectedIndexChanged" AutoPostBack="True">
                                                                             <asp:ListItem Value=" Order by Orders Asc">总量表</asp:ListItem>
-                                                                            <asp:ListItem Value=" where Dimension1name = 1 ">多维度量表</asp:ListItem>
-                                                                            <asp:ListItem Value=" where Dimension1name = 2 ">心理测评量表</asp:ListItem>       
+                                                                            <asp:ListItem Value=" where Dimension0name = 1 ">多维度量表</asp:ListItem>
+                                                                            <asp:ListItem Value=" where Dimension0name = 2 ">心理测评量表</asp:ListItem>       
                                                                         </asp:DropDownList>
                                                                         &nbsp;&nbsp;&nbsp;&nbsp;
                                                                         <asp:Button ID="SearchBtnText" runat="server" Text="搜索" class="btn btn-info" OnClick="SearchBtnText_Click" />&nbsp;&nbsp;&nbsp;&nbsp;
