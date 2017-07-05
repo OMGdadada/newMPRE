@@ -54,8 +54,10 @@
                                                       <p><%# Eval("Weight") %></p>
                                                   </div>
                                                 <div class="Div2"  style=" width: 10%;" >
-                                                      <p> <asp:Button ID="Button1" runat="server" Text=">>" ControlStyle-CssClass="btn btn-danger" style="height:25px;line-height:0px;" /></p>
-                                                    
+                                                    <asp:UpdatePanel ID="UpdatePanel1" runat="server"><ContentTemplate>
+                                                      <p> <asp:Button ID="Button1" runat="server" Text=">>" ControlStyle-CssClass="btn btn-danger" style="height:25px;line-height:0px;" data-dismiss="modal" data-toggle="modal" data-target="#QuestionModal" CommandArgument='<%#Eval("ID")%>' OnCommand="Button1_Command" /></p>
+                                                    </ContentTemplate></asp:UpdatePanel>
+                                                  
                                                   </div>
                                                    
                                               <!-- /Event -->
@@ -72,6 +74,31 @@
                         </div>
                     </div>
          </div>
+
+
+    <%--模态框--%>
+    <div class="modal fade" id="QuestionModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document" style="width:80%">
+            <div class="modal-content" style="margin-top: 10%;">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel4">上传图片</h4>
+                </div>
+                <div class="modal-body">
+                       <asp:UpdatePanel ID="UpdatePanel2" runat="server"><ContentTemplate>
+          <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
+                    <asp:TextBox ID="TextBox2" runat="server"></asp:TextBox>
+                    <asp:TextBox ID="TextBox4" runat="server"></asp:TextBox>
+                    <asp:TextBox ID="TextBox3" runat="server"></asp:TextBox></ContentTemplate></asp:UpdatePanel>
+                </div>
+                <div class="modal-footer">
+                 
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <style type="text/css">
         .Div1 {
             float: left;
@@ -97,5 +124,6 @@
             text-align:center;
             }
     </style>
+   
 </asp:Content>
 

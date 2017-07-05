@@ -55,4 +55,20 @@ public partial class NewPage_Question_Add : System.Web.UI.Page
         }
 
     }
+    protected void Button1_Command(object sender, CommandEventArgs e)
+    {
+        string id = e.CommandArgument.ToString();
+        using (SqlConnection conn = new DB().GetConnection())
+        {
+            SqlCommand cmd = conn.CreateCommand();
+            cmd.CommandText = "select * from Question where ID=@ID";
+            cmd.Parameters.AddWithValue("@ID", id);
+            conn.Open();
+            SqlDataReader rd = cmd.ExecuteReader();
+            if (rd.Read()) { 
+                TextBox1.Text=rd["QuestionText"].ToString();
+            }
+        }
+    
+    }
 }
