@@ -12,6 +12,7 @@ public partial class NewPage_Question_Add : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
+      
         if (!IsPostBack)
         {
             if (Session["DoctorGUID"] == null)
@@ -46,29 +47,37 @@ public partial class NewPage_Question_Add : System.Web.UI.Page
             }
             rd.Close();
 
-            cmd.CommandText = "select * from QView where TestGUID=@TestGUID and Level=1";
+            cmd.CommandText = "select * from QView where TestGUID=@TestGUID order by Serial desc";
             cmd.Parameters.AddWithValue("@TestGUID", Request.QueryString["TestGUID"].ToString());
             rd = cmd.ExecuteReader();
             Repeater1.DataSource = rd;
             Repeater1.DataBind();
-            rd.Close();
+            rd.Close();      
+
         }
 
     }
-    protected void Button1_Command(object sender, CommandEventArgs e)
+
+  
+    protected void readbtn_Click(object sender, EventArgs e)
     {
-        string id = e.CommandArgument.ToString();
+        
         using (SqlConnection conn = new DB().GetConnection())
         {
-            SqlCommand cmd = conn.CreateCommand();
-            cmd.CommandText = "select * from Question where ID=@ID";
-            cmd.Parameters.AddWithValue("@ID", id);
+            string sql = "select * from [QuestionItem] where QuestionGUID = @QGUID";
+            SqlCommand cmd = new SqlCommand(sql, conn);
+            cmd.Parameters.AddWithValue("@QGUID", QGUID.Text);
             conn.Open();
             SqlDataReader rd = cmd.ExecuteReader();
-            if (rd.Read()) { 
-                TextBox1.Text=rd["QuestionText"].ToString();
-            }
+            Repeater2.DataSource = rd;
+            Repeater2.DataBind();
+            rd.Close();
+           
         }
-    
+        Label2.Text = "123456";
     }
+
+
+  
+   
 }
