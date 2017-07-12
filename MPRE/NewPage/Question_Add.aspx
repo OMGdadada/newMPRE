@@ -30,7 +30,8 @@
       <asp:UpdatePanel ID="UpdatePanel1" runat="server">
         <ContentTemplate>
             <asp:HiddenField ID="ita_hidf" runat="server" Value="1" />
-            <asp:Button ID="aBt" runat="server" Text="Button" OnClick="readbtn_Click" Visible="True" Style="display: none;" />
+            <asp:Button ID="aBt" runat="server" OnClick="readbtn_Click" Visible="True" Style="display: none;" />
+               <asp:Button ID="Sure1" runat="server" Text="确定" class="btn btn-darkorange shiny" OnClick="Sure_Click" Style="display: none;"/> </th>
         </ContentTemplate>
     </asp:UpdatePanel>
 
@@ -40,11 +41,11 @@
                 <div class="widget">
                     <div class="widget-header" style="width: 100%;">
                         <span class="widget-caption" style="width: 100%; text-align: center">量表名：
-                            <asp:Label ID="Label1" runat="server"></asp:Label>
-                            <asp:Label ID="QTypeValue" runat="server" Text="Label"></asp:Label>
-                           
-                                <asp:Label ID="QGUID" runat="server"></asp:Label>
-                               
+                            <asp:Label ID="TextName" runat="server"></asp:Label>
+                            <asp:Label ID="TextGUID" runat="server" Style="display: none;"></asp:Label>
+                            <asp:Label ID="QTypeValue" runat="server" Style="display: none;"></asp:Label>
+                            <asp:Label ID="QGUID" runat="server" Style="display: none;"></asp:Label>
+
                         </span>
                     </div>
 
@@ -54,7 +55,7 @@
                                 <%--左边--%>
                                 <div class="col-xs-4 col-md-4" style="-webkit-box-shadow: 0 0 10px rgb(128, 128, 128); -moz-box-shadow: 0 0 10px rgb(128, 128, 128); box-shadow: 0 0 10px rgb(128, 128, 128);">
                                     <div class="row">
-                                        <asp:UpdatePanel ID="UpdatePanel3" runat="server"><ContentTemplate>
+                                        <asp:UpdatePanel ID="UpdatePanel3" runat="server"><ContentTemplate>                   
                                         <asp:Repeater ID="Repeater1" runat="server">
                                             <HeaderTemplate>
                                                 <div style="width: 100%;">
@@ -65,32 +66,33 @@
                                                         <p>题目</p>
                                                     </div>
                                                     <div class="Div1" style="width: 20%;">
-                                                        <p>题型</p>
-                                                    </div>
-                                                    <div class="Div1" style="width: 15%;">
                                                         <p>权重</p>
                                                     </div>
+                                                    <div class="Div1" style="width: 15%;">
+                                                        <p>删除</p>
+                                                    </div>
+
                                                 </div>
                                             </HeaderTemplate>
 
 
                                             <ItemTemplate>
 
-                                                <div class="Div2" style="clear: both; width: 5%;">
+                                                <div class="Div2" style="clear: both; width: 10%;">
                                                     <p><%# Container.ItemIndex + 1%>. </p>
                                                 </div>
-                                                <div class="Div2" style="width: 60%;">
-                                                    <%--<a runat="server" style="overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; text-align: left; color: #22aff7;"><%# Eval("QuestionText") %></a>--%>
-                                                  
-                                                        <a ID="LinkButton1" class="Read" onclick="a(this)"  data-guid="<%#Eval("GUID")%>"  style="overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; text-align: left; color: #22aff7;"><%# Eval("QuestionText") %></a>
+                                                <div class="Div2" style="width: 55%;">                
+                                                                                   
+                                                        <a ID="LinkButton1" class="Read" onclick="a(this)"  data-guid="<%#Eval("GUID")%>"  style="overflow: hidden; cursor:pointer; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; text-align: left; color: #22aff7;"><%# Eval("QuestionText") %></a>
                                                        
                                             
                                                 </div>
                                                 <div class="Div2" style="width: 20%;">
-                                                    <p><%# Eval("Type") %></p>
+                                                      <p><%# Eval("Weight") %></p>
+                                                
                                                 </div>
                                                 <div class="Div2" style="width: 15%;">
-                                                    <p><%# Eval("Weight") %></p>
+                                                    <p><a href="#" id="<%#"Qcancel"+Eval("ID") %>" onclick="Qcancel(<%#Eval("ID") %>)" title="删除" class="subitem_update2"><i  class="glyphicon glyphicon-remove"></i></a></p>  
                                                 </div>
 
 
@@ -131,9 +133,10 @@
                                                        <asp:ListItem Value="2">多选</asp:ListItem>
                                                        <asp:ListItem Value="3">判断</asp:ListItem>
                                                    </asp:RadioButtonList>--%>
+                                                     &nbsp;
                                                      <span><input type="radio" id ="radio1"  name="QType" value="1" />单选</span>
                                                       <span><input type="radio" id ="radio2" name="QType" value="2"/>多选</span>
-                                                      <span><input type="radio" id ="radio3" name="QType" value="3"/>判断</span>
+                                                
                                                     </th>
                                              </tr>
 
@@ -150,21 +153,41 @@
                                                 <th colspan="3">
                                                     <asp:UpdatePanel ID="UpdatePanel5" runat="server">
                                                         <ContentTemplate>
-                                                            <asp:Label ID="Label2" runat="server" Text="Label"></asp:Label>
                                                             <asp:Repeater ID="Repeater2" runat="server">
-                                                                  <ItemTemplate>
-                                                               <p> <%# Eval("ItemText") %></p>
-                                                                      </ItemTemplate>
+                                                                <HeaderTemplate>
+                                                                   
+                                                                </HeaderTemplate>
+                                                                <ItemTemplate>
+                                                                     <div id="<%#"subitem"+Eval("ID") %>">
+                                                                        <div style="float:left;width:60%;">
+                                                                        <span id="<%#"order1"+Eval("ID") %>"><%# Eval("Serial") %> </span>.                                                                   
+                                                                        <span id="<%#"itemtext1"+Eval("ID") %>" style="font-size: 14px; font-weight: bold; line-height:25px;"><%# Eval("ItemText") %></span>
+                                                                      &nbsp; ------------- &nbsp;
+                                                                         <span id="<%#"Score1"+Eval("ID") %>" ><%# Eval("Score") %></span>
+                                                                         <span id="<%#"Has"+Eval("ID") %>"   style="display:none">  <%#  Convert.ToInt32((Eval("HasTextBox")) )%></span>
+                                                                            </div>
+                                                                        <div style="float:left;width:40%; text-align:right;">
+                                                                     <a href="#" id="<%#"update1"+Eval("ID") %>" onclick="updatesubtext(<%#Eval("ID") %>)" data-dismiss="modal" data-toggle="modal" data-target="#QuestionModal"><i class="glyphicon glyphicon-pencil" title="修改" ></i></a>
+                                                                    <a href="#" id="<%#"delete"+Eval("ID") %>"  onclick="deletesubtext(<%#Eval("ID") %>)" style="margin-left: 15px; margin-right: 10px;" title="删除"><i class="glyphicon glyphicon-remove"></i></a>
+                                                                    <a href="#" id="<%#"cancel"+Eval("ID") %>" onclick="recoveryesubtext(<%#Eval("ID") %>)" style="display: none; margin-left: 15px; margin-right: 10px;" title="删除" class="subitem_update2"><i  class="glyphicon glyphicon-remove"></i></a>
+                                                                            </div>
+                                                                    </div>
+                                                                </ItemTemplate>
                                                             </asp:Repeater>
                                                         </ContentTemplate>
                                                     </asp:UpdatePanel>
-                                                            <button type="button" style="border-radius: 50%;background-color:#F14141;font-size:larger;color:white;" data-dismiss="modal" data-toggle="modal" data-target="#QuestionModal">+</button>
+                                                    <div style="clear:both">
+                                                            <span style="cursor:pointer;" data-dismiss="modal" data-toggle="modal" data-target="#QuestionModal" onclick="AddQ()"><i class="glyphicon glyphicon-plus"></i></span>
+
+                                                    </div>
                                                 </th>
                                             </tr>
                                          
                                             <tr>
                                                 <th  class="Left" colspan="4">
-                                                    <asp:Button ID="Button2" runat="server" Text="确定" class="btn btn-darkorange shiny" /> </th>
+                                                  
+                                                  <span id="AddSure" class ="btn btn-darkorange shiny" onclick="AddSure(this)"> 确定</span>
+                                                     
                                             </tr>
                                             
                                         </table>
@@ -194,22 +217,33 @@
                 </div>
                 <div class="modal-body">
                      <table class="table">
-                         <tr><th>选项</th>
+                         <tr>
+                              <th>排序</th><th>选项</th>
                              <th>分值</th>
+                            
+                             <th>是否有输入框</th>
                          </tr>
-                         <tr><th><asp:TextBox ID="TextBox1" runat="server"></asp:TextBox></th>
+                         <tr><th><asp:TextBox ID="ItemtSerial" runat="server"></asp:TextBox></th>
+                             <th><asp:TextBox ID="ItemText" runat="server"></asp:TextBox></th>  
+                             <th><asp:TextBox ID="ItemtScore" runat="server"></asp:TextBox></th>
+                           
+                             <th> <span><input type="radio" id ="Has0"  name="HasTextBox" value="0"  />否</span>
+                                  <span><input type="radio" id ="Has1" name="HasTextBox" value="1"/>是</span>
+                                 
+                                </th>
                              
-                             <th><asp:TextBox ID="TextBox2" runat="server"></asp:TextBox></th>
                          </tr>
                          </table>
                 </div>
-                <div class="modal-footer">
-                    <asp:UpdatePanel ID="UpdatePanel2" runat="server"><ContentTemplate>
-                      <asp:Button ID="Add" runat="server" Text="添加" class="btn btn-default" />
+                <div class="modal-footer"> <span  class="btn btn-default" id ="Sure2" onclick="Sure2()"> 确定 </span>
+                    <asp:UpdatePanel ID="UpdatePanel2" runat="server" style="float:right;"><ContentTemplate>
+                      <asp:Button ID="Add" runat="server" Text="添加" class="btn btn-default"  OnClick="Add_Click" Style="display: none;"/>
                     <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-
+                      <span id="ItemID"  style="display:none;">0 </span>       
                                                                       </ContentTemplate></asp:UpdatePanel>
                 </div>
+                
+               
             </div>
         </div>
     </div>
@@ -230,7 +264,7 @@
          }
 
      .Div2 {
-       float: left;
+         float:left;
        height: 25px;
         }
 
@@ -270,41 +304,16 @@
             }
 
             document.getElementById('<%=QGUID.ClientID %>').innerText = guid;
+            document.getElementById('<%=ita_hidf.ClientID %>').value = guid;
 
             document.getElementById('radio1').onclick = function () {
-                document.getElementById('<%=QTypeValue.ClientID %>').innerText = "1";
+                document.getElementById('<%=QTypeValue.ClientID %>').innerHTML = "1";
             }
             document.getElementById('radio2').onclick = function () {
-                document.getElementById('<%=QTypeValue.ClientID %>').innerText = "2";
+                document.getElementById('<%=QTypeValue.ClientID %>').innerHTML = "2";
             }
-            document.getElementById('radio3').onclick = function () {
-                document.getElementById('<%=QTypeValue.ClientID %>').innerText = "3";
-            }
-
-           <%-- $(".Read").click(function () {
-                $.ajax({
-                    type: "post",
-                    url: "QuestionAdd_WebService.asmx/ReadQuestion",
-                    data: { GUID: $(this).data("guid") },
-                    success: function (ds) {
-                        document.getElementById('<%=Serial.ClientID %>').value = $(ds).find("Serial").text();
-                        document.getElementById('<%=Weight.ClientID %>').value = $(ds).find("Weight").text();
-                        document.getElementById('<%=QGUID.ClientID %>').innerText = $(ds).find("GUID").text();
-                        document.getElementById('<%=QTypeValue.ClientID %>').innerText = $(ds).find("QuestionType").text();
-                        document.getElementsByTagName("iframe")[0].contentWindow.document.body.innerHTML = $(ds).find("QuestionText").text();
-                        document.getElementById("radio" + $(ds).find("QuestionType").text()).checked = true;
-
-                        console.log('查找item成功');
-                    },
-                    error: function () {
-                        console.log('查找item失败');
-                    }
-                });
-               
-                       
-            });--%>
-
-            
+          
+  
 
         })(jQuery)
 
@@ -321,15 +330,151 @@
                 document.getElementById('<%=QTypeValue.ClientID %>').innerText = $(ds).find("QuestionType").text();
                 document.getElementsByTagName("iframe")[0].contentWindow.document.body.innerHTML = $(ds).find("QuestionText").text();
                 document.getElementById("radio" + $(ds).find("QuestionType").text()).checked = true;
-
                 console.log('查找item成功');
             },
             error: function () {
                 console.log('查找item失败');
             }
-        });
+            });
+            document.getElementById('<%=ita_hidf.ClientID %>').value = guid;
             document.getElementById('<%=aBt.ClientID %>').click();
 
+        }
+
+        function AddSure(e) {
+          
+            var Tguid = document.getElementById('<%=TextGUID.ClientID %>').innerText;
+            var guid = document.getElementById('<%=QGUID.ClientID %>').innerText;
+            var Text = document.getElementsByTagName("iframe")[0].contentWindow.document.body.innerHTML;
+            var Text1 = document.getElementsByTagName("iframe")[0].contentWindow.document.body.innerHTML;
+            var Serial1 = document.getElementById('<%=Serial.ClientID %>').value ;
+            var Weight1 = document.getElementById('<%=Weight.ClientID %>').value;
+            var Qtype = document.getElementById('<%=QTypeValue.ClientID %>').innerHTML;
+            alert(Text1);
+         $.ajax({
+                type: "post",
+                url: "QuestionAdd_WebService.asmx/AddQuestion", //服务端处理程序   
+                data: { TGUID: Tguid, QGUID: guid, QuestionText: Text, Serial: Serial1, Weight: Weight1, QuestionType: Qtype },
+                success: function (msg) {
+                    var guid = "";
+                    for (var i = 1; i <= 32; i++) {
+                        var n = Math.floor(Math.random() * 16.0).toString(16);
+                        guid += n;
+                        if ((i == 8) || (i == 12) || (i == 16) || (i == 20))
+                            guid += "-";
+                    }
+
+                    document.getElementById('<%=QGUID.ClientID %>').innerText = guid;
+                    document.getElementById('<%=Sure1.ClientID %>').click();
+                    alert("修改Text成功!");
+      
+                    //sign1=1;
+
+                },
+                error: function (msg) {
+                    alert("操作失败!");
+                }
+            });
+        }
+        function AddQ() {
+            document.getElementById("ItemID").innerText = 0;
+        }
+
+        function updatesubtext(id) {         //点击修改按钮触发事件
+          //  document.getElementById("update1" + id).style.display = 'none';         //修改按钮隐藏
+            document.getElementById("delete" + id).style.display = 'none';         //修改按钮隐藏
+            document.getElementById("cancel" + id).style.display = 'inline-block'; //取消按钮显示
+            var H = document.getElementById("Has" + id).innerText;
+            document.getElementById('<%=ItemText.ClientID %>').value = document.getElementById("itemtext1" + id).innerText;
+            document.getElementById('<%=ItemtScore.ClientID %>').value = document.getElementById("Score1" + id).innerText;
+            document.getElementById('<%=ItemtSerial.ClientID %>').value = document.getElementById("order1" + id).innerText;
+            if (H == 0) {
+                document.getElementById("Has0").checked = true;
+            }
+           else {
+               document.getElementById("Has1").checked = true;
+           }
+           document.getElementById("ItemID").innerText = id;
+            
+        }     
+
+
+        function Sure2(e) {       //  确认按钮触发
+            var iid = document.getElementById("ItemID").innerText;   
+            var itemt = document.getElementById('<%=ItemText.ClientID %>').value;
+            var s = document.getElementById('<%=ItemtScore.ClientID %>').value;
+            var od = document.getElementById('<%=ItemtSerial.ClientID %>').value;
+            var guid = document.getElementById('<%=QGUID.ClientID %>').innerText;
+            var HasTB = 0;
+            if (document.getElementById("Has1").checked == true) {
+                HasTB = 1;
+            }
+            if (iid == 0) {
+                $.ajax({
+                    type: "post",
+                    url: "QuestionAdd_WebService.asmx/AddQItem", //服务端处理程序   
+                    data: { id: iid, itemtext: itemt, score: s, order: od, Qguid: guid, Has: HasTB },
+                    success: function (msg) {                       
+                        document.getElementById('<%=Add.ClientID %>').click();
+                    },
+                    error: function (msg) {
+                        alert("添加失败!");
+                    }
+                });
+               
+            }
+            else {
+                $.ajax({
+                    type: "post",
+                    url: "QuestionAdd_WebService.asmx/UpdateQItem", //服务端处理程序   
+                    data: { id: iid, itemtext: itemt, score: s, order: od, Has: HasTB },
+                    success: function (msg) {
+                        document.getElementById("ItemID").innerText = 0;
+                        document.getElementById('<%=Add.ClientID %>').click();   
+                    },
+                    error: function (msg) {
+                        alert("更新失败!");
+                    }
+                });
+            }
+            
+        }
+
+        function deletesubtext(iid) {       //  删除按钮触发
+            if (window.confirm('你确定要删除吗？')) {
+                $.ajax({
+                    type: "post",
+                    url: "QuestionAdd_WebService.asmx/DeleteQItem", //服务端处理程序   
+                    data: { id: iid },
+                    success: function (msg) {
+                        document.getElementById("subitem" + iid).style.display = "none";
+                    }
+                });
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        function Qcancel(iid) {       //  删除按钮触发
+            if (window.confirm('你确定要删除吗？')) {
+                $.ajax({
+                    type: "post",
+                    url: "QuestionAdd_WebService.asmx/DeleteQText", //服务端处理程序   
+                    data: { id: iid },
+                    success: function (msg) {
+                        document.getElementById('<%=Sure1.ClientID %>').click();
+                    
+                    },
+                    error: function (msg) {
+                        alert("删除失败!");
+                    }
+
+                });
+                return true;
+            } else {
+                return false;
+            }
         }
     </script>
 
