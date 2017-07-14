@@ -46,7 +46,7 @@ public partial class Dashboard : System.Web.UI.Page
             DoctorDDL.DataBind();
             rd.Close();
             DoctorDDL.Items.Insert(0, new ListItem("按医生分类", "-1"));
-
+            /*
             cmd.CommandText = "select count(*) as maxrow from [Patient] ";
             rd = cmd.ExecuteReader();
             if (rd.Read())
@@ -71,7 +71,7 @@ public partial class Dashboard : System.Web.UI.Page
                 ReportNum.Text = rd["maxrow"].ToString();
             }
             rd.Close();
-
+            
             cmd.CommandText = "select * from [Hospital] where [GUID] = @HospitalGUID";
             cmd.Parameters.AddWithValue("@HospitalGUID", HospitalGUID.Text);
             rd = cmd.ExecuteReader();
@@ -82,7 +82,7 @@ public partial class Dashboard : System.Web.UI.Page
                 Introduction.Text = rd["Introduction"].ToString();
             }
             rd.Close();
-
+            */
             cmd.CommandText = "select * from Doctor where GUID=@GUID";
             cmd.Parameters.AddWithValue("@GUID", Session["DoctorGUID"].ToString());
             rd = cmd.ExecuteReader();

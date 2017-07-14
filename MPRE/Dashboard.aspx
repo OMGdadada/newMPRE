@@ -4,13 +4,14 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
-    <div id="CurrentPosition">当前位置：<a href="#">首页</a></div>
+    <!-- <div id="CurrentPosition">当前位置：<a href="#">首页</a></div> -->
     <asp:Label ID="HospitalGUID" runat="server" Visible="false" Text=""></asp:Label>
     <!-- Page Body -->
                 <div class="page-body" style="margin-left:-15px;margin-right:-15px;">
                     <div class="row">
                         <div class="col-md-12">
                             <div class="profile-container">
+                                <!--
                                 <div class="profile-header row">
                                     <div class="col-lg-2 col-md-4 col-sm-12 text-center">
                                         <asp:Image ID="Image1" runat="server" class="header-avatar" />
@@ -25,23 +26,23 @@
                                         </div>
                                     </div>
                                     <div class="col-lg-5 col-md-12 col-sm-12 col-xs-12 profile-stats">
-                                        <div class="row">
-                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 stats-col">
-                                                <div class="stats-value pink"><asp:Label ID="PatientNum" runat="server" Text="0"></asp:Label></div>
-                                                <div class="stats-title">病人总数</div>
-                                            </div>
-                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 stats-col">
-                                                <div class="stats-value pink"><asp:Label ID="TestNum" runat="server" Text="0"></asp:Label></div>
-                                                <div class="stats-title">完成测试总数</div>
-                                            </div>
-                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 stats-col">
-                                                <div class="stats-value pink"><asp:Label ID="ReportNum" runat="server" Text="0"></asp:Label></div>
-                                                <div class="stats-title">总报告单总数</div>
+                                            <div class="row">
+                                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 stats-col">
+                                                    <div class="stats-value pink"><asp:Label ID="PatientNum" runat="server" Text="0"></asp:Label></div>
+                                                    <div class="stats-title">病人总数</div>
+                                                </div>
+                                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 stats-col">
+                                                    <div class="stats-value pink"><asp:Label ID="TestNum" runat="server" Text="0"></asp:Label></div>
+                                                    <div class="stats-title">完成测试总数</div>
+                                                </div>
+                                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 stats-col">
+                                                    <div class="stats-value pink"><asp:Label ID="ReportNum" runat="server" Text="0"></asp:Label></div>
+                                                    <div class="stats-title">总报告单总数</div>
+                                                </div>
                                             </div>
                                         </div>
-                                        
                                     </div>
-                                </div>
+                                    -->
                                 <div class="profile-body">
                                     <div class="col-lg-12">
                                         <div class="tabbable">
@@ -68,7 +69,7 @@
                                                 </li>
                                                 
                                             </ul>
-                                            <div class="tab-content tabs-flat">
+                                            <div class="tab-content tabs-flat" style="margin-top:0;padding-top:0">
                                                 <div id="timeline" class="tab-pane active">
                                                     <div class="row">
                                                         <div class="widget-body" style="margin:12px;padding:0px;box-shadow:0px 0 0px 0px rgba(256,256,256,.3);">
