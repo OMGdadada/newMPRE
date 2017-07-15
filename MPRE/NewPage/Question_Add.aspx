@@ -32,6 +32,7 @@
             <asp:HiddenField ID="ita_hidf" runat="server" Value="1" />
             <asp:Button ID="aBt" runat="server" OnClick="readbtn_Click" Visible="True" Style="display: none;" />
             <asp:Button ID="Sure1" runat="server" Text="确定" class="btn btn-darkorange shiny" OnClick="Sure_Click" Style="display: none;" />
+             <asp:Button ID="ItemListSure" runat="server"  OnClick="ItemListSure_Click" Style="display: none;" />
         </ContentTemplate>
     </asp:UpdatePanel>
 
@@ -41,8 +42,7 @@
                 <div class="widget">
                     <div class="widget-header" style="width: 100%;">
                         <span class="widget-caption" style="width: 100%; text-align: center">量表名：
-                            <asp:Label ID="Label1" runat="server" Text="Label"></asp:Label>
-                            <asp:Label ID="Label2" runat="server" Text="Label"></asp:Label>
+                        
                             <asp:Label ID="TextName" runat="server"></asp:Label>
                             <asp:Label ID="TextGUID" runat="server" Style="display: none;"></asp:Label>
                             <asp:Label ID="QTypeValue" runat="server" Text="1" Style="display: none;"></asp:Label>
@@ -56,15 +56,9 @@
                             <div class="row">
                                 <%--左边--%>
                                 <div class="col-xs-4 col-md-4" style="-webkit-box-shadow: 0 0 10px rgb(128, 128, 128); -moz-box-shadow: 0 0 10px rgb(128, 128, 128); box-shadow: 0 0 10px rgb(128, 128, 128);">
-                                    <div class="row">
-
-                                        <asp:UpdatePanel ID="UpdatePanel3" runat="server">
-                                            <ContentTemplate>
-                                                <ul id="OrderList" style="padding: 0; margin-top: -10px;">
-                                                    <asp:Repeater ID="Repeater1" runat="server">
-                                                        <HeaderTemplate>
-                                                            <div style="width: 100%;">
-                                                                <div class="Div1" style="width: 10%;">
+                           
+                                    <div class="row" >
+                                          <div class="Div1" style="width: 10%;">
                                                                     <p>序号</p>
                                                                 </div>
                                                                 <div class="Div1" style="width: 50%;">
@@ -77,10 +71,13 @@
                                                                     <p>操作</p>
                                                                 </div>
 
-                                                            </div>
-                                                        </HeaderTemplate>
-
-
+                                    </div>
+                                    <div class="row" style="clear:both;  height :500px; overflow-y:scroll;">
+                                        <asp:UpdatePanel ID="UpdatePanel3" runat="server">
+                                            <ContentTemplate>
+                                                <ul id="OrderList" style="padding: 0; margin-top: -10px;">
+                                                    <asp:Repeater ID="Repeater1" runat="server">
+                                     
                                                         <ItemTemplate>
                                                             <il class="modules" data-id='<%#Eval("ID") %>' data-order='<%#Eval("Serial") %>'>
                                                 <div class="Div2" style="clear: both; width: 10%;">
@@ -97,7 +94,7 @@
                                                 
                                                 </div>
                                                 <div class="Div2" style="width: 25%; letter-spacing:5px; text-align:center;">
-                                                    <a href="#" id="<%#"Qcancel"+Eval("ID") %>" onclick="Qcancel(this)"  data-id='<%#Eval("ID") %>' data-guid='<%#Eval("TestGUID") %>' title="删除" class="subitem_update2"><i  class="glyphicon glyphicon-remove"></i></a>
+                                                    <a href="#" id="<%#"Qcancel"+Eval("ID") %>" onclick="Qcancel(this)"  data-id='<%#Eval("ID") %>' data-qguid='<%#Eval("GUID") %>' data-guid='<%#Eval("TestGUID") %>' title="删除" class="subitem_update2"><i  class="glyphicon glyphicon-remove"></i></a>
                                                          <a  onclick="OrderUp(this)" data-id='<%#Eval("ID") %>' data-order='<%#Eval("Serial") %>' title="上移"  style="cursor: pointer;"> <i  class="glyphicon glyphicon-arrow-up"></i></a>
                                                           <a  onclick="OrderDown(this)" data-id='<%#Eval("ID") %>' data-order='<%#Eval("Serial") %>'  title="下移"  style="cursor: pointer;"> <i  class="glyphicon glyphicon-arrow-down"></i></a>
                                                       
@@ -268,25 +265,45 @@
         </div>
     </div>
     <%--批量添加选项--%>
-    <div  class="modal fade" id="myModal4" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" >
-        <div class="modal-dialog" role="document"  style="width: 40%; zoom: 0.7;">
-           <div class="modal-content" style="margin-top: 10%;">
+    <div class="modal fade" id="myModal4" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document" style="width: 548px; height: 428px; zoom: 0.7;">
+            <div class="modal-content" style="margin-top: 10%;">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" data-toggle="modal" data-target="#myModal"><span aria-hidden="true">&times;</span></button>
-                      <h4 class="modal-title">常用选项</h4>
+                    <br />
                 </div>
-                <div class="modal-body ">
-                  
-                    <div style="float:left; width:65%; height:300px;border :1px solid red;" >
-                        <asp:TextBox ID="n_subitemname" runat="server" TextMode="MultiLine" CssClass="form-control" Height="300px"></asp:TextBox>
-                  </div>
-                    <div style=" float:right;width:30%;height :300px ;border :1px solid red">12345</div>
-                    <br style="clear:both"/>
+                <div class="modal-body " style="padding-top:0px;">
+                    <div style="float: left; width: 70%; height: 300px;">
+                      <h5>  <strong> 选项内容</strong></h5>
+                   <asp:UpdatePanel ID="UpdatePanel4" runat="server">
+                       <ContentTemplate>
+                           <asp:Label ID="TagID" runat="server" style="display:none;"></asp:Label>
+                           <asp:ListBox ID="ListBox1" runat="server" Style="width: 100%; height: 280px;" Font-Size="Larger"></asp:ListBox>
+                       </ContentTemplate>
+                   </asp:UpdatePanel>
+                    </div>
+
+                    <div style="float: right; width: 25%;">
+                     <h5> <strong> 选项预设</strong></h5> 
+                        <div  style="float: right;overflow-y:scroll;text-align: center; height: 280px;background-color: #F9F7F7">
+                            <asp:UpdatePanel ID="UpdatePanel6" runat="server">
+                                <ContentTemplate>
+                                    <asp:Repeater ID="Repeater3" runat="server">
+                                        <ItemTemplate>
+                                            <asp:Button ID="ButtonItemList" runat="server" Text='<%#Eval("TagName") %>' class="btn btn-default shiny" Style="margin-top: 5px; width: 80%;" CommandArgument='<%#Eval("TagID")%>' OnCommand="ButtonItemList_Command" Font-Size="Larger" />
+                                        </ItemTemplate>
+                                    </asp:Repeater>
+                                </ContentTemplate>
+                            </asp:UpdatePanel>
+
+                        </div>
+                    </div>
+                    <br style="clear: both" />
                 </div>
-               
+
                 <div class="modal-footer">
-                    <button id="New_SubItem" class="btn btn-info" data-dismiss="modal" data-toggle="modal" data-target="#myModal">确认添加</button>
-                    <button type="button" class="btn btn-default" data-dismiss="modal" data-toggle="modal" data-target="#myModal">返回</button>
+                     <button onclick="ItemList()" class="btn btn-info" data-dismiss="modal" data-toggle="modal" data-target="#myModal">确认添加</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal" data-toggle="modal" data-target="#myModal">取消</button>
                 </div>
             </div>
         </div>
@@ -333,6 +350,7 @@
             border: 1px solid #cad9ea;
             padding: 0 1em 0;
         }
+      
     </style>
 
     <script type="text/javascript">
@@ -471,12 +489,13 @@
             function Qcancel(e) {       //  删除按钮触发
                 var guid = e.getAttribute("data-guid");
                 var iid = e.getAttribute("data-id");
+                var qguid = e.getAttribute("data-qguid");
 
             if (window.confirm('你确定要删除吗？')) {
                 $.ajax({
                     type: "post",
                     url: "QuestionAdd_WebService.asmx/DeleteQText", //服务端处理程序   
-                    data: { id: iid, GUID: guid },
+                    data: { id: iid, GUID: guid, QGUID: qguid },
                     success: function (msg) {
 
                         document.getElementById('<%=Sure1.ClientID %>').click();
@@ -520,6 +539,7 @@
                             guid += "-";
                     }
                     document.getElementById('<%=QGUID.ClientID %>').innerText = guid;
+                    document.getElementById('<%=ita_hidf.ClientID %>').value = guid;
                     document.getElementById('<%=Sure1.ClientID %>').click();
                     alert("操作成功!");
 
@@ -595,19 +615,22 @@
             var guid = e.getAttribute("data-guid");
             var iid = e.getAttribute("data-id");
 
-            if (window.confirm('你确定要删除吗？')) {
+            
                 $.ajax({
                     type: "post",
                     url: "QuestionAdd_WebService.asmx/DeleteQItem", //服务端处理程序   
                     data: { id: iid, QGUID: guid},
                     success: function (msg) {
                         document.getElementById('<%=Add.ClientID %>').click();
+                    },
+                    error: function (msg) {
+                        alert("操作失败!");
+
                     }
+
                 });
                 return true;
-            } else {
-                return false;
-            }
+           
         }
 
 
@@ -692,6 +715,9 @@
             }
         }
 
+      function ItemList(){
+          document.getElementById('<%=ItemListSure.ClientID %>').click();
+        }
 
     </script>
 

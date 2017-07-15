@@ -26,6 +26,7 @@ public partial class NewPage_Question_Add : System.Web.UI.Page
                 if (Request.QueryString["TestGUID"].Length>0) 
                 {
                     MyDataBind();
+                    ItemDataBind();
                   
                 }
             }
@@ -54,10 +55,7 @@ public partial class NewPage_Question_Add : System.Web.UI.Page
             rd = cmd.ExecuteReader();
             Repeater1.DataSource = rd;
             Repeater1.DataBind();
-            rd.Close();
-
-       
-       
+            rd.Close();   
         }
 
     }
@@ -76,7 +74,24 @@ public partial class NewPage_Question_Add : System.Web.UI.Page
 
         }
     }
-  
+
+
+    private void ItemDataBind()
+    {
+        using (SqlConnection conn = new DB().GetConnection())
+        {
+            string sql = "select DISTINCT TagID,TagName from [QuestionItemList] ";
+            SqlCommand cmd = new SqlCommand(sql, conn);
+            conn.Open();
+            SqlDataReader rd = cmd.ExecuteReader();
+            Repeater3.DataSource = rd;
+            Repeater3.DataBind();
+            rd.Close();
+
+        }
+    }
+
+
     protected void readbtn_Click(object sender, EventArgs e)
     {
         ItemData();
@@ -103,5 +118,87 @@ public partial class NewPage_Question_Add : System.Web.UI.Page
         string regexstr = @"<[^>]*>";
         str = Regex.Replace(str, regexstr, string.Empty, RegexOptions.IgnoreCase);
         return str;
+    }
+
+    protected void ButtonItemList_Command(object sender, CommandEventArgs e)
+    {
+        string Tagid = e.CommandArgument.ToString();
+        using (SqlConnection conn = new DB().GetConnection())
+        {
+            string sql = "select * from [QuestionItemList] where TagID=@TagID ";
+            SqlCommand cmd = new SqlCommand(sql, conn);
+            cmd.Parameters.AddWithValue("@TagID", Tagid);
+            conn.Open();
+            SqlDataReader rd = cmd.ExecuteReader();
+            ListBox1.DataSource = rd;
+            ListBox1.DataTextField = "ItemText";
+            ListBox1.DataBind();
+            rd.Close();
+        }
+        TagID.Text = Tagid;
+
+    }
+
+
+    private void ItemDataBindList()
+    {
+        string ItemName = "";
+        string ItemScore = "";
+        string ItemOrder = "";
+
+        string[] ItemName1 ;
+        string[] ItemScore1;
+        string[] ItemOrder1 ;
+
+        using (SqlConnection conn = new DB().GetConnection())
+        {
+            string sql = "select * from [QuestionItemList] where TagID=@TagID  order by Serial ";
+            SqlCommand cmd = new SqlCommand(sql, conn);
+            conn.Open();
+            cmd.Parameters.AddWithValue("@TagID", TagID.Text);
+            SqlDataReader rd = cmd.ExecuteReader();
+            while (rd.Read())
+            {
+                ItemName += rd["ItemText"].ToString() + ",";
+                ItemScore += rd["Score"].ToString() + ",";
+                ItemOrder += rd["Serial"].ToString() + ",";
+          
+            }
+            rd.Close();
+
+            ItemName1 = ItemName.Split(',');
+            ItemScore1 = ItemScore.Split(',');
+            ItemOrder1 = ItemOrder.Split(',');
+
+       
+            using (SqlConnection conn1 = new DB().GetConnection())
+            {   conn1.Open();
+                for (int j = 0; j < ItemName1.Length-1 ; j++)
+                {
+                    StringBuilder sb = new StringBuilder("insert into QuestionItem(QuestionGUID,ItemText,Serial,Score,HasTextBox )");
+                    sb.Append(" values ( @QuestionGUID,@ItemText,@Serial,@Score,@HasTextBox) ");
+                    SqlCommand cmd2 = new SqlCommand(sb.ToString(), conn1);
+                    //  cmd2.CommandText = "insert into QuestionItem (QuestionGUID,ItemText,Serial,Score,HasTextBox) values (@QuestionGUID,@ItemText,@Serial,@Score,@HasTextBox)";
+                    cmd2.Parameters.AddWithValue("@QuestionGUID", ita_hidf.Value.ToString());
+                    cmd2.Parameters.AddWithValue("@ItemText", ItemName1[j]);
+                    cmd2.Parameters.AddWithValue("@Serial", ItemOrder1[j]);
+                    cmd2.Parameters.AddWithValue("@Score",  ItemScore1[j]);
+                    cmd2.Parameters.AddWithValue("@HasTextBox", "0");  
+                    cmd2.ExecuteNonQuery();
+
+
+                }
+
+                conn1.Close();
+            }
+            conn.Close();
+        }
+    }
+
+    protected void ItemListSure_Click(object sender, EventArgs e)
+    {
+        ItemDataBindList();
+        ItemData();
+        Repeater2.Visible = true;
     }
 }

@@ -162,7 +162,7 @@ public class QuestionAdd_WebService : System.Web.Services.WebService {
     /// 删除试题
     /// </summary>     
     [WebMethod]
-    public string DeleteQText(string id, string GUID)
+    public string DeleteQText(string id, string GUID, string QGUID)
     {
         int i = 0; 
         string Qid="";
@@ -176,6 +176,12 @@ public class QuestionAdd_WebService : System.Web.Services.WebService {
             conn.Open();
             cmd.ExecuteNonQuery();
             cmd.Dispose();
+
+            cmd.CommandText = "Delete from QuestionItem where QuestionGUID=@QuestionGUID ";
+            cmd.Parameters.AddWithValue("@QuestionGUID", QGUID);
+            cmd.ExecuteNonQuery();
+            cmd.Dispose();
+
             conn.Close();
         }
 
