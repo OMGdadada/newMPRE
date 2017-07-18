@@ -163,6 +163,5 @@ public partial class NewPage_Gauge_Library : System.Web.UI.Page
         }
     }
 
-   
 
 }

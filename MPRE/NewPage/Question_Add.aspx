@@ -33,22 +33,28 @@
             <asp:Button ID="aBt" runat="server" OnClick="readbtn_Click" Visible="True" Style="display: none;" />
             <asp:Button ID="Sure1" runat="server" Text="确定" class="btn btn-darkorange shiny" OnClick="Sure_Click" Style="display: none;" />
              <asp:Button ID="ItemListSure" runat="server"  OnClick="ItemListSure_Click" Style="display: none;" />
+
+            
         </ContentTemplate>
     </asp:UpdatePanel>
-
     <div class="page-body" style="margin-top: -30px;">
         <div class="row">
             <div class="col-xs-12 col-md-12">
                 <div class="widget">
                     <div class="widget-header" style="width: 100%;">
-                        <span class="widget-caption" style="width: 100%; text-align: center">量表名：
-                        
+                        <span class="widget-caption" style="width: 80%; text-align: center;">量表名：
                             <asp:Label ID="TextName" runat="server"></asp:Label>
                             <asp:Label ID="TextGUID" runat="server" Style="display: none;"></asp:Label>
                             <asp:Label ID="QTypeValue" runat="server" Text="1" Style="display: none;"></asp:Label>
-                            <asp:Label ID="QGUID" runat="server" Style="display: none;"></asp:Label>
+                            <asp:Label ID="QGUID" runat="server" Style="display: none;"></asp:Label>   
+                        </span>
+
+                        <span style=" margin-right:5px;">
+                          <asp:Button ID="Question" runat="server" Text="试题"  OnClick="Question_Click"  class="btn btn-default" />
+                            <asp:Button ID="Report" runat="server" Text="报告单" OnClick="Report_Click"  class="btn btn-default"/>
 
                         </span>
+                        
                     </div>
 
                     <div class="widget-body">
@@ -156,25 +162,36 @@
                                             <tr>
                                                 <th class="Left">选项</th>
                                                 <th colspan="3">
+                                                 
                                                     <div>
                                                     <asp:UpdatePanel ID="UpdatePanel5" runat="server">
                                                         <ContentTemplate>
                                                             <ul id="OrderList1" style="padding: 0;">
-                                                            <asp:Repeater ID="Repeater2" runat="server">
+                                                            <asp:Repeater ID="Repeater2" runat="server" >
                                                                 <HeaderTemplate>
+                                                                    <div class="ItemDiv" style="width:80%;">
+                                                                        <div class="ItemDiv" style="width:5%;">序</div>
+                                                                        <div class="ItemDiv" style="width:35%;">选项文字</div>
+                                                                        <div class="ItemDiv" style="width:20%;"> 分数</div>
+                                                                        <div class="ItemDiv" style="width:20%;">跳题</div>
+                                                                        <div class="ItemDiv" style="width:20%;">允许填空</div>
+                                                                        </div>
+                                                                     <div  class="ItemDiv" style="width: 20%; text-align:center; ">
+                                                                         操作
+                                                                     </div>
                                                                 </HeaderTemplate>
                                                                 <ItemTemplate> 
                                                                    <il class="modules" data-id='<%#Eval("ID") %>' data-order='<%#Eval("Serial") %>' >
                                                                     <div id="<%#"subitem"+Eval("ID") %>">
-                                                                        <div style="float: left; width: 60%;">
-                                                                            <span id="<%#"order1"+Eval("ID") %>"><%# Eval("Serial") %> </span>.                                                                   
-                                                                          <span id="<%#"itemtext1"+Eval("ID") %>" style="font-size: 14px; font-weight: bold; line-height: 25px;"><%# Eval("ItemText") %></span>
-                                                                            &nbsp; ------------- &nbsp;
-                                                                        <span id="<%#"Score1"+Eval("ID") %>"><%# Eval("Score") %></span>
-                                                                        <span id="<%#"Has"+Eval("ID") %>" style="display: none"><%#  Convert.ToInt32((Eval("HasTextBox")) )%></span>
-                                                                        </div>
-                                                                        <div style="float: left; width: 40%; text-align: right; letter-spacing:5px;">
-                                                                            <a href="#" id="<%#"update1"+Eval("ID") %>" onclick="updatesubtext(<%#Eval("ID") %>)" data-dismiss="modal" data-toggle="modal" data-target="#QuestionModal"><i class="glyphicon glyphicon-edit" title="修改"></i></a>
+                                                                        <div  style="float: left; width: 80%;">
+                                                                        <div style="float: left; width:5%; text-align:center; margin-top:8px;"><span  id="<%#"order1"+Eval("ID") %>"><%# Eval("Serial") %> </span>.  </div>                                                                 
+                                                                        <div style="float: left; width:35%;text-align:center; margin-top:8px;"><input style="width:80%;" id="<%#"itemtext2"+Eval("ID") %>" type="text" value="<%# Eval("ItemText") %>" /></div> 
+                                                                       <div style="float: left; width:20%; text-align:center; margin-top:8px;"><input style="width:40px;"  id="<%#"Score2"+Eval("ID") %>" type="text" value="<%# Eval("Score") %>" /></div> 
+                                                                       <div style="float: left; width:20%; text-align:center; margin-top:8px;"><input style="width:40px;" id="<%#"Jump"+Eval("ID") %>"  type="text" value="<%# Eval("ID") %>" /></div>
+                                                                       <div  style="float: left; width:20%; text-align:center; margin-top:8px;"><input id="<%#"checkbox"+Eval("ID") %>" type="checkbox" name="HasTextBox1" <%#(Eval("HasTextBox").ToString()=="True"?"checked='checked'":"" ) %> /></span>  </div> 
+                                                                       </div>
+                                                                        <div style="float: left; width: 20%; text-align: center; letter-spacing:2px; margin-top:8px;">
+                                                                          
                                                                             <a href="#" onclick="deleteitem(this)" data-guid='<%#Eval("QuestionGUID") %>' data-id='<%#Eval("ID") %>'  title="删除"><i class="glyphicon glyphicon-remove-circle"></i></a>
                                                                             <a href="#" onclick="ItemUp(this)" data-id='<%#Eval("ID") %>' data-order='<%#Eval("Serial") %>' title="上移"><i class="glyphicon glyphicon-upload"></i></a>
                                                                             <a href="#" onclick="ItemDown(this)" data-id='<%#Eval("ID") %>' data-order='<%#Eval("Serial") %>' title="下移"><i class="glyphicon glyphicon-download"></i></a>
@@ -190,7 +207,7 @@
 
                                                     </div>
                                                     <div style="clear: both; zoom: 0.7; margin-top:15px; color:blue;">
-                                                        <span style="cursor: pointer;" data-dismiss="modal" data-toggle="modal" data-target="#QuestionModal" onclick="AddQ()"><i class="glyphicon glyphicon-plus-sign"></i> &nbsp;添加选项</span> &nbsp; &nbsp;
+                                                        <span style="cursor: pointer;"  onclick="AddQ()"><i class="glyphicon glyphicon-plus-sign"></i> &nbsp;添加选项</span> &nbsp; &nbsp;
                                                         <span style="cursor: pointer;" data-dismiss="modal" data-toggle="modal" data-target="#myModal4" ><i class="glyphicon glyphicon-check"></i> &nbsp;批量添加选项</span>
                                                     </div>
                                                 </th>
@@ -200,7 +217,9 @@
                                                 <th class="Left" colspan="4">
 
                                                     <span id="AddSure" class="btn btn-darkorange shiny" onclick="AddSure(this)">确定</span>
+                                                    
                                             </tr>
+                                            
 
                                         </table>
 
@@ -219,51 +238,6 @@
         </div>
     </div>
 
-    <%--添加选项模态框--%>
-    <div class="modal fade" id="QuestionModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-        <div class="modal-dialog" role="document" style="width: 50%; zoom: 0.7;">
-            <div class="modal-content" style="margin-top: 10%;">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel4">添加选项</h4>
-                </div>
-                <div class="modal-body">
-                    <table class="table">
-                        <tr>
-                          
-                            <th>选项</th>
-                            <th>分值</th>
-
-                            <th>是否有输入框</th>
-                        </tr>
-                        <tr>
-                            <th>
-                                <asp:TextBox ID="ItemText" runat="server"></asp:TextBox></th>
-                            <th>
-                                <asp:TextBox ID="ItemtScore" runat="server"></asp:TextBox></th>
-
-                            <th><span>
-                                <input type="radio" id="Has0" name="HasTextBox" value="0" checked="checked"/>否</span>
-                                <span>
-                                    <input type="radio" id="Has1" name="HasTextBox" value="1" />是</span>
-                            </th>
-                        </tr>
-                    </table>
-                </div>
-                <div class="modal-footer">
-                    <span class="btn btn-default" id="Sure2" onclick="Sure2()">确定 </span>
-                    <asp:UpdatePanel ID="UpdatePanel2" runat="server" style="float: right;">
-                        <ContentTemplate>
-                            <asp:Button ID="Add" runat="server" Text="添加" class="btn btn-default" OnClick="Add_Click" Style="display: none;" />
-                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                            <span id="ItemID" style="display: none;">0 </span>
-                        </ContentTemplate>
-                    </asp:UpdatePanel>
-                </div>
-              
-            </div>
-        </div>
-    </div>
     <%--批量添加选项--%>
     <div class="modal fade" id="myModal4" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document" style="width: 548px; height: 428px; zoom: 0.7;">
@@ -350,13 +324,17 @@
             border: 1px solid #cad9ea;
             padding: 0 1em 0;
         }
-      
+        .ItemDiv {
+            float:left;
+            height:20px;
+            background-color:#d5d5d5;
+            text-align:center;
+        }
+
     </style>
 
     <script type="text/javascript">
-
-
-
+      
         (function ($) {
             //加载完成调用
             var guid = "";
@@ -376,9 +354,6 @@
             document.getElementById('radio2').onclick = function () {
                 document.getElementById('<%=QTypeValue.ClientID %>').innerHTML = "2";
             }
-
-
-
         })(jQuery)
 
         function a(e) {
@@ -399,12 +374,12 @@
                     console.log('查找item失败');
                 }
             });
-        document.getElementById('<%=ita_hidf.ClientID %>').value = guid;
+            document.getElementById('<%=ita_hidf.ClientID %>').value = guid;
             document.getElementById('<%=aBt.ClientID %>').click();
-
+          
         }
 
-
+   
         function OrderUp(e) {
             var list = $("#OrderList");
             var old_order = [];
@@ -516,7 +491,6 @@
      
 
             function AddSure(e) {
-
                 var Tguid = document.getElementById('<%=TextGUID.ClientID %>').innerText;
             var guid = document.getElementById('<%=QGUID.ClientID %>').innerText;
             var Text = document.getElementsByTagName("iframe")[0].contentWindow.document.body.innerHTML;
@@ -541,6 +515,7 @@
                     document.getElementById('<%=QGUID.ClientID %>').innerText = guid;
                     document.getElementById('<%=ita_hidf.ClientID %>').value = guid;
                     document.getElementById('<%=Sure1.ClientID %>').click();
+                    UpdataItem();
                     alert("操作成功!");
 
                     //sign1=1;
@@ -551,65 +526,23 @@
 
              }
          });
-        }
+            }
+
         function AddQ() {
-            document.getElementById("ItemID").innerText = 0;
-        }
-
-        function updatesubtext(id) {        
-            var H = document.getElementById("Has" + id).innerText;
-            document.getElementById('<%=ItemText.ClientID %>').value = document.getElementById("itemtext1" + id).innerText;
-            document.getElementById('<%=ItemtScore.ClientID %>').value = document.getElementById("Score1" + id).innerText;
-            if (H == 0) {
-                document.getElementById("Has0").checked = true;
-            }
-            else {
-                document.getElementById("Has1").checked = true;
-            }
-            document.getElementById("ItemID").innerText = id;
-
-        }
-
-
-        function Sure2(e) {       //  确认按钮触发
-            var iid = document.getElementById("ItemID").innerText;
-            var itemt = document.getElementById('<%=ItemText.ClientID %>').value;
-            var s = document.getElementById('<%=ItemtScore.ClientID %>').value;
             var guid = document.getElementById('<%=QGUID.ClientID %>').innerText;
-            var HasTB = 0;
-            if (document.getElementById("Has1").checked == true) {
-                HasTB = 1;
-            }
-            if (iid == 0) {
-                $.ajax({
-                    type: "post",
-                    url: "QuestionAdd_WebService.asmx/AddQItem", //服务端处理程序   
-                    data: { id: iid, itemtext: itemt, score: s,  Qguid: guid, Has: HasTB },
-                    success: function (msg) {
-                        document.getElementById('<%=Add.ClientID %>').click();
-                    },
-                    error: function (msg) {
-                        alert("添加失败!");
-                    }
-                });
-
+            $.ajax({
+                type: "post",
+                url: "QuestionAdd_WebService.asmx/AddQItem", //服务端处理程序   
+                data: { QGUID:guid },
+                success: function (msg) {
+                    document.getElementById('<%=aBt.ClientID %>').click();
+                },
+                error: function (msg) {
+                    alert("添加失败!");
                 }
-                else {
-                    $.ajax({
-                        type: "post",
-                        url: "QuestionAdd_WebService.asmx/UpdateQItem", //服务端处理程序   
-                        data: { id: iid, itemtext: itemt, score: s, Has: HasTB },
-                        success: function (msg) {
-                            document.getElementById("ItemID").innerText = 0;
-                            document.getElementById('<%=Add.ClientID %>').click();
-                    },
-                    error: function (msg) {
-                        alert("更新失败!");
-                    }
-                });
-            }
-
+            });
         }
+
 
         function deleteitem(e) {       //  删除按钮触发
             var guid = e.getAttribute("data-guid");
@@ -621,7 +554,7 @@
                     url: "QuestionAdd_WebService.asmx/DeleteQItem", //服务端处理程序   
                     data: { id: iid, QGUID: guid},
                     success: function (msg) {
-                        document.getElementById('<%=Add.ClientID %>').click();
+                        document.getElementById('<%=aBt.ClientID %>').click();
                     },
                     error: function (msg) {
                         alert("操作失败!");
@@ -631,6 +564,49 @@
                 });
                 return true;
            
+        }
+
+        var UpdataItem = function () {
+            var list = $("#OrderList1");
+            var old_order = [];
+            var new_id = [];
+            list.children(".modules").each(function () {
+                if (this.getAttribute("data-id") != null) {
+                    new_id.push(this.getAttribute("data-id"));
+                }
+
+            });
+            var newid = new_id.join(',');
+            var k = new_id.length;
+            var name = "";
+            var score = "";
+            var jump = "";
+            var Has="";
+            for (var i = 0; i < k; i++) {
+                name += document.getElementById("itemtext2" + new_id[i]).value + ",";
+                 score += document.getElementById("Score2" + new_id[i]).value + ",";
+                 jump += document.getElementById("Jump" + new_id[i]).value + ",";
+                
+                 if (document.getElementById("checkbox" + new_id[i]).checked == true) {
+                     Has += 1 + ",";
+                 }
+                 else { Has += 0 + ","; }
+            }
+
+            $.ajax({
+                type: "post",
+                url: "QuestionAdd_WebService.asmx/UpdateQItem", //服务端处理程序   
+                data: { id: newid, itemtext: name, itemscore: score, itemHas: Has },   //id:新的排列对应的ID,order：原排列顺序   
+                success: function (msg) {
+                    document.getElementById('<%=aBt.ClientID %>').click();
+
+                },
+                error: function (msg) {
+                    alert("操作失败!");
+
+                }
+            });
+          
         }
 
 
@@ -663,7 +639,7 @@
                     url: "QuestionAdd_WebService.asmx/UpdateItemOrder", //服务端处理程序   
                     data: { id: newid, order: oldid },   //id:新的排列对应的ID,order：原排列顺序   
                     success: function (msg) {
-                        document.getElementById('<%=Add.ClientID %>').click();
+                        document.getElementById('<%=aBt.ClientID %>').click();
 
                     },
                     error: function (msg) {
@@ -704,7 +680,7 @@
                     url: "QuestionAdd_WebService.asmx/UpdateItemOrder", //服务端处理程序   
                     data: { id: newid, order: oldid },   //id:新的排列对应的ID,order：原排列顺序   
                     success: function (msg) {
-                        document.getElementById('<%=Add.ClientID %>').click();
+                        document.getElementById('<%=aBt.ClientID %>').click();
                     },
                     error: function (msg) {
                         alert("操作失败!");

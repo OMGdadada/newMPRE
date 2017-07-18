@@ -245,7 +245,7 @@ public class QuestionAdd_WebService : System.Web.Services.WebService {
     /// 试题选项插入
     /// </summary>     
     [WebMethod]
-    public string AddQItem(string Qguid, string itemtext, string score,  string Has)
+    public string AddQItem(string Qguid)
     {
         int i = 0;
         string MaxSerial0 = "0";
@@ -271,10 +271,10 @@ public class QuestionAdd_WebService : System.Web.Services.WebService {
             sb.Append(" values ( @QuestionGUID,@ItemText,@Serial,@Score,@HasTextBox) ");
             SqlCommand cmd = new SqlCommand(sb.ToString(), conn);
             cmd.Parameters.AddWithValue("@QuestionGUID", Qguid);
-            cmd.Parameters.AddWithValue("@ItemText", itemtext);
-            cmd.Parameters.AddWithValue("@Score", score);
+            cmd.Parameters.AddWithValue("@ItemText", "选项" + MaxSerial);
+            cmd.Parameters.AddWithValue("@Score", 1);
             cmd.Parameters.AddWithValue("@Serial", MaxSerial);
-            cmd.Parameters.AddWithValue("@HasTextBox", Has);
+            cmd.Parameters.AddWithValue("@HasTextBox", 0);
             conn.Open();
             i = cmd.ExecuteNonQuery();
             cmd.Dispose();
@@ -330,24 +330,58 @@ public class QuestionAdd_WebService : System.Web.Services.WebService {
     /// 更新试题选项
     /// </summary>     
   [WebMethod]
-    public string UpdateQItem(string id, string itemtext, string score, string Has)
+    public string UpdateQItem(string id, string itemtext, string itemscore, string itemHas)
     {
-        int i = 0;
-        using (SqlConnection conn = new DB().GetConnection())
+       // int i = 0;
+        string[] ids = id.Split(',');
+        string[] itemtexts = itemtext.Split(',');
+        string[] itemscores = itemscore.Split(',');
+        string[] itemHass = itemHas.Split(',');
+        int flag = 0;
+        string sql = "";
+        for (int i = 0; i < ids.Length; i++)
         {
-            StringBuilder sb = new StringBuilder("Update QuestionItem set ItemText=@ItemText, Score=@Score, HasTextBox=@HasTextBox where ID=@ID ");
-            SqlCommand cmd = new SqlCommand(sb.ToString(), conn);
-            cmd.Parameters.AddWithValue("@ItemText", itemtext);
-            cmd.Parameters.AddWithValue("@Score", score);
-            cmd.Parameters.AddWithValue("@HasTextBox", Has);
-            cmd.Parameters.AddWithValue("@ID", id);
-            conn.Open();
-            i = cmd.ExecuteNonQuery();
-            cmd.Dispose();
-            conn.Close();
+            for (int j = 0; j < itemtexts.Length; j++)
+            {
+                if (i == j)
+                {
+                    sql += "update QuestionItem set ItemText='" + itemtexts[j] + " ', Score=" + itemscores[j] + ", HasTextBox=" + itemHass[j] + " where ID='" + ids[i] + "';";
+                    flag = 1;
+                }
+            }
         }
-        if (i == 1) return "1";
-        else return "";
+        if (flag == 1)
+        {
+            using (SqlConnection conn = new DB().GetConnection())
+            {
+                SqlCommand cmd = conn.CreateCommand();
+                cmd.CommandText = sql;
+                conn.Open();
+                cmd.ExecuteNonQuery();
+                cmd.Dispose();
+                conn.Close();
+            }
+            return "Success!";
+        }
+        else
+        {
+            return "Failure!";
+        }
+        //using (SqlConnection conn = new DB().GetConnection())
+        //{
+        //    StringBuilder sb = new StringBuilder("Update QuestionItem set ItemText=@ItemText, Score=@Score, HasTextBox=@HasTextBox where ID=@ID ");
+        //    SqlCommand cmd = new SqlCommand(sb.ToString(), conn);
+        //    cmd.Parameters.AddWithValue("@ItemText", itemtext);
+        //    cmd.Parameters.AddWithValue("@Score", itemscore);
+        //    cmd.Parameters.AddWithValue("@HasTextBox", itemHas);
+        //    cmd.Parameters.AddWithValue("@ID", id);
+        //    conn.Open();
+        //    i = cmd.ExecuteNonQuery();
+        //    cmd.Dispose();
+        //    conn.Close();
+        //}
+        //if (i == 1) return "1";
+        //else return "";
     }
   /// <summary>  
   /// 删除试题选项

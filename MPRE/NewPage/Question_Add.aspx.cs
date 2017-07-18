@@ -95,17 +95,11 @@ public partial class NewPage_Question_Add : System.Web.UI.Page
     protected void readbtn_Click(object sender, EventArgs e)
     {
         ItemData();
-        Repeater2.Visible = true;     
-      
-    }
-
-    protected void Add_Click(object sender, EventArgs e)
-    { 
-        ItemData();
         Repeater2.Visible = true;
-       
-
+  
     }
+
+   
     protected void Sure_Click(object sender, EventArgs e)
     {
         MyDataBind();
@@ -150,6 +144,24 @@ public partial class NewPage_Question_Add : System.Web.UI.Page
         string[] ItemScore1;
         string[] ItemOrder1 ;
 
+        string MaxSerial0="0";
+        using (SqlConnection conn = new DB().GetConnection())
+        {
+            string sql1 = "select  count(*) as Max from QuestionItem where  QuestionGUID=@QuestionGUID ";
+            SqlCommand cmd = new SqlCommand(sql1, conn);
+            cmd.Parameters.AddWithValue("@QuestionGUID", ita_hidf.Value.ToString());
+            conn.Open();
+            SqlDataReader rd = cmd.ExecuteReader();
+            if (rd.Read())
+            {
+                MaxSerial0 = rd["Max"].ToString();
+            }
+            rd.Close();
+        }
+
+        int MaxSerial = Convert.ToInt16(MaxSerial0) + 1;
+
+
         using (SqlConnection conn = new DB().GetConnection())
         {
             string sql = "select * from [QuestionItemList] where TagID=@TagID  order by Serial ";
@@ -170,6 +182,7 @@ public partial class NewPage_Question_Add : System.Web.UI.Page
             ItemScore1 = ItemScore.Split(',');
             ItemOrder1 = ItemOrder.Split(',');
 
+
        
             using (SqlConnection conn1 = new DB().GetConnection())
             {   conn1.Open();
@@ -181,7 +194,7 @@ public partial class NewPage_Question_Add : System.Web.UI.Page
                     //  cmd2.CommandText = "insert into QuestionItem (QuestionGUID,ItemText,Serial,Score,HasTextBox) values (@QuestionGUID,@ItemText,@Serial,@Score,@HasTextBox)";
                     cmd2.Parameters.AddWithValue("@QuestionGUID", ita_hidf.Value.ToString());
                     cmd2.Parameters.AddWithValue("@ItemText", ItemName1[j]);
-                    cmd2.Parameters.AddWithValue("@Serial", ItemOrder1[j]);
+                    cmd2.Parameters.AddWithValue("@Serial", MaxSerial+j);
                     cmd2.Parameters.AddWithValue("@Score",  ItemScore1[j]);
                     cmd2.Parameters.AddWithValue("@HasTextBox", "0");  
                     cmd2.ExecuteNonQuery();
@@ -200,5 +213,14 @@ public partial class NewPage_Question_Add : System.Web.UI.Page
         ItemDataBindList();
         ItemData();
         Repeater2.Visible = true;
+    }
+    protected void Question_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("Question_Add.aspx?TestGUID=" + Request.QueryString["TestGUID"].ToString());
+
+    }
+    protected void Report_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("ReportCustomize.aspx?TestGUID=" + Request.QueryString["TestGUID"].ToString());
     }
 }

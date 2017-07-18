@@ -30,8 +30,7 @@
                                         <asp:ListItem Value=" [Num1]">搜索门诊号</asp:ListItem>                         
                                     </asp:DropDownList>--%>
                                     &nbsp;&nbsp;
-                                    <asp:Button ID="SearchBtn" runat="server" Text="搜索" class="btn btn-info"
-                                     />&nbsp;&nbsp;
+                                    <asp:Button ID="SearchBtn" runat="server" Text="搜索" class="btn btn-info" OnClick="SearchBtn_Click"  />&nbsp;&nbsp;
 
                                        <asp:DropDownList ID="DDLTest" runat="server" OnSelectedIndexChanged="DDLTest_SelectedIndexChanged" AutoPostBack="True">
                                                                                <asp:ListItem Value="-1">总量表</asp:ListItem>
