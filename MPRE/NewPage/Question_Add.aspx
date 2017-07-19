@@ -89,15 +89,11 @@
                                                 <div class="Div2" style="clear: both; width: 10%;">
                                                     <p><%#Eval("Serial") %>. </p>
                                                 </div>
-                                                <div class="Div2" style="width: 50%;">                
-                                                                                   
+                                                <div class="Div2" style="width: 50%;">                                              
                                                         <a ID="LinkButton1" class="Read" onclick="a(this)"  data-guid="<%#Eval("GUID")%>"  style="overflow: hidden; cursor:pointer; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; text-align: left; color: #22aff7;"><%# ReturninnerText(Eval("QuestionText").ToString()) %></a>
-                                                       
-                                            
                                                 </div>
                                                 <div class="Div2" style="width: 15%;">
                                                       <p><%# Eval("Weight") %></p>
-                                                
                                                 </div>
                                                 <div class="Div2" style="width: 25%; letter-spacing:5px; text-align:center;">
                                                     <a href="#" id="<%#"Qcancel"+Eval("ID") %>" onclick="Qcancel(this)"  data-id='<%#Eval("ID") %>' data-qguid='<%#Eval("GUID") %>' data-guid='<%#Eval("TestGUID") %>' title="删除" class="subitem_update2"><i  class="glyphicon glyphicon-remove"></i></a>
@@ -150,6 +146,7 @@
                                                     <span>
                                                         <input type="radio" id="radio2" name="QType" value="2" />多选</span>
 
+                                                    
                                                 </th>
                                             </tr>
 
@@ -162,7 +159,6 @@
                                             <tr>
                                                 <th class="Left">选项</th>
                                                 <th colspan="3">
-                                                 
                                                     <div>
                                                     <asp:UpdatePanel ID="UpdatePanel5" runat="server">
                                                         <ContentTemplate>
@@ -185,9 +181,9 @@
                                                                     <div id="<%#"subitem"+Eval("ID") %>">
                                                                         <div  style="float: left; width: 80%;">
                                                                         <div style="float: left; width:5%; text-align:center; margin-top:8px;"><span  id="<%#"order1"+Eval("ID") %>"><%# Eval("Serial") %> </span>.  </div>                                                                 
-                                                                        <div style="float: left; width:35%;text-align:center; margin-top:8px;"><input style="width:80%;" id="<%#"itemtext2"+Eval("ID") %>" type="text" value="<%# Eval("ItemText") %>" /></div> 
+                                                                        <div style="float: left; width:35%;text-align:center; margin-top:8px;"><input style="width:80%;" id="<%#"itemtext2"+Eval("ID") %>" type="text" value="<%# Eval("ItemText").ToString().Trim() %>" /></div> 
                                                                        <div style="float: left; width:20%; text-align:center; margin-top:8px;"><input style="width:40px;"  id="<%#"Score2"+Eval("ID") %>" type="text" value="<%# Eval("Score") %>" /></div> 
-                                                                       <div style="float: left; width:20%; text-align:center; margin-top:8px;"><input style="width:40px;" id="<%#"Jump"+Eval("ID") %>"  type="text" value="<%# Eval("ID") %>" /></div>
+                                                                       <div style="float: left; width:20%; text-align:center; margin-top:8px;"><input style="width:40px;" id="<%#"Jump"+Eval("ID") %>" type="text" value="<%# Eval("Jump") %>" /></div>
                                                                        <div  style="float: left; width:20%; text-align:center; margin-top:8px;"><input id="<%#"checkbox"+Eval("ID") %>" type="checkbox" name="HasTextBox1" <%#(Eval("HasTextBox").ToString()=="True"?"checked='checked'":"" ) %> /></span>  </div> 
                                                                        </div>
                                                                         <div style="float: left; width: 20%; text-align: center; letter-spacing:2px; margin-top:8px;">
@@ -204,9 +200,11 @@
                                                                 </ul>
                                                         </ContentTemplate>
                                                     </asp:UpdatePanel>
-
+                                                        
+                                                        <br style="clear: both; " />
+                                                    <div runat="server"  id="errortext" style="color:red;  zoom: 0.7; margin-top:10px;">*提示：如需跳转，跳转题号必须大于本题题号<span id="QServial"></span>, 0 默认跳到下一题；</div>
                                                     </div>
-                                                    <div style="clear: both; zoom: 0.7; margin-top:15px; color:blue;">
+                                                    <div style=" zoom: 0.9; margin-top:10px; color:blue;">
                                                         <span style="cursor: pointer;"  onclick="AddQ()"><i class="glyphicon glyphicon-plus-sign"></i> &nbsp;添加选项</span> &nbsp; &nbsp;
                                                         <span style="cursor: pointer;" data-dismiss="modal" data-toggle="modal" data-target="#myModal4" ><i class="glyphicon glyphicon-check"></i> &nbsp;批量添加选项</span>
                                                     </div>
@@ -356,6 +354,7 @@
             }
         })(jQuery)
 
+
         function a(e) {
             var guid = e.getAttribute("data-guid");
             $.ajax({
@@ -368,6 +367,7 @@
                 document.getElementById('<%=QTypeValue.ClientID %>').innerText = $(ds).find("QuestionType").text();
                 document.getElementsByTagName("iframe")[0].contentWindow.document.body.innerHTML = $(ds).find("QuestionText").text();
                 document.getElementById("radio" + $(ds).find("QuestionType").text()).checked = true;
+                document.getElementById("QServial").innerText = $(ds).find("Serial").text();
                 console.log('查找item成功');
             },
                 error: function () {
@@ -499,6 +499,7 @@
             var Qtype = document.getElementById('<%=QTypeValue.ClientID %>').innerHTML;
             var str = Text.split("");
             Text = str.join("6");
+           
 
             $.ajax({
                 type: "post",
@@ -596,7 +597,7 @@
             $.ajax({
                 type: "post",
                 url: "QuestionAdd_WebService.asmx/UpdateQItem", //服务端处理程序   
-                data: { id: newid, itemtext: name, itemscore: score, itemHas: Has },   //id:新的排列对应的ID,order：原排列顺序   
+                data: { id: newid, itemtext: name, itemscore: score, itemHas: Has, itemjump:jump },   //id:新的排列对应的ID,order：原排列顺序   
                 success: function (msg) {
                     document.getElementById('<%=aBt.ClientID %>').click();
 

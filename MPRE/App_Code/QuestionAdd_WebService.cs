@@ -267,14 +267,15 @@ public class QuestionAdd_WebService : System.Web.Services.WebService {
 
         using (SqlConnection conn = new DB().GetConnection())
         {
-            StringBuilder sb = new StringBuilder("insert into QuestionItem(QuestionGUID,ItemText,Serial,Score,HasTextBox)");
-            sb.Append(" values ( @QuestionGUID,@ItemText,@Serial,@Score,@HasTextBox) ");
+            StringBuilder sb = new StringBuilder("insert into QuestionItem(QuestionGUID,ItemText,Serial,Score,HasTextBox,Jump)");
+            sb.Append(" values ( @QuestionGUID,@ItemText,@Serial,@Score,@HasTextBox,@Jump) ");
             SqlCommand cmd = new SqlCommand(sb.ToString(), conn);
             cmd.Parameters.AddWithValue("@QuestionGUID", Qguid);
             cmd.Parameters.AddWithValue("@ItemText", "选项" + MaxSerial);
             cmd.Parameters.AddWithValue("@Score", 1);
             cmd.Parameters.AddWithValue("@Serial", MaxSerial);
             cmd.Parameters.AddWithValue("@HasTextBox", 0);
+            cmd.Parameters.AddWithValue("@Jump", 0);
             conn.Open();
             i = cmd.ExecuteNonQuery();
             cmd.Dispose();
@@ -330,13 +331,14 @@ public class QuestionAdd_WebService : System.Web.Services.WebService {
     /// 更新试题选项
     /// </summary>     
   [WebMethod]
-    public string UpdateQItem(string id, string itemtext, string itemscore, string itemHas)
+    public string UpdateQItem(string id, string itemtext, string itemscore, string itemHas, string itemjump)
     {
        // int i = 0;
         string[] ids = id.Split(',');
         string[] itemtexts = itemtext.Split(',');
         string[] itemscores = itemscore.Split(',');
         string[] itemHass = itemHas.Split(',');
+        string[] itemjumps = itemjump.Split(',');
         int flag = 0;
         string sql = "";
         for (int i = 0; i < ids.Length; i++)
@@ -345,7 +347,7 @@ public class QuestionAdd_WebService : System.Web.Services.WebService {
             {
                 if (i == j)
                 {
-                    sql += "update QuestionItem set ItemText='" + itemtexts[j] + " ', Score=" + itemscores[j] + ", HasTextBox=" + itemHass[j] + " where ID='" + ids[i] + "';";
+                    sql += "update QuestionItem set ItemText='" + itemtexts[j] + " ', Score=" + itemscores[j] + ", HasTextBox=" + itemHass[j] + ", Jump=" + itemjumps[j] + " where ID='" + ids[i] + "';";
                     flag = 1;
                 }
             }

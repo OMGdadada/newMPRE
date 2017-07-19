@@ -27,6 +27,7 @@ public partial class NewPage_Question_Add : System.Web.UI.Page
                 {
                     MyDataBind();
                     ItemDataBind();
+                    ItemData();
                   
                 }
             }
@@ -95,15 +96,12 @@ public partial class NewPage_Question_Add : System.Web.UI.Page
     protected void readbtn_Click(object sender, EventArgs e)
     {
         ItemData();
-        Repeater2.Visible = true;
-  
     }
 
    
     protected void Sure_Click(object sender, EventArgs e)
     {
         MyDataBind();
-        Repeater2.Visible = false;
     }
 
     public string ReturninnerText(string str)
@@ -188,15 +186,16 @@ public partial class NewPage_Question_Add : System.Web.UI.Page
             {   conn1.Open();
                 for (int j = 0; j < ItemName1.Length-1 ; j++)
                 {
-                    StringBuilder sb = new StringBuilder("insert into QuestionItem(QuestionGUID,ItemText,Serial,Score,HasTextBox )");
-                    sb.Append(" values ( @QuestionGUID,@ItemText,@Serial,@Score,@HasTextBox) ");
+                    StringBuilder sb = new StringBuilder("insert into QuestionItem(QuestionGUID,ItemText,Serial,Score,HasTextBox,Jump)");
+                    sb.Append(" values ( @QuestionGUID,@ItemText,@Serial,@Score,@HasTextBox,@Jump) ");
                     SqlCommand cmd2 = new SqlCommand(sb.ToString(), conn1);
                     //  cmd2.CommandText = "insert into QuestionItem (QuestionGUID,ItemText,Serial,Score,HasTextBox) values (@QuestionGUID,@ItemText,@Serial,@Score,@HasTextBox)";
                     cmd2.Parameters.AddWithValue("@QuestionGUID", ita_hidf.Value.ToString());
                     cmd2.Parameters.AddWithValue("@ItemText", ItemName1[j]);
                     cmd2.Parameters.AddWithValue("@Serial", MaxSerial+j);
                     cmd2.Parameters.AddWithValue("@Score",  ItemScore1[j]);
-                    cmd2.Parameters.AddWithValue("@HasTextBox", "0");  
+                    cmd2.Parameters.AddWithValue("@HasTextBox", "0");
+                    cmd2.Parameters.AddWithValue("@Jump", 0);  
                     cmd2.ExecuteNonQuery();
 
 
@@ -212,7 +211,7 @@ public partial class NewPage_Question_Add : System.Web.UI.Page
     {
         ItemDataBindList();
         ItemData();
-        Repeater2.Visible = true;
+        
     }
     protected void Question_Click(object sender, EventArgs e)
     {
