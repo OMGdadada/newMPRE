@@ -369,21 +369,7 @@ public class QuestionAdd_WebService : System.Web.Services.WebService {
         {
             return "Failure!";
         }
-        //using (SqlConnection conn = new DB().GetConnection())
-        //{
-        //    StringBuilder sb = new StringBuilder("Update QuestionItem set ItemText=@ItemText, Score=@Score, HasTextBox=@HasTextBox where ID=@ID ");
-        //    SqlCommand cmd = new SqlCommand(sb.ToString(), conn);
-        //    cmd.Parameters.AddWithValue("@ItemText", itemtext);
-        //    cmd.Parameters.AddWithValue("@Score", itemscore);
-        //    cmd.Parameters.AddWithValue("@HasTextBox", itemHas);
-        //    cmd.Parameters.AddWithValue("@ID", id);
-        //    conn.Open();
-        //    i = cmd.ExecuteNonQuery();
-        //    cmd.Dispose();
-        //    conn.Close();
-        //}
-        //if (i == 1) return "1";
-        //else return "";
+       
     }
   /// <summary>  
   /// 删除试题选项
@@ -440,5 +426,195 @@ public class QuestionAdd_WebService : System.Web.Services.WebService {
       if (i == 1) return "1";
       else return "";
   }
+
+   [WebMethod(EnableSession = true)]
+  public string ReportList(string QGUID)
+  {
+      string ListNum = "";
+      string[] ListNums;
+      string[] ListNums0;
+      string ListItem = "[";
+      string str1 = "[";
+     
+      using (SqlConnection conn = new DB().GetConnection())
+      {
+          StringBuilder sb = new StringBuilder("select DISTINCT [ListNumber] from [ReportText] where QGUID='" + QGUID + "' order by ListNumber asc");
+          SqlCommand cmd = new SqlCommand(sb.ToString(), conn);
+          conn.Open();
+          SqlDataReader rd = cmd.ExecuteReader();
+          while (rd.Read()){
+              ListNum += rd["ListNumber"].ToString()+",";
+
+          }
+          rd.Close();
+          ListNums = ListNum.Split(',');
+          ListNums0 = ListNum.Split(',');
+     
+          using (SqlConnection conn1 = new DB().GetConnection())
+          {
+              SqlCommand cmd2 = conn.CreateCommand();
+              for (int i = 0; i < ListNums.Length-1; i++)
+              {
+                  cmd2.CommandText = "select * from [ReportText] where  ListNumber='" + ListNums[i] + "' and  QGUID='" + QGUID + "'order by Serial asc";
+                  rd = cmd2.ExecuteReader();
+                  while (rd.Read()) {
+                      str1 += "{\"Content\":\"" + rd["Content"].ToString() + "\",\"ID\":\"" + rd["ID"].ToString() + "\"},";
+                  }
+                  rd.Close();
+                  str1 = str1.Substring(0, str1.Length - 1);
+                  str1 = str1 + "]";
+                  ListNums0[i] = str1;
+                  str1 = "[";
+              }
+
+              for (int j = 0; j < ListNums.Length - 1; j++) {
+                  ListItem += "{\"ItemListNumb\":" + ListNums0[j] + ", \"ItemListNumbID\":  \"" + ListNums[j] + " \"},";
+                 
+              }
+           ListItem = ListItem.Substring(0, ListItem.Length - 1);
+                  ListItem = ListItem + "]";
+          }
+
+
+          return ListItem;
+      }
+
+      
+      
+  }
+
+   [WebMethod]
+   public string AddReportList(string Sum, string QGUID)
+   {
+       int i = 0;
+       int k = Convert.ToInt16(Sum);
+       int a = 1;
+       string list="";
+       int ListMax = 0;
+       using (SqlConnection conn = new DB().GetConnection())
+       {
+          
+               string sql = "select COUNT(distinct(ListNumber)) as sum  from [ReportText] where QGUID='" + QGUID +"'";
+               SqlCommand cmd = new SqlCommand(sql, conn);
+               conn.Open();
+               SqlDataReader rd = cmd.ExecuteReader();
+               if (rd.Read()) {
+                   list = rd["sum"].ToString();
+               }
+               rd.Close();
+
+               ListMax = Convert.ToInt16(list) + 1;
+               
+       }
+
+
+       using (SqlConnection conn = new DB().GetConnection())
+       {   conn.Open();
+           for (int j = 0; j < k; j++)
+           {
+               StringBuilder sb = new StringBuilder("insert into ReportText(QGUID,Content,Serial,ListNumber)");
+               sb.Append(" values ( @QGUID,@Content,@Serial,@ListNumber) ");
+               SqlCommand cmd = new SqlCommand(sb.ToString(), conn);
+               cmd.Parameters.AddWithValue("@QGUID", QGUID);
+               cmd.Parameters.AddWithValue("@Content", "Text"); 
+               cmd.Parameters.AddWithValue("@Serial", a);
+               cmd.Parameters.AddWithValue("@ListNumber", ListMax);
+               i = cmd.ExecuteNonQuery();
+               a = a + 1;
+           }
+         conn.Close();
+       }
+       if (i == 1) return "1";
+       else return "";
+   }
+
+   [WebMethod]
+   public string DelReportList(string ListNum, string QGUID)
+   {
+       int i = 0;
+       string list = "";
+       int ListMax = 0;
+       int newlist = 0;
+       using (SqlConnection conn = new DB().GetConnection())
+       {
+           StringBuilder sb = new StringBuilder("Delete from ReportText where ListNumber=@ListNumber and QGUID=@QGUID ");
+           SqlCommand cmd = new SqlCommand(sb.ToString(), conn);
+           cmd.Parameters.AddWithValue("@ListNumber", ListNum);
+           cmd.Parameters.AddWithValue("@QGUID", QGUID);
+           conn.Open();
+          i= cmd.ExecuteNonQuery();
+           cmd.Dispose();
+       }
+
+       
+       using (SqlConnection conn = new DB().GetConnection())
+       {
+
+           string sql = "select COUNT(distinct(ListNumber)) as sum  from [ReportText] where QGUID='" + QGUID + "'";
+           SqlCommand cmd = new SqlCommand(sql, conn);
+           conn.Open();
+           SqlDataReader rd = cmd.ExecuteReader();
+           if (rd.Read())
+           {
+               list = rd["sum"].ToString();
+           }
+           rd.Close();
+
+           ListMax = Convert.ToInt16(list)+1;
+
+           for (int j = Convert.ToInt16(ListNum); j < ListMax; j++) {
+               newlist = j + 1;
+               cmd.CommandText = "update ReportText set ListNumber='" + j + "' where ListNumber='" + newlist + "' and QGUID='" + QGUID + "'";
+               //cmd.Parameters.AddWithValue("@ListNumberNew", j);
+               //cmd.Parameters.AddWithValue("@ListNumberOld", j+1);
+               //cmd.Parameters.AddWithValue("@QGUID1", QGUID);
+                cmd.ExecuteNonQuery(); 
+               
+           }
+
+       }
+
+
+       if (i == 1) return ListMax.ToString();
+       else return ListMax.ToString();
+   }
+
+   /// <summary>  
+   /// 选项重新更新顺序  
+   /// </summary>  
+   /// <param name="id"></param>  
+   /// <param name="order"></param>  
+   [WebMethod]
+   public string UpdateReportList(string ID, string Content)
+   {
+
+       string[] deptIds = ID.Split(',');
+       string[] NewContent = Content.Split(',');
+       int flag = 0;
+       string sql = "";
+       for (int i = 0; i < deptIds.Length; i++)
+       {
+           sql += "update ReportText set Content= '" + NewContent[i] + "' where ID='" + deptIds[i] + "';";
+           flag = 1;
+
+       }
+       if (flag == 1)
+       {
+           using (SqlConnection conn = new DB().GetConnection())
+           {
+               SqlCommand cmd = conn.CreateCommand();
+               cmd.CommandText = sql;
+               conn.Open();
+               cmd.ExecuteNonQuery();
+               cmd.Dispose();
+               conn.Close();
+           }
+           return "Success!";
+       }
+       else
+       {
+           return "Failure!";
+       }
+   }
 
 }

@@ -238,7 +238,7 @@
 
     <%--批量添加选项--%>
     <div class="modal fade" id="myModal4" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-        <div class="modal-dialog" role="document" style="width: 548px; height: 428px; zoom: 0.7;">
+        <div class="modal-dialog" role="document" style="width: 800px; height: 428px; zoom: 0.7;">
             <div class="modal-content" style="margin-top: 10%;">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" data-toggle="modal" data-target="#myModal"><span aria-hidden="true">&times;</span></button>
@@ -256,7 +256,7 @@
                     </div>
 
                     <div style="float: right; width: 25%;">
-                     <h5> <strong> 选项预设</strong></h5> 
+                     <h5> <strong> 选项预设</strong>  <span class="btn btn-default"> 添加</span></h5> 
                         <div  style="float: right;overflow-y:scroll;text-align: center; height: 280px;background-color: #F9F7F7">
                             <asp:UpdatePanel ID="UpdatePanel6" runat="server">
                                 <ContentTemplate>
@@ -267,6 +267,7 @@
                                     </asp:Repeater>
                                 </ContentTemplate>
                             </asp:UpdatePanel>
+                           
 
                         </div>
                     </div>

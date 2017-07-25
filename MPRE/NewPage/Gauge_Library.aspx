@@ -43,7 +43,7 @@
                                    <asp:DropDownList ID="OrderDDL" runat="server"
                                         OnSelectedIndexChanged="OrderDDL_SelectedIndexChanged" AutoPostBack="True">
                                         <asp:ListItem Value=" Order by ID Desc">默认排序</asp:ListItem>
-                                        <asp:ListItem Value=" Order by CDT Desc">最新记录</asp:ListItem>
+                                        <asp:ListItem Value=" Order by Orders Desc">最新记录</asp:ListItem>
                                         <asp:ListItem Value=" Order by Price Asc">价格从低到高</asp:ListItem> 
                                          <asp:ListItem Value=" Order by Price Desc">价格从高到低</asp:ListItem> 
 
