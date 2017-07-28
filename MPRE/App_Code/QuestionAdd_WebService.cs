@@ -616,5 +616,44 @@ public class QuestionAdd_WebService : System.Web.Services.WebService {
            return "Failure!";
        }
    }
+   [WebMethod]
+   public string ItemList()
+   {  
+       string str1 = "[";
+       int num = 1;
+       using (SqlConnection conn = new DB().GetConnection())
+       {
+           SqlCommand cmd = conn.CreateCommand();
+           cmd.CommandText = "select DISTINCT TagID,TagName from [QuestionItemList]";
+           conn.Open();
+           SqlDataReader rd = cmd.ExecuteReader();
+           while (rd.Read())
+           {
+               str1 += "{\"TagName\":\"" + rd["TagName"].ToString() + "\",\"TagID\":\"" + rd["TagID"].ToString() + "\",\"num\":\"" + num + "\"},";
+               num += 1;
+           }
+           str1 = str1.Substring(0, str1.Length - 1);
+           str1 = str1 + "]";
 
+       }
+
+       return str1;
+   }
+   [WebMethod]
+   public string ItemListDel(string TagID)
+   {
+       int i = 0;
+       using (SqlConnection conn = new DB().GetConnection())
+       {
+           StringBuilder sb = new StringBuilder("Delete from QuestionItemList where TagID=@ID ");
+           SqlCommand cmd = new SqlCommand(sb.ToString(), conn);
+           cmd.Parameters.AddWithValue("@ID", TagID);
+           conn.Open();
+           i= cmd.ExecuteNonQuery();
+           cmd.Dispose();
+           conn.Close();
+       }
+       if (i == 1) return "1";
+       else return "";
+   }
 }

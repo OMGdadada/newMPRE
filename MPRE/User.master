@@ -403,7 +403,7 @@
 
                             <ul class="submenu">
                                 <li>
-                                    <a href="../NewPage/ItemBank.aspx">
+                                    <a href="../NewPage/Item_List.aspx">
                                         <%--<i class="menu-icon fa fa-plus-square"></i>--%>
                                         <span class="menu-text">试题库维护</span>
                                     </a>
