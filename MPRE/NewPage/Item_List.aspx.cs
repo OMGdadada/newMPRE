@@ -18,40 +18,58 @@ public partial class NewPage_Item_List : System.Web.UI.Page
                 Util.ShowMessage("用户登录超时，请重新登录！", "../Login.aspx");
                 Response.End();
             }
-            else
-            {
-                MyInit();
-               
-            }
+           
 
         }
     }
 
 
-    private void MyInit()
+    protected void Sure_Click(object sender, EventArgs e)
     {
-        string str1 = "[";
-        int num = 1;
+        TagNum.Text = ita_hidf.Value.ToString();
+        ItemData();
+    }
+    protected void SureNew_Click(object sender, EventArgs e)
+    {
+        int k = 0;
         using (SqlConnection conn = new DB().GetConnection())
         {
             SqlCommand cmd = conn.CreateCommand();
-            cmd.CommandText = "select DISTINCT TagID,TagName from [QuestionItemList]";
+            conn.Open();
+            cmd.CommandText = "select top 1* from [QuestionItemList] order by TagID desc";
+            SqlDataReader rd = cmd.ExecuteReader();
+            if (rd.Read())
+            {
+                k = Convert.ToInt16(rd["TagID"].ToString()) + 1;
+            }
+            rd.Close();
+            TagNum.Text = k.ToString();
+        }
+        ItemData();
+        TextBox1.Text = "新标签名";
+    }
+    private void ItemData()
+    {
+        using (SqlConnection conn = new DB().GetConnection())
+        {
+            string sql = "select * from [QuestionItemList] where TagID = @TagID order by Serial asc ";
+            SqlCommand cmd = new SqlCommand(sql, conn);
+            cmd.Parameters.AddWithValue("@TagID", TagNum.Text);
             conn.Open();
             SqlDataReader rd = cmd.ExecuteReader();
-            while (rd.Read())
+            Repeater2.DataSource = rd;
+            Repeater2.DataBind();
+            rd.Close();
+
+            cmd.CommandText = "select DISTINCT [TagName] from [QuestionItemList] where TagID=@TagID";
+
+            rd = cmd.ExecuteReader();
+            if (rd.Read())
             {
-                str1 += "{\"TagName\":\"" + rd["TagName"].ToString() + "\",\"TagID\":\"" + rd["TagID"].ToString() + "\",\"num\":\"" + num + "\"},";
-                num += 1;
+                TextBox1.Text = rd["TagName"].ToString().Trim();
             }
-            str1 = str1.Substring(0, str1.Length - 1);
-            str1 = str1 + "]";
+            rd.Close();
 
         }
-        Label1.Text = str1;
-
     }
-
-
-
-
 }

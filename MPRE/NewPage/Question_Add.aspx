@@ -256,7 +256,7 @@
                     </div>
 
                     <div style="float: right; width: 25%;">
-                     <h5> <strong> 选项预设</strong>  <span class="btn btn-default"> 添加</span></h5> 
+                     <h5> <strong> 选项预设</strong></h5> 
                         <div  style="float: right;overflow-y:scroll;text-align: center; height: 280px;background-color: #F9F7F7">
                             <asp:UpdatePanel ID="UpdatePanel6" runat="server">
                                 <ContentTemplate>

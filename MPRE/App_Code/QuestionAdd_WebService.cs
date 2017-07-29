@@ -656,4 +656,188 @@ public class QuestionAdd_WebService : System.Web.Services.WebService {
        if (i == 1) return "1";
        else return "";
    }
+
+   /// <summary>  
+   /// 批量选项插入
+   /// </summary>     
+   [WebMethod]
+   public string AddItemList(string TagID, string TagName)
+   {
+       int i = 0;
+       string MaxSerial0 = "0";
+       using (SqlConnection conn = new DB().GetConnection())
+       {
+           string sql1 = "select  count(*) as Max from QuestionItemList where  TagID=@TagID ";
+           SqlCommand cmd = new SqlCommand(sql1, conn);
+           cmd.Parameters.AddWithValue("@TagID", TagID);
+           conn.Open();
+           SqlDataReader rd = cmd.ExecuteReader();
+           if (rd.Read())
+           {
+               MaxSerial0 = rd["Max"].ToString();
+           }
+           rd.Close();
+       }
+
+       int MaxSerial = Convert.ToInt16(MaxSerial0) + 1;
+
+       using (SqlConnection conn = new DB().GetConnection())
+       {
+           StringBuilder sb = new StringBuilder("insert into QuestionItemList(TagID,ItemText,Serial,Score,HasTextBox,TagName)");
+           sb.Append(" values ( @TagID,@ItemText,@Serial,@Score,@HasTextBox,@TagName) ");
+           SqlCommand cmd = new SqlCommand(sb.ToString(), conn);
+           cmd.Parameters.AddWithValue("@TagID", TagID);
+           cmd.Parameters.AddWithValue("@ItemText", "选项" + MaxSerial);
+           cmd.Parameters.AddWithValue("@Score", 1);
+           cmd.Parameters.AddWithValue("@Serial", MaxSerial);
+           cmd.Parameters.AddWithValue("@HasTextBox", 0);
+           cmd.Parameters.AddWithValue("@TagName", TagName);
+           conn.Open();
+           i = cmd.ExecuteNonQuery();
+           cmd.Dispose();
+           conn.Close();
+       }
+       if (i == 1) return "1";
+       else return "";
+   }
+
+   /// <summary>  
+   /// 更新试题选项
+   /// </summary>     
+   [WebMethod]
+   public string UpdateItemList(string id, string itemtext, string itemscore, string tagname)
+   {
+       // int i = 0;
+       string[] ids = id.Split(',');
+       string[] itemtexts = itemtext.Split(',');
+       string[] itemscores = itemscore.Split(',');
+       int flag = 0;
+       string sql = "";
+       for (int i = 0; i < ids.Length; i++)
+       {
+           for (int j = 0; j < itemtexts.Length; j++)
+           {
+               if (i == j)
+               {
+                   sql += "update QuestionItemList set ItemText='" + itemtexts[j] + " ', Score=" + itemscores[j] + ", TagName= '" + tagname + "' where ID='" + ids[i] + "';";
+                   flag = 1;
+               }
+           }
+       }
+       if (flag == 1)
+       {
+           using (SqlConnection conn = new DB().GetConnection())
+           {
+               SqlCommand cmd = conn.CreateCommand();
+               cmd.CommandText = sql;
+               conn.Open();
+               cmd.ExecuteNonQuery();
+               cmd.Dispose();
+               conn.Close();
+           }
+           return "Success!";
+       }
+       else
+       {
+           return "Failure!";
+       }
+
+   }
+   /// <summary>  
+   /// 选项重新更新顺序  
+   /// </summary>  
+   /// <param name="id"></param>  
+   /// <param name="order"></param>  
+   [WebMethod]
+   public string UpdateItemListOrder(string id, string order)
+   {
+
+       string[] deptIds = id.Split(',');
+       string[] orders = order.Split(',');
+       int flag = 0;
+       string sql = "";
+       for (int i = 0; i < deptIds.Length; i++)
+       {
+           for (int j = 0; j < orders.Length; j++)
+           {
+               if (i == j)
+               {
+                   sql += "update QuestionItemList set Serial=" + orders[j] + " where ID='" + deptIds[i] + "';";
+                   flag = 1;
+               }
+           }
+       }
+       if (flag == 1)
+       {
+           using (SqlConnection conn = new DB().GetConnection())
+           {
+               SqlCommand cmd = conn.CreateCommand();
+               cmd.CommandText = sql;
+               conn.Open();
+               cmd.ExecuteNonQuery();
+               cmd.Dispose();
+               conn.Close();
+           }
+           return "Success!";
+       }
+       else
+       {
+           return "Failure!";
+       }
+   }
+   /// <summary>  
+   /// 删除试题选项
+   /// </summary>     
+   [WebMethod]
+   public string DeleteItemList(string id, string TagID)
+   {
+       int i = 0;
+       string Qid = "";
+       int k = 0;
+       string[] Qid1;
+
+       using (SqlConnection conn = new DB().GetConnection())
+       {
+           StringBuilder sb = new StringBuilder("Delete from QuestionItemList where ID=@ID ");
+           SqlCommand cmd = new SqlCommand(sb.ToString(), conn);
+           cmd.Parameters.AddWithValue("@ID", id);
+           conn.Open();
+           cmd.ExecuteNonQuery();
+           cmd.Dispose();
+           conn.Close();
+       }
+
+       using (SqlConnection conn = new DB().GetConnection())
+       {
+           SqlCommand cmd = conn.CreateCommand();
+           conn.Open();
+           cmd.CommandText = "select * from QuestionItemList where TagID=@TagID order by Serial";
+           cmd.Parameters.AddWithValue("@TagID", TagID);
+           SqlDataReader rd = cmd.ExecuteReader();
+           while (rd.Read())
+           {
+               Qid += rd["ID"].ToString() + ",";
+
+           }
+           rd.Close();
+
+           Qid1 = Qid.Split(',');
+
+           using (SqlConnection conn1 = new DB().GetConnection())
+           {
+               SqlCommand cmd2 = conn.CreateCommand();
+               for (int j = 0; j < Qid1.Length - 1; j++)
+               {
+                   k = k + 1;
+                   cmd2.CommandText = "update QuestionItemList set Serial = " + k + " where ID ='" + Qid1[j] + "'";
+                   i = cmd2.ExecuteNonQuery();
+                   cmd2.Dispose();
+               }
+           }
+           conn.Close();
+       }
+
+       if (i == 1) return "1";
+       else return "";
+   }
 }
