@@ -7,7 +7,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Script.Serialization;
 using System.Web.Services;
-
+using System.Text;
 
 /// <summary>
 /// Gtest 的摘要说明
@@ -191,6 +191,22 @@ public class Gtest : System.Web.Services.WebService {
 
         return Url;
 
+    }
+        [WebMethod]
+    public string Delete(string ID)
+    {
+        int i= 0;
+        using (SqlConnection conn = new DB().GetConnection())
+        {
+            StringBuilder sb = new StringBuilder("Delete from TestCart where ID="+ ID );
+            SqlCommand cmd = new SqlCommand(sb.ToString(), conn);
+            conn.Open();
+            cmd.ExecuteNonQuery();
+            cmd.Dispose();
+            conn.Close();
+        }
+        if (i == 1) return "1";
+        else return "";
     }
     [WebMethod]
     public string GetPatient(string Tguid)

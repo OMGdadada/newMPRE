@@ -989,7 +989,7 @@
         function StartTest() {
             if (PatientGUID != "" && TestGUID != "") {
 
-                var Tdata = TestGUID;
+                var Tdata = TestGUID.substring(0, TestGUID.length - 1);
                 var Pguid = PatientGUID;
                 var Url = "";
                 $.ajax({
