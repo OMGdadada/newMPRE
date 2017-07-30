@@ -83,24 +83,12 @@
                                         <i class="icon glyphicon glyphicon glyphicon-repeat" style="font-size:18px;"></i>
                                     </a>
                                     </li>
-                                    <li>
-                                        <h4 style="color:white;margin-top:14px;">
-                                            <asp:UpdatePanel ID="UpdatePanel1" runat="server">  
-                                                <ContentTemplate>
-                                                    丨 <i class="fa fa-clock-o"></i>
-                                                    <!--Lable和Timer控件必须都包含在UpdatePanel控件中 -->
-                                                    <asp:Label ID="TimeLabel" runat="server" Text="Label"></asp:Label><!--用于显示时间-->  
-                                                    <asp:Timer ID="Timer1" runat="server" Interval="30000"></asp:Timer><!-- 用于更新时间，每30秒更新一次-->丨
-                                                </ContentTemplate>                  
-                                            </asp:UpdatePanel>
-                                            
-                                        </h4>
-                                    </li>
+                                  
                                     </ul>
                             </div>
                             <div class="setting">
                                 
-                                <a id="btn-log-out" title="退出" href="login.aspx">
+                                <a id="btn-log-out" title="退出" href="../login.aspx">
                                     <i class="icon glyphicon glyphicon-log-out" style="font-size:18px;"></i>
                                 </a>
                             </div>
@@ -405,7 +393,7 @@
                                 <li>
                                     <a href="../NewPage/Item_List.aspx">
                                         <%--<i class="menu-icon fa fa-plus-square"></i>--%>
-                                        <span class="menu-text">试题库维护</span>
+                                        <span class="menu-text">批量选项维护</span>
                                     </a>
                                 </li>
                                 <li>

@@ -41,15 +41,12 @@ public partial class NewPage_Gauge_Library : System.Web.UI.Page
     {
         AspNetPager1.PageSize = Convert.ToInt16(PageSizeDDL.SelectedValue);
         string param = SearchTB.Text;
-        StringBuilder whereStr = new StringBuilder("where 1=1 ");
+        StringBuilder whereStr = new StringBuilder("where Dimension0name=2 ");
         if (!String.IsNullOrEmpty(param))
         {
             whereStr.Append(" and [TestName] like '%").Append(Server.HtmlEncode(param.Trim().Replace("'", ""))).Append("%' ");
         }
-        if (Convert.ToInt16(DDLTest.SelectedValue) > 0)
-        {
-            whereStr.Append(" and Dimension0name = ").Append(DDLTest.SelectedValue);
-        }
+     
 
         string sql = "select count(ID) as total from Test " + whereStr.ToString();
 

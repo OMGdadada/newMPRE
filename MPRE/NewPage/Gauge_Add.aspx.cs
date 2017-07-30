@@ -104,17 +104,7 @@ public partial class NewPage_Gauge_Add : System.Web.UI.Page
                 Price.Text = rd["Price"].ToString();
                 Description.Text = rd["Description"].ToString();
              
-               // string  Dimension1name =rd["Dimension1name"].ToString();
-             //   DDLDimension1name.Items.FindByText(rd["Dimension1name"].ToString().Trim()).Selected = true;
-
-                string Dimension1name = rd["Dimension1name"].ToString().Trim();
-
-                if (DDLDimension1name.Items.FindByText(Dimension1name) != null)
-                {
-                    DDLDimension1name.ClearSelection();
-                    DDLDimension1name.Items.FindByText(Dimension1name).Selected = true;
-                }
-
+    
               
 
                 string IsValid1 = rd["Valid"].ToString();
@@ -139,8 +129,8 @@ public partial class NewPage_Gauge_Add : System.Web.UI.Page
         using (SqlConnection conn = new DB().GetConnection())
         {
 
-            StringBuilder sb = new StringBuilder("insert into Test(TestName,GUID,Orders,Price,Description,IsPageType,Valid,Dimension1name )");
-            sb.Append(" values (@TestName,@GUID,@Orders,@Price,@Description,@IsPageType,@Valid,@Dimension1name ) ");
+            StringBuilder sb = new StringBuilder("insert into Test(TestName,GUID,Orders,Price,Description,IsPageType,Valid,Dimension1name,Dimension0name )");
+            sb.Append(" values (@TestName,@GUID,@Orders,@Price,@Description,@IsPageType,@Valid,@Dimension1name,Dimension0name ) ");
             SqlCommand cmd = new SqlCommand(sb.ToString(), conn);
             cmd.Parameters.AddWithValue("@TestName", TestName.Text);
             cmd.Parameters.AddWithValue("@GUID", GUID.Text);
@@ -149,8 +139,8 @@ public partial class NewPage_Gauge_Add : System.Web.UI.Page
             cmd.Parameters.AddWithValue("@Description", Description.Text);
             cmd.Parameters.AddWithValue("@IsPageType", 1);
             cmd.Parameters.AddWithValue("@Valid", IsValid.SelectedValue);
-            cmd.Parameters.AddWithValue("@Dimension1name", DDLDimension1name.SelectedItem.Text);
-            
+            cmd.Parameters.AddWithValue("@Dimension1name", "心理测评量表");
+              cmd.Parameters.AddWithValue("@Dimension0name", 2);
             conn.Open();
             i = cmd.ExecuteNonQuery();
             conn.Close();
@@ -164,7 +154,7 @@ public partial class NewPage_Gauge_Add : System.Web.UI.Page
         int i = 0;
         using (SqlConnection conn = new DB().GetConnection())
         {
-            StringBuilder sb = new StringBuilder("Update Test set TestName=@TestName,Orders=@Orders,Price=@Price,Description=@Description,IsPageType=@IsPageType,Valid=@Valid,Dimension0name=@Dimension0name,Dimension1name=@Dimension1name where GUID=@GUID ");
+            StringBuilder sb = new StringBuilder("Update Test set TestName=@TestName,Orders=@Orders,Price=@Price,Description=@Description,IsPageType=@IsPageType,Valid=@Valid  where GUID=@GUID ");
             SqlCommand cmd = new SqlCommand(sb.ToString(), conn);
             cmd.Parameters.AddWithValue("@GUID", Request.QueryString["GUID"].ToString());
             cmd.Parameters.AddWithValue("@TestName", TestName.Text);
@@ -173,9 +163,7 @@ public partial class NewPage_Gauge_Add : System.Web.UI.Page
             cmd.Parameters.AddWithValue("@Description", Description.Text);
             cmd.Parameters.AddWithValue("@IsPageType",1);
             cmd.Parameters.AddWithValue("@Valid", IsValid.SelectedValue);
-            cmd.Parameters.AddWithValue("@Dimension1name", DDLDimension1name.SelectedItem.Text);
-            cmd.Parameters.AddWithValue("@Dimension0name", DDLDimension1name.SelectedValue);
-           
+         
             conn.Open();
             i = cmd.ExecuteNonQuery();
         }

@@ -64,10 +64,7 @@
                         <tr>
                             <th id="td1">所属测试：</th>
                             <th id="td2">
-                                  <asp:DropDownList ID="DDLDimension1name" runat="server">
-                                    <asp:ListItem  Value="1" >多维度量表</asp:ListItem>
-                                    <asp:ListItem Value="2" >心理测评量表</asp:ListItem>
-                                </asp:DropDownList>
+                                  心理测评量表
 
                                </th> 
                             <th id="td1">有效性：</th>

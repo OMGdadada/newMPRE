@@ -130,7 +130,7 @@ public partial class Login : System.Web.UI.Page
                         Response.Cookies.Add(cookie);  
                         ErrorLabel.Text = "登录成功！";
                         ErrorLabel.ForeColor = System.Drawing.Color.Green;
-                        Response.Redirect(Server.HtmlEncode("Dashboard.aspx"));
+                        Response.Redirect(Server.HtmlEncode("Index.aspx"));
                     }
                     else
                     {

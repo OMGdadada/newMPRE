@@ -11,7 +11,6 @@ public partial class User : System.Web.UI.MasterPage
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        TimeLabel.Text = DateTime.Now.ToString("HH:mm");
         if (!IsPostBack)
         {
             if (Session["DoctorGUID"] == null)

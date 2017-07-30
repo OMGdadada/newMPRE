@@ -32,18 +32,14 @@
                                     &nbsp;&nbsp;
                                     <asp:Button ID="SearchBtn" runat="server" Text="搜索" class="btn btn-info" OnClick="SearchBtn_Click"  />&nbsp;&nbsp;
 
-                                       <asp:DropDownList ID="DDLTest" runat="server" OnSelectedIndexChanged="DDLTest_SelectedIndexChanged" AutoPostBack="True">
-                                                                               <asp:ListItem Value="-1">总量表</asp:ListItem>
-                                                                            <asp:ListItem Value="1">多维度量表</asp:ListItem>
-                                                                            <asp:ListItem Value="2">心理测评量表</asp:ListItem>    
-                                                                        </asp:DropDownList>
+                                    
     
                           
                                                                     &nbsp;&nbsp;
                                    <asp:DropDownList ID="OrderDDL" runat="server"
                                         OnSelectedIndexChanged="OrderDDL_SelectedIndexChanged" AutoPostBack="True">
-                                        <asp:ListItem Value=" Order by ID Desc">默认排序</asp:ListItem>
-                                        <asp:ListItem Value=" Order by Orders Desc">最新记录</asp:ListItem>
+                                        <asp:ListItem Value=" Order by Orders asc">升序</asp:ListItem>
+                                       <asp:ListItem Value=" Order by Orders Desc">降序</asp:ListItem>
                                         <asp:ListItem Value=" Order by Price Asc">价格从低到高</asp:ListItem> 
                                          <asp:ListItem Value=" Order by Price Desc">价格从高到低</asp:ListItem> 
 
