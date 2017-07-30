@@ -6,6 +6,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Data.SqlClient;
 using System.Text;
+using System.Web.UI.HtmlControls;
 
 public partial class NewPage_Multidimensional_Test : System.Web.UI.Page
 {
@@ -33,14 +34,15 @@ public partial class NewPage_Multidimensional_Test : System.Web.UI.Page
         MyDataBind();
     }
 
-    private void MyDataBind()
+    public void MyDataBind()
     {
         AspNetPager1.PageSize = Convert.ToInt16(PageSizeDDL.SelectedValue);
         string param = SearchTB.Text;
         StringBuilder whereStr = new StringBuilder(" ");
         if (!String.IsNullOrEmpty(param))
         {
-            whereStr.Append(" where " + SearchDDL.SelectedValue + " like '%").Append(Server.HtmlEncode(param.Trim().Replace("'", ""))).Append("%' ");
+          //  whereStr.Append(" where " + SearchDDL.SelectedValue + " like '%").Append(Server.HtmlEncode(param.Trim().Replace("'", ""))).Append("%' ");
+            whereStr.Append(" where PatientName like '%").Append(Server.HtmlEncode(param.Trim().Replace("'", ""))).Append("%' or Num1 like '%").Append(Server.HtmlEncode(param.Trim().Replace("'", ""))).Append("%' ");
         }
         string sql = "select count(ID) as total from Patient " + whereStr.ToString();
 
@@ -84,8 +86,8 @@ public partial class NewPage_Multidimensional_Test : System.Web.UI.Page
             //TestLabel.Text = sql;
             cmd.CommandText = sql;
             rd = cmd.ExecuteReader();
-            GridView1.DataSource = rd;
-            GridView1.DataBind();
+            Repeater2.DataSource = rd;
+            Repeater2.DataBind();
             rd.Close();
         }
     }
@@ -99,10 +101,6 @@ public partial class NewPage_Multidimensional_Test : System.Web.UI.Page
     {
         MyDataBind();
     }
-    protected void SearchDDL_SelectedIndexChanged(object sender, EventArgs e)
-    {
-        MyDataBind();
-    }
 
     protected void SearchBtn_Click(object sender, EventArgs e)
     {
@@ -113,26 +111,10 @@ public partial class NewPage_Multidimensional_Test : System.Web.UI.Page
     {
         Response.Redirect(Server.HtmlEncode("../Patient_Info.aspx"));
     }
-    protected void UpdateBtn_Click(object sender, EventArgs e)
+  
+    public void MyDataBind2()
     {
-        string ids = "";
-        for (int i = 0; i <= GridView1.Rows.Count - 1; i++)
-        {
-            CheckBox checkBox = (CheckBox)GridView1.Rows[i].FindControl("ChechBox1");
-            if (checkBox.Checked == true)
-            {
-                ids = GridView1.DataKeys[i].Value.ToString();
-            }
-        }
-        if (!String.IsNullOrEmpty(ids))
-        {
-            Response.Redirect(Server.HtmlEncode("../Patient_Info.aspx?GUID=" + ids));
-        }
-    }
-
-    private void MyDataBind2()
-    {
-        AspNetPager3.PageSize = Convert.ToInt16(PageSizeText.SelectedValue);
+        AspNetPager3.PageSize = Convert.ToInt16(28);
         string param = SearchText.Text;
         StringBuilder OrderStr = new StringBuilder(" where Dimension0name=1");
         if (!String.IsNullOrEmpty(param))
@@ -158,8 +140,7 @@ public partial class NewPage_Multidimensional_Test : System.Web.UI.Page
             }
             rd.Close();
 
-            Label6.Text = AspNetPager3.RecordCount + "";//总记录数
-            Label7.Text = (AspNetPager3.RecordCount / AspNetPager3.PageSize) + 1 + "";//总页数            
+         
 
             if (AspNetPager3.CurrentPageIndex == 1)
             {
@@ -193,31 +174,13 @@ public partial class NewPage_Multidimensional_Test : System.Web.UI.Page
     {
         MyDataBind2();
     }
-    protected void PageSizeText_SelectedIndexChanged(object sender, EventArgs e)
-    {
-        MyDataBind2();
-    }
+ 
     protected void AspNetPager3_PageChanged(object sender, EventArgs e)
     {
         MyDataBind2();
     }
 
-    protected void StartTest_Click(object sender, EventArgs e)
-    {
-        string Tnum = Label3.Text;
-        string ids = "";
-        for (int i = 0; i <= GridView1.Rows.Count - 1; i++)
-        {
-            CheckBox checkBox = (CheckBox)GridView1.Rows[i].FindControl("ChechBox1");
-            if (checkBox.Checked == true)
-            {
-                ids = GridView1.DataKeys[i].Value.ToString();
-            }
-        }
-        if (!String.IsNullOrEmpty(ids))
-        {
-            Response.Redirect(Server.HtmlEncode("../"+Tnum+".aspx?GUID=" + ids));
-        }
-        
-    }
+  
+ 
+
 }

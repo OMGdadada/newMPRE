@@ -6,38 +6,35 @@
 
     
     <script type="text/javascript">
+        
+            function trigger(e) {
+                $('.panel2').show();
+                $('.trigger2').show();
+                $('.panel1').hide();
+                $('.trigger').hide();
+            }
 
-        function trigger(e) {
-            $('.panel2').show();
-            $('.trigger2').show();
-            $('.panel1').hide();
-            $('.trigger').hide();
-        }
-
-        function trigger2(e) {
-            $('.panel1').show();
-            $('.trigger').show();
-            $('.panel2').hide();
-            $('.trigger2').hide();;
-        }
-    
-
-        function textnumb(num) {
-            document.getElementById("labeltextnum").innerText = num;
-        }
+            function trigger2(e) {
+                $('.panel1').show();
+                $('.trigger').show();
+                $('.panel2').hide();
+                $('.trigger2').hide();;
+            }
+        
             
         </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
+    <script src="../assets/js/vue.js"></script>
     <span id="labeltextnum"> </span>
-    <asp:Label ID="Label3" runat="server"></asp:Label>
-    <div id="overview" class="tab-pane active">
+
+    <div class="tab-pane active">
                                     <div class="row">
                                         <div class="col-xs-12 col-md-12">
                                             <div class="widget" style="margin: 0px;">
                                                 <div class="widget-header bg-blue">
                                                     <i class="widget-icon fa fa-arrow-right"></i>
-                                                    <span class="widget-caption" style="font-size: 15px;"><strong>测试维度</strong></span>
+                                                    <span class="widget-caption" style="font-size: 15px;"><strong>多维度测试</strong></span>
                                                     <span style="margin-right:15px;font-size: 20px;">
                                                      <span class="trigger" onclick="trigger(this)" style="cursor:pointer;"><i class="glyphicon glyphicon-th-large"></i></span>
                                                     <span class="trigger2"  onclick="trigger2(this)" style="display:none; cursor:pointer;"><i class="glyphicon glyphicon-th-list"></i></span>
@@ -51,8 +48,8 @@
                                                          <strong>带<strong style="color: red"> * </strong>号表示该量表为自评量表</strong>
                                                     <h3><strong>功能康复维度</strong> </h3>
                                                     <hr />
-                                                    <div class="row" id="TestRow">
-                                                        <a onclick="TextNum(1)"  data-dismiss="modal" data-toggle="modal" data-target="#myModal4">
+                                                    <div class="row"  >
+                                                        <a  href="../T1.aspx" target="_blank">
                                                             <div class="col-lg-3 col-sm-6 col-xs-12">
 
                                                                 <div class="databox">
@@ -73,10 +70,10 @@
                                                             </div>
                                                         </a>
                                                     </div>
-                                                    <div class="row" id="TestRow">
+                                                    <div class="row"  >
 
                                                         <div class="col-lg-3 col-sm-6 col-xs-12">
-                                                            <a onclick="TextNum(2)"  data-dismiss="modal" data-toggle="modal" data-target="#myModal4">
+                                                            <a  >
                                                                 <div class="databox">
                                                                     <div class="databox-left bg-palegreen">
                                                                         <div class="databox-piechart">
@@ -97,7 +94,7 @@
                                                             </a>
                                                         </div>
                                                         <div class="col-lg-3 col-sm-6 col-xs-12">
-                                                            <a onclick="TextNum(3)"  data-dismiss="modal" data-toggle="modal" data-target="#myModal4">
+                                                            <a  >
                                                                 <div class="databox">
                                                                     <div class="databox-left bg-palegreen">
                                                                         <div class="databox-piechart">
@@ -118,9 +115,9 @@
                                                             </a>
                                                         </div>
                                                     </div>
-                                                    <div class="row" id="TestRow">
+                                                    <div class="row"  >
                                                         <div class="col-lg-3 col-sm-6 col-xs-12">
-                                                            <a onclick="TextNum(4)"  data-dismiss="modal" data-toggle="modal" data-target="#myModal4">
+                                                            <a>
                                                                 <div class="databox">
                                                                     <div class="databox-left bg-azure">
                                                                         <div class="databox-piechart">
@@ -142,7 +139,7 @@
                                                         </div>
 
                                                         <div class="col-lg-3 col-sm-6 col-xs-12">
-                                                            <a onclick="TextNum(5)"  data-dismiss="modal" data-toggle="modal" data-target="#myModal4">
+                                                            <a >
                                                                 <div class="databox">
                                                                     <div class="databox-left bg-azure">
                                                                         <div class="databox-piechart">
@@ -164,7 +161,7 @@
                                                         </div>
 
                                                         <div class="col-lg-3 col-sm-6 col-xs-12">
-                                                            <a onclick="TextNum(6)" data-dismiss="modal" data-toggle="modal" data-target="#myModal4">
+                                                            <a >
                                                                 <div class="databox">
                                                                     <div class="databox-left bg-azure">
                                                                         <div class="databox-piechart">
@@ -186,7 +183,7 @@
                                                         </div>
 
                                                         <div class="col-lg-3 col-sm-6 col-xs-12">
-                                                            <a onclick="TextNum(7)" data-dismiss="modal" data-toggle="modal" data-target="#myModal4">
+                                                            <a >
                                                                 <div class="databox">
                                                                     <div class="databox-left bg-azure">
                                                                         <div class="databox-piechart">
@@ -212,9 +209,9 @@
 
                                                     <h3><strong>躯体维度</strong> </h3>
                                                     <hr />
-                                                    <div class="row" id="TestRow">
+                                                    <div class="row"  >
                                                         <div class="col-lg-3 col-sm-6 col-xs-12">
-                                                            <a onclick="TextNum(8)" data-dismiss="modal" data-toggle="modal" data-target="#myModal4">
+                                                            <a >
                                                                 <div class="databox">
                                                                     <div class="databox-left bg-yellow">
                                                                         <div class="databox-piechart">
@@ -240,9 +237,9 @@
 
                                                     <h3><strong>生命价值和质量维度</strong> </h3>
                                                     <hr />
-                                                    <div class="row" id="TestRow">
+                                                    <div class="row"  >
                                                         <div class="col-lg-3 col-sm-6 col-xs-12">
-                                                            <a onclick="TextNum(9)" data-dismiss="modal" data-toggle="modal" data-target="#myModal4">
+                                                            <a >
                                                                 <div class="databox">
                                                                     <div class="databox-left bg-yellow">
                                                                         <div class="databox-piechart">
@@ -264,9 +261,9 @@
                                                         </div>
                                                     </div>
 
-                                                    <div class="row" id="TestRow">
+                                                    <div class="row"  >
                                                         <div class="col-lg-3 col-sm-6 col-xs-12">
-                                                            <a onclick="TextNum(10)"data-dismiss="modal" data-toggle="modal" data-target="#myModal4">
+                                                            <a >
                                                                 <div class="databox">
                                                                     <div class="databox-left bg-palegreen">
                                                                         <div class="databox-piechart">
@@ -287,9 +284,9 @@
                                                             </a>
                                                         </div>
                                                     </div>
-                                                    <div class="row" id="TestRow">
+                                                    <div class="row"  >
                                                         <div class="col-lg-3 col-sm-6 col-xs-12">
-                                                            <a onclick="TextNum(11)" data-dismiss="modal" data-toggle="modal" data-target="#myModal4">
+                                                            <a >
                                                                 <div class="databox">
                                                                     <div class="databox-left bg-azure">
                                                                         <div class="databox-piechart">
@@ -310,7 +307,7 @@
                                                             </a>
                                                         </div>
                                                         <div class="col-lg-3 col-sm-6 col-xs-12">
-                                                            <a onclick="TextNum(12)" data-dismiss="modal" data-toggle="modal" data-target="#myModal4">
+                                                            <a >
                                                                 <div class="databox">
                                                                     <div class="databox-left bg-azure">
                                                                         <div class="databox-piechart">
@@ -331,7 +328,7 @@
                                                             </a>
                                                         </div>
                                                         <div class="col-lg-3 col-sm-6 col-xs-12">
-                                                            <a onclick="TextNum(13)" data-dismiss="modal" data-toggle="modal" data-target="#myModal4">
+                                                            <a >
                                                                 <div class="databox">
                                                                     <div class="databox-left bg-azure">
                                                                         <div class="databox-piechart">
@@ -358,9 +355,9 @@
 
                                                     <h3><strong>症状维度</strong> </h3>
                                                     <hr />
-                                                    <div class="row" id="TestRow">
+                                                    <div class="row"  >
                                                         <div class="col-lg-3 col-sm-6 col-xs-12">
-                                                            <a onclick="TextNum(14)"data-dismiss="modal" data-toggle="modal" data-target="#myModal4">
+                                                            <a >
                                                                 <div class="databox">
                                                                     <div class="databox-left bg-yellow">
                                                                         <div class="databox-piechart">
@@ -381,10 +378,10 @@
                                                             </a>
                                                         </div>
                                                     </div>
-                                                    <div class="row" id="TestRow">
+                                                    <div class="row"  >
 
                                                         <div class="col-lg-3 col-sm-6 col-xs-12">
-                                                            <a onclick="TextNum(15)" data-dismiss="modal" data-toggle="modal" data-target="#myModal4">
+                                                            <a >
                                                                 <div class="databox">
                                                                     <div class="databox-left bg-palegreen">
                                                                         <div class="databox-piechart">
@@ -406,7 +403,7 @@
                                                         </div>
 
                                                         <div class="col-lg-3 col-sm-6 col-xs-12">
-                                                            <a onclick="TextNum(16)" data-dismiss="modal" data-toggle="modal" data-target="#myModal4"> 
+                                                            <a > 
                                                                 <div class="databox">
                                                                     <div class="databox-left bg-palegreen">
                                                                         <div class="databox-piechart">
@@ -427,9 +424,9 @@
                                                             </a>
                                                         </div>
                                                     </div>
-                                                    <div class="row" id="TestRow">
+                                                    <div class="row"  >
                                                         <div class="col-lg-3 col-sm-6 col-xs-12">
-                                                            <a onclick="TextNum(17)"data-dismiss="modal" data-toggle="modal" data-target="#myModal4">
+                                                            <a >
                                                                 <div class="databox">
                                                                     <div class="databox-left bg-azure">
                                                                         <div class="databox-piechart">
@@ -451,7 +448,7 @@
                                                         </div>
 
                                                         <div class="col-lg-3 col-sm-6 col-xs-12">
-                                                            <a onclick="TextNum(18)" data-dismiss="modal" data-toggle="modal" data-target="#myModal4">
+                                                            <a>
                                                                 <div class="databox">
                                                                     <div class="databox-left bg-azure">
                                                                         <div class="databox-piechart">
@@ -472,7 +469,7 @@
                                                             </a>
                                                         </div>
                                                         <div class="col-lg-3 col-sm-6 col-xs-12">
-                                                            <a onclick="TextNum(19)" data-dismiss="modal" data-toggle="modal" data-target="#myModal4">
+                                                            <a >
                                                                 <div class="databox">
                                                                     <div class="databox-left bg-azure">
                                                                         <div class="databox-piechart">
@@ -493,7 +490,7 @@
                                                             </a>
                                                         </div>
                                                         <div class="col-lg-3 col-sm-6 col-xs-12">
-                                                            <a onclick="TextNum(20)" data-dismiss="modal" data-toggle="modal" data-target="#myModal4">
+                                                            <a >
                                                                 <div class="databox">
                                                                     <div class="databox-left bg-azure">
                                                                         <div class="databox-piechart">
@@ -514,7 +511,7 @@
                                                             </a>
                                                         </div>
                                                         <div class="col-lg-3 col-sm-6 col-xs-12">
-                                                            <a onclick="TextNum(21)" data-dismiss="modal" data-toggle="modal" data-target="#myModal4">
+                                                            <a >
                                                                 <div class="databox">
                                                                     <div class="databox-left bg-azure">
                                                                         <div class="databox-piechart">
@@ -540,9 +537,9 @@
 
                                                     <h3><strong>治疗意愿及能力维度</strong> </h3>
                                                     <hr />
-                                                    <div class="row" id="TestRow">
+                                                    <div class="row"  >
                                                         <div class="col-lg-3 col-sm-6 col-xs-12" >
-                                                            <a onclick="TextNum(22)" data-dismiss="modal" data-toggle="modal" data-target="#myModal4">
+                                                            <a >
                                                                 <div class="databox">
                                                                     <div class="databox-left bg-yellow">
                                                                         <div class="databox-piechart">
@@ -564,7 +561,7 @@
                                                         </div>
 
                                                         <div class="col-lg-3 col-sm-6 col-xs-12">
-                                                            <a onclick="TextNum(23)" data-dismiss="modal" data-toggle="modal" data-target="#myModal4">
+                                                            <a >
                                                                 <div class="databox">
                                                                     <div class="databox-left bg-yellow">
                                                                         <div class="databox-piechart">
@@ -585,9 +582,9 @@
                                                             </a>
                                                         </div>
                                                     </div>
-                                                    <div class="row" id="TestRow">
+                                                    <div class="row"  >
                                                         <div class="col-lg-3 col-sm-6 col-xs-12">
-                                                            <a onclick="TextNum(24)" data-dismiss="modal" data-toggle="modal" data-target="#myModal4">
+                                                            <a >
                                                                 <div class="databox">
                                                                     <div class="databox-left bg-palegreen">
                                                                         <div class="databox-piechart">
@@ -618,9 +615,9 @@
 
                                                     <h3><strong>资源维度</strong> </h3>
                                                     <hr />
-                                                    <div class="row" id="TestRow">
+                                                    <div class="row"  >
                                                         <div class="col-lg-3 col-sm-6 col-xs-12">
-                                                            <a onclick="TextNum(25)" data-dismiss="modal" data-toggle="modal" data-target="#myModal4">
+                                                            <a >
                                                                 <div class="databox">
                                                                     <div class="databox-left bg-yellow">
                                                                         <div class="databox-piechart">
@@ -642,9 +639,9 @@
                                                         </div>
 
                                                     </div>
-                                                    <div class="row" id="TestRow">
+                                                    <div class="row"  >
                                                         <div class="col-lg-3 col-sm-6 col-xs-12">
-                                                            <a onclick="TextNum(26)" data-dismiss="modal" data-toggle="modal" data-target="#myModal4">
+                                                            <a >
                                                                 <div class="databox">
                                                                     <div class="databox-left bg-palegreen">
                                                                         <div class="databox-piechart">
@@ -665,7 +662,7 @@
                                                             </a>
                                                         </div>
                                                         <div class="col-lg-3 col-sm-6 col-xs-12">
-                                                            <a onclick="TextNum(27)" data-dismiss="modal" data-toggle="modal" data-target="#myModal4">
+                                                            <a >
                                                                 <div class="databox">
                                                                     <div class="databox-left bg-palegreen">
                                                                         <div class="databox-piechart">
@@ -686,7 +683,7 @@
                                                             </a>
                                                         </div>
                                                         <div class="col-lg-3 col-sm-6 col-xs-12">
-                                                            <a onclick="TextNum(28)" data-dismiss="modal" data-toggle="modal" data-target="#myModal4"> 
+                                                            <a > 
                                                                 <div class="databox">
                                                                     <div class="databox-left bg-palegreen">
                                                                         <div class="databox-piechart">
@@ -715,7 +712,7 @@
                                                     </div>
 
                                                  <!--Panel2-->
-                                                    <div class="panel2">
+                                                    <div class="panel2" style="display:none">
                                                       <div id="timeline" class="tab-pane active">
                                                     <div class="row">
                                                         <div class="widget-body" style="margin:12px;padding:0px;box-shadow:0px 0 0px 0px rgba(256,256,256,.3);">
@@ -732,46 +729,17 @@
                                                                         </div>
                                                                         
                                                                         &nbsp;&nbsp;&nbsp;&nbsp;
-                                                                        <asp:Button ID="SearchBtnText" runat="server" Text="搜索" class="btn btn-info" OnClick="SearchBtnText_Click" />&nbsp;&nbsp;&nbsp;&nbsp;
-                                                                        <span class="btn btn-warning">选择病人</span>
-                                                                       
-                                                                    <div class=" col-xs-12 col-md-12">
-                                                                        <div style="float: right;">总共：<asp:Label ID="Label6" runat="server" ForeColor="#5D7B9D" Font-Bold="true"></asp:Label>条记录，每页显示：
-                                                                            <asp:DropDownList ID="PageSizeText" runat="server" AutoPostBack="true" Font-Bold="true" OnSelectedIndexChanged="PageSizeText_SelectedIndexChanged" ForeColor="#5D7B9D">
-                                                                                <asp:ListItem Value="5">5</asp:ListItem>
-                                                                                <asp:ListItem Value="10">10</asp:ListItem>
-                                                                                <asp:ListItem Value="20">20</asp:ListItem>
-                                                                                <asp:ListItem Value="50">50</asp:ListItem>
-                                                                                <asp:ListItem Value="100" Selected="True">100</asp:ListItem>
-                                                                                <asp:ListItem Value="200">200</asp:ListItem>
-                                                                            </asp:DropDownList>
-                                                                            条记录，共<asp:Label ID="Label7" runat="server" ForeColor="#5D7B9D" Font-Bold="true"></asp:Label>页
-                                                                        </div>
-                                                                    </div>
+                                                                             <span   class="btn btn-info" id="SearchTextBtn"  onclick="SearchTextBtn()" >搜索</span>
+                                                                        <asp:Button ID="SearchBtnText" runat="server" style="display:none" OnClick="SearchBtnText_Click" />&nbsp;&nbsp;&nbsp;&nbsp;
+                                                                        <span class="btn btn-warning" data-dismiss="modal" data-toggle="modal" data-target="#myModal4">选择病人</span>
+                                                                      <span onclick="test()">测试</span>
+                                                                   
                                                                            </ContentTemplate></asp:UpdatePanel>
                                                                     <br />
                                                                     <br />
                                                                     <br />
                                                                     <div id="RightContent">
-                                                                        <asp:GridView ID="GridView3" runat="server" DataKeyNames="ID" AutoGenerateColumns="false" class="table table-striped table-bordered table-hover" GridLines="Horizontal" Style="text-align: center;" ForeColor="#333333" HeaderStyle-HorizontalAlign="Center" Width="99%">
-                                                                            <RowStyle BackColor="#F7F6F3" ForeColor="#333333" Height="30px" HorizontalAlign="Center" />
-                                                                            <HeaderStyle HorizontalAlign="Center" />
-                                                                            <Columns>
-                                                                                <asp:BoundField DataField="Orders" HeaderText="排序" ItemStyle-Width="30" Visible="false" />
-                                                                                <asp:TemplateField HeaderText="序" HeaderStyle-HorizontalAlign="Center">
-                                                                                    <ItemTemplate>
-                                                                                        <asp:Label ID="lblNo" runat="server" Text='<%# Container.DataItemIndex+1 %>'></asp:Label>
-                                                                                    </ItemTemplate>
-                                                                                    <ItemStyle Width="30px" HorizontalAlign="center" />
-                                                                                    <HeaderStyle Width="30px" />
-                                                                                </asp:TemplateField>
-                                                                                
-                                                                                <asp:HyperLinkField DataNavigateUrlFields="TestUrl" DataNavigateUrlFormatString="{0}" DataTextField="TestName" HeaderText="量表名称" ItemStyle-Width="300" HeaderStyle-HorizontalAlign="Left" ItemStyle-HorizontalAlign="Left" Target="_blank" ></asp:HyperLinkField>
-                                                                                <asp:BoundField DataField="Dimension1name" HeaderText="所属测试"  ></asp:BoundField>
-                                                                                <asp:BoundField DataField="Price" HeaderText="价格"  />
-                                                                            </Columns>
-                                                                        </asp:GridView>
-
+                                                                      
                                                                         <asp:Repeater ID="Repeater1" runat="server">
                                                                             <HeaderTemplate>
                                                                                 <div style="background-color:#F7F6F3; color:#333333;height:30px; width:98%;padding:5px" >
@@ -784,18 +752,21 @@
                                                                             </HeaderTemplate>
                                                                             <ItemTemplate>
                                                                                 <table class="table" style="clear:both;width:98%">
-                                                                                    <tr>
+                                                                                   
+                                                                                    <tr data-guid='<%#Eval("GUID") %>' data-id='<%#Eval("ID") %>'  onclick="check(this)" style="cursor:pointer">
                                                                                         <th style="width:5%"> <%# Container.ItemIndex + 1 %></th>
-                                                                                        <th style="width:5%"> <asp:CheckBox ID="ChechBox1" runat="server" /></th>
-                                                                                         <th style="width:50%;text-align:left;margin-left:5px;"> <a style="cursor:pointer;" data-dismiss="modal" data-toggle="modal" data-target="#myModal4" onclick="textnumb(<%#Eval("Serial") %>)"  ><%# Eval("TestName") %></a></th>
+                                                                                        <th style="width:5%"> <input id="<%#"checkbox"+Eval("ID") %>" type="checkbox" name="CheckOn" value='<%#Eval("GUID") %>' /></th>
+                                                                                         <th style="width:50%;text-align:left;margin-left:5px;"> <a style="cursor:pointer;"  ><%# Eval("TestName") %></a></th>
                                                                                          <th style="width:25%"><%# Eval("Dimension1name") %></th>
                                                                                          <th  style="width:15%"> <%# Eval("Price") %></th>
                                                                                     </tr>
+                                                                                
                                                                                 </table>
                                                                
                                                                             </ItemTemplate>
 
                                                                         </asp:Repeater>
+                                                                          
                                                                         <br />
                                                                         <asp:Label ID="Label8" runat="server" Text="" Visible="true"></asp:Label>
                                                                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -833,21 +804,17 @@
                                 <asp:UpdatePanel ID="UpdatePanel3" runat="server">
                                     <ContentTemplate>
                                         <div id="Man_Nav">
-                                            <div class="form-group col-xs-3 col-md-3">
+                                            <div id="test1" class="form-group col-xs-3 col-md-3">
                                                 <span class="input-icon">
+                                         
                                                     <asp:TextBox ID="SearchTB" runat="server" placeholder="搜索..." class="form-control input-sm"></asp:TextBox>
                                                     <i class="glyphicon glyphicon-search danger circular"></i>
                                                 </span>
                                             </div>
-                                            <asp:DropDownList ID="SearchDDL" runat="server"
-                                                OnSelectedIndexChanged="SearchDDL_SelectedIndexChanged" AutoPostBack="True">
-                                                <asp:ListItem Value=" [PatientName]">搜索病人姓名</asp:ListItem>
-                                                <asp:ListItem Value=" [Num1]">搜索门诊号</asp:ListItem>
-                                            </asp:DropDownList>
-                                            &nbsp;&nbsp;
-                                   
+                                        
                                             <asp:Button ID="SearchBtn" runat="server" Text="搜索" class="btn btn-info"  OnClick="SearchBtn_Click" />&nbsp;&nbsp;  &nbsp;&nbsp;
-                                   
+                                     <span onclick="test()">测试</span>
+
                                             <asp:DropDownList ID="OrderDDL" runat="server"
                                                 OnSelectedIndexChanged="OrderDDL_SelectedIndexChanged" AutoPostBack="True">
                                                 <asp:ListItem Value=" Order by ID Desc">默认排序</asp:ListItem>
@@ -859,9 +826,8 @@
                                     </ContentTemplate>
                                 </asp:UpdatePanel>
                                     <asp:Button ID="AddBtn" runat="server" Text="增加新病人" class="btn btn-info" OnClick="AddBtn_Click" />&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <asp:Button ID="UpdateBtn" runat="server" Text="修改信息" class="btn btn-info" OnClick="UpdateBtn_Click" />&nbsp;&nbsp;&nbsp;&nbsp;   
-                                    <asp:Button ID="StartTest" runat="server" Text="开始测试" class="btn btn-warning" OnClick="StartTest_Click" />&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <span  id="StartTest1" class="btn btn-warning">开始测试</span>
+                                  <span class="btn btn-info" onclick="UpdataPatient()" > 修改信息</span>&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <span  id="StartTest" class="btn btn-warning" onclick="StartTest()">开始测试</span>
                                      
                                 <asp:UpdatePanel ID="UpdatePanel1" runat="server">
                                     <ContentTemplate>
@@ -884,39 +850,41 @@
                                         <br />
 
                                         <div >
-                                            <asp:GridView ID="GridView1" runat="server" DataKeyNames="GUID" AutoGenerateColumns="false" class="table table-striped table-bordered table-hover"
-                                                GridLines="Horizontal" Style="text-align: center;" ForeColor="#333333" HeaderStyle-HorizontalAlign="Center" Width="99%">
-                                                <RowStyle BackColor="#F7F6F3" ForeColor="#333333" Height="30px" HorizontalAlign="Center" />
-                                                <HeaderStyle HorizontalAlign="Center" />
-                                                <Columns>
-                                                    <asp:BoundField DataField="Orders" HeaderText="排序" ItemStyle-Width="30" Visible="false" />
-                                                    <asp:TemplateField HeaderText="序" HeaderStyle-HorizontalAlign="Center">
-                                                        <ItemTemplate>
-                                                            <asp:Label ID="lblNo" runat="server" Text='<%# Container.DataItemIndex+1 %>'></asp:Label>
-                                                        </ItemTemplate>
-                                                        <ItemStyle Width="30px" HorizontalAlign="center" />
-                                                        <HeaderStyle Width="30px" />
-                                                    </asp:TemplateField>
-                                                    <asp:TemplateField>
-                                                        <ItemTemplate>
-                                                            <asp:CheckBox ID="ChechBox1" runat="server" />
-                                                        </ItemTemplate>
-                                                        <ItemStyle Width="30px" HorizontalAlign="Left" />
-                                                    </asp:TemplateField>
-                                                    <asp:HyperLinkField DataNavigateUrlFields="GUID"
-                                                        DataNavigateUrlFormatString="../Patient_Info.aspx?GUID={0}" DataTextField="PatientName"
-                                                        HeaderText="患者姓名" ItemStyle-Width="100" HeaderStyle-HorizontalAlign="Left" ItemStyle-HorizontalAlign="Left" Target="_blank"></asp:HyperLinkField>
-                                                     
-                                                    <asp:BoundField DataField="Sex" HeaderText="性别" />
+                                     
+                                            <table class="table">
+                                            <asp:Repeater ID="Repeater2" runat="server">
+                                               
+                                                <HeaderTemplate>
+                                                    <tr> 
+                                                        <th>序</th>
+                                                        <th></th>
+                                                        <th>患者姓名</th>
+                                                        <th>性别</th>
+                                                        <th>门诊号</th>
+                                                        <th>联系电话</th>
+                                                        <th>日期</th>
+                                                    </tr>
+                                                </HeaderTemplate>
+                                                <ItemTemplate>
+                                                      <tr data-guid='<%#Eval("GUID") %>' data-id='<%#Eval("ID") %>'  onclick="Radio(this)" style="cursor:pointer" > 
+                                                          <th><%# Container.ItemIndex + 1 %></th>
+                                                          <th>
+                                                            <input type="radio" id="<%#"rdb"+Eval("ID") %>"  name="aa " value='<%# Eval("GUID") %>' />
+                                                          </th>
+                                                          <th><%# Eval("PatientName") %></th>
+                                                          <th><%# Eval("Num1") %></th>
+                                                          <th><%# Eval("Phone1") %></th>
+                                                          <th><%# Eval("Marriage") %></th>
+                                                          <th><%# Eval("CDT","{0:yyyy年MM月dd日}") %></th>
 
-                                                    <asp:BoundField DataField="Num1" HeaderText="门诊号" />
-                                                    <asp:BoundField DataField="Phone1" HeaderText="联系电话" />
-                                                    <asp:BoundField DataField="Marriage" HeaderText="婚姻状况" />
-                                                    <asp:BoundField DataField="CDT" HeaderText=" 日期 " DataFormatString="{0:yy年MM月dd日}" />
-                                                    <asp:BoundField DataField="DoctorName" HeaderText="就诊医生" />
+                                                      </tr>
+                                                </ItemTemplate>  
 
-                                                </Columns>
-                                            </asp:GridView>
+                                             
+                                            </asp:Repeater>
+                                            </table>
+                                            
+
                                             <br />
                                             <asp:Label ID="TestLabel" runat="server" Text="" Visible="true"></asp:Label>
                                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -924,6 +892,7 @@
                                             <webdiyer:AspNetPager CssClass="pages" class="pagination" CurrentPageButtonClass="cpb" AlwaysShow="true" ID="AspNetPager1" runat="server" FirstPageText="首页" LastPageText="尾页" NextPageText="下一页" PrevPageText="上一页" OnPageChanged="AspNetPager1_PageChanged" LayoutType="Div">
                                             </webdiyer:AspNetPager>
                                         </div>
+
 
                                     </ContentTemplate>
                                 </asp:UpdatePanel>
@@ -949,7 +918,7 @@
         }
 
         .table td, .table th {
-            border: 1px solid #cad9ea;
+            border:1px solid #cad9ea;
             padding: 0 1em 0;
             border-top:none;
         }
@@ -959,13 +928,108 @@
         } 
     </style>
     <script type="text/javascript">
-        function TextNum(num) {
-            var Tnum = "T"+num;
-            document.getElementById('<%=Label3.ClientID %>').innerText = Tnum;
+        var PatientGUID = "";
+        var TestGUID = "";
+     
 
-            document.getElementById("StartTest1").style.display = 'none';
-            document.getElementById('<%=StartTest.ClientID %>').style.display = 'inline-block';
-             }
-       </script>
+        function SearchTextBtn(){
+            document.getElementById('<%=SearchBtnText.ClientID %>').click();
+            TestGUID = "";
+
+        }
+
+  
+
+        function check(e) {
+            var New_TextGUID = [];
+            var GUID = e.getAttribute("data-guid");
+            var id = e.getAttribute("data-id");
+            if (document.getElementById("checkbox" + id).checked == false) {
+                document.getElementById("checkbox" + id).checked = true;
+                TestGUID += document.getElementById("checkbox" + id).value + "&";
+
+            }
+            else {
+                New_TextGUID = TestGUID.split("&");
+                TestGUID = "";
+                for (i = 0; i < New_TextGUID.length-1; i++) {
+                    if (New_TextGUID[i] != document.getElementById("checkbox" + id).value) {
+                        TestGUID += New_TextGUID[i] + "&";
+                    }
+                }
+
+                document.getElementById("checkbox" + id).checked = false;
+
+            }
+        }
+
+        function Radio(e)
+        {
+            var GUID = e.getAttribute("data-guid");
+            var id = e.getAttribute("data-id");
+            if (document.getElementById("rdb" + id).checked == false) {
+                document.getElementById("rdb" + id).checked = true;
+                PatientGUID = document.getElementById("rdb" + id).value;
+            }
+            else {
+                document.getElementById("rdb" + id).checked = false;
+                PatientGUID = "";
+            }
+        }
+
+        function UpdataPatient() {
+            if (PatientGUID != "") {
+                window.open("../Patient_Info.aspx?GUID=" + PatientGUID)
+            }
+            else {
+                alert("请选择病人");
+            }
+           
+        }
+        function StartTest() {
+            if (PatientGUID != "" && TestGUID != "") {
+
+                var Tdata = TestGUID;
+                var Pguid = PatientGUID;
+                var Url = "";
+                $.ajax({
+                    type: "post",
+                    url: "Gtest.asmx/Insert", //服务端处理程序   
+                    data: { "Pguid": Pguid, "Tdata": Tdata },
+                    success: function (Nums) {
+                        try {
+                            Url = $(Nums).find("string").text();
+                            //Window.oper.href = Url;
+                            window.open(Url);
+                        }
+                        catch (e) {
+                            alert(e);
+                            return;
+                        }
+                    },
+                    error: function (Num) {
+                        console.log('0');
+                    },
+                })
+
+            }
+
+            else {
+                if (PatientGUID == "") {
+                    alert("请选择一个病人");
+                }
+                else {
+                    alert("至少选择一个量表");
+                }
+
+            }
+
+        }
+        function test() {
+            alert("病人："+ PatientGUID + "量表："+ TestGUID);
+        }
+    </script>
+
+   
 </asp:Content>
 
