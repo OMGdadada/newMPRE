@@ -1,0 +1,16 @@
+﻿{
+  "list": [
+    {
+      "QuestionSerial": "1",
+      "Score": "1",
+      "Serial": "1",
+      "ItemText": "是"
+    },
+    {
+      "QuestionSerial": "1",
+      "Score": "0",
+      "Serial": "2",
+      "ItemText": "否"
+    }
+  ]
+}
