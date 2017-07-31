@@ -1,7 +1,5 @@
 ﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="User.master.cs" Inherits="User" %>
 
-
-
 <!DOCTYPE html>
 
 <html>
@@ -25,7 +23,7 @@
     <link href="/assets/css/demo.min.css" rel="stylesheet" />
     <link href="/assets/css/typicons.min.css" rel="stylesheet" />
     <link href="/assets/css/animate.min.css" rel="stylesheet" />
-
+    
     <!--[if lte IE 8]>
         <script>
             alert("为获得最佳效果，建议使用IE9、Chrome10或更高版本的浏览器。");
@@ -138,7 +136,7 @@
                     <ul class="nav sidebar-menu">
                         <!--Dashboard-->
                         <li class="active">
-                            <a href="../Dashboard.aspx">
+                            <a href="../Index.aspx">
                                 <i class="menu-icon glyphicon glyphicon-home"></i>
                                 <span class="menu-text">首页</span>
                             </a>
@@ -383,7 +381,7 @@
                               <!--药物管理-->
                         <li>
                             <a href="#" class="menu-dropdown">
-                                <i class="menu-icon fa fa-medkit"></i>
+                                <i class="menu-icon fa fa-foldert"></i>
                                 <span class="menu-text">试题库
                                 </span>
                                 <i class="menu-expand"></i>
@@ -700,7 +698,7 @@
                         </asp:ContentPlaceHolder>
                     </div>
 
-                    
+                 <iframe width=0   height=0   src="SessionKeeper.aspx">   </iframe>         
     </form>
 </body>
 </html>
