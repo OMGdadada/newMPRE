@@ -30,8 +30,7 @@
     </script>
 
        <script  type="text/javascript" src="My97DatePicker/WdatePicker.js" charset="gb2312"></script>
-       <p>&nbsp;</p>
- 
+
                     <!-- 模态框弹出部分  --->
 
     <div class="module-area2 modal-content">
@@ -68,7 +67,7 @@
         <hr />
     </div>
       <!-- //模态框弹出部分结束  --->
-                       <div id="CurrentPosition">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;当前位置：<a href="Dashboard.aspx">后台首页</a>>> <a href="Patient_List.aspx">病人管理</a>   </div>
+                       <div id="CurrentPosition">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;当前位置：<a href="Index.aspx">首页</a>>> <a href="Patient_List.aspx">病人管理</a>   </div>
                           <div class="page-body" style="padding: 18px 20px 24px;">       
                                  <asp:Label ID="GUIDLabel" runat="server"  Visible="false"></asp:Label>
                                <asp:Label ID="ResultLabel" runat="server" ></asp:Label>

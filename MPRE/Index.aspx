@@ -3,10 +3,9 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
-    <div id="CurrentPosition">当前位置：<a href="#">首页</a></div>
     <asp:Label ID="HospitalGUID" runat="server" Visible="false" Text=""></asp:Label>
     <!-- Page Body -->
-    <div class="page-body">
+    <div class="page-body" style="padding:0px 0px 24px">
         <div class="row">
             <div class="col-md-12">
                 <div class="profile-container">
@@ -28,22 +27,55 @@
 
                     <div class="profile-header row">
                        
-                        <div class="col-lg-6 col-md-8 col-xs-12">
-                        <div class="divleft" >
-                              <a href="NewPage/Multidimensional_Test.aspx" target="_blank"><i class="fa fa-cogs"></i></a>
-                              <h1> 多维度康复系统</h1>
-
+                           <div class="col-md-6 col-sm-6">
+                            <div class="divright" id="div1">
+                                  <a href="NewPage/Multidimensional_Test.aspx" target="_blank"><i class="fa fa-cogs"></i></a>
+                                  <h1>多维度精神康复</h1><h1>评估系统</h1>
+                            </div>
                         </div>
 
+                        <div class="col-md-6 col-sm-6">
+                            <div class="divright" id="div2">
+                                  <a  href="NewPage/Psychological_Test.aspx" target="_blank"><i class="fa fa-heart"></i></a>
+                                  <h1>心理测评系统</h1>
+                            </div>
                         </div>
 
-                          <div class="col-lg-6 col-md-8 col-xs-12">
-                        <div class="divright" >
-                              <a  href="NewPage/Psychological_Test.aspx" target="_blank"><i class="fa fa-heart"></i></a>
-                              <h1> 心理测试系统</h1>
+                    </div>
 
-                        </div>
-
+                       <div class="profile-header row">
+                        <div class="divbottom">
+                            <div class="row">
+                                <div class="col-md-2" style="text-align: right;">
+                                    <h2>快速链接 :</h2>
+                                </div>
+                                <div class="col-md-10 divbottom-icon">
+                                    <div class="col-md-3">
+                                        <div class="divleft">
+                                              <a  href="Patient_List.aspx" target="_blank"><i class="fa fa-list-ol"></i></a>
+                                              <h3>患者列表</h3>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="divleft">
+                                              <a  href="Patient_Info.aspx" target="_blank"><i class="fa fa-user"></i></a>
+                                              <h3>新增患者</h3>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="divleft">
+                                              <a  href="Report_List.aspx" target="_blank"><i class="fa fa-file-text"></i></a>
+                                              <h3>报告单</h3>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="divleft">
+                                              <a  href="NewPage/Gauge_Library.aspx" target="_blank"><i class="fa fa-folder"></i></a>
+                                              <h3>试题库</h3>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -52,35 +84,64 @@
         </div>
     </div>
     <style type="text/css">
-        .divleft{
-            text-align:center;
-            margin-top:10px;
+       .profile-header div{
+            margin: 0 auto;
         }
-         .divright{
+        .divright{
             text-align:center;
-            margin-top:10px;
+            margin-top: 35px !important;
+            width: 275px;
+            height: 275px;        
         }
-        .divleft i {
+        .divright h1 {
+            font-size: 28px;
+            color: #000;
+            line-height: 1.2!important;
+        }
+        .divright i {
             -webkit-border-radius: 2px;
             border-radius: 50%;
             padding: 10px 10px;
             color: #000;
             text-align: center;
             border: 2px solid #000;
-            zoom:4.0;
-           
+            zoom:4.0;      
+            width: 35px;
+            height: 35px;   
         }
-
-
-          .divright i {
-            -webkit-border-radius: 2px;
+        #div1 i{
+            color: #1f839c;
+            border: 1px solid #1f839c;
+        }
+        #div1 h1{
+            color: #1f839c;
+        }
+        #div2 i{
+            color: #D14850;
+            border: 1px solid #D14850;
+        }
+        #div2 h1{
+            color: #D14850;
+        }
+        .divbottom {
+            padding-top: 50px;
+            padding-left: 20px;  
+            margin: 0 auto;       
+        }
+        .divbottom i {
             border-radius: 50%;
-            padding: 10px 10px;
+            padding: 4px 4px;
             color: #000;
             text-align: center;
-            border: 2px solid #000;
-            zoom:4.0;
-           
+            border: 1px solid #000;
+            zoom:4.0;      
+            width: 20px;
+            height: 20px;   
+            font-size: 10px;
+        }
+        .divbottom div {
+            margin-top: -5px;
+            text-align: center;
         }
     </style>
 </asp:Content>

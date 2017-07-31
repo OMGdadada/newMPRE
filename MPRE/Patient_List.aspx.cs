@@ -29,24 +29,15 @@ public partial class Patient_List : System.Web.UI.Page
 
     }
 
-
-
-
-
-
-    protected void AspNetPager1_PageChanged(object sender, EventArgs e)
-    {
-        MyDataBind();
-    }
-
-    private void MyDataBind()
+    public void MyDataBind()
     {
         AspNetPager1.PageSize = Convert.ToInt16(PageSizeDDL.SelectedValue);
         string param = SearchTB.Text;
         StringBuilder whereStr = new StringBuilder(" ");
         if (!String.IsNullOrEmpty(param))
         {
-            whereStr.Append(" where " + SearchDDL.SelectedValue + " like '%").Append(Server.HtmlEncode(param.Trim().Replace("'", ""))).Append("%' ");
+            //  whereStr.Append(" where " + SearchDDL.SelectedValue + " like '%").Append(Server.HtmlEncode(param.Trim().Replace("'", ""))).Append("%' ");
+            whereStr.Append(" where PatientName like '%").Append(Server.HtmlEncode(param.Trim().Replace("'", ""))).Append("%' or Num1 like '%").Append(Server.HtmlEncode(param.Trim().Replace("'", ""))).Append("%' ");
         }
         string sql = "select count(ID) as total from Patient " + whereStr.ToString();
 
@@ -90,62 +81,17 @@ public partial class Patient_List : System.Web.UI.Page
             //TestLabel.Text = sql;
             cmd.CommandText = sql;
             rd = cmd.ExecuteReader();
-            GridView1.DataSource = rd;
-            GridView1.DataBind();
+            Repeater2.DataSource = rd;
+            Repeater2.DataBind();
             rd.Close();
         }
     }
-
-
-    protected void PageSizeDDL_SelectedIndexChanged(object sender, EventArgs e)
+    protected void AspNetPager1_PageChanged(object sender, EventArgs e)
     {
         MyDataBind();
     }
-
-    protected void UpdateBtn_Click(object sender, EventArgs e)
-    {
-        string ids = "";
-        for (int i = 0; i <= GridView1.Rows.Count - 1; i++)
-        {
-            CheckBox checkBox = (CheckBox)GridView1.Rows[i].FindControl("ChechBox1");
-            if (checkBox.Checked == true)
-            {
-                ids = GridView1.DataKeys[i].Value.ToString();
-            }
-        }
-        if (!String.IsNullOrEmpty(ids))
-        {
-            Response.Redirect(Server.HtmlEncode("Patient_Info.aspx?GUID=" + ids));
-        }
-    }
-
-    protected void DelBtn_Click(object sender, EventArgs e)
-    {
-        string ids = "";
-        for (int i = 0; i <= GridView1.Rows.Count - 1; i++)
-        {
-            CheckBox checkBox = (CheckBox)GridView1.Rows[i].FindControl("ChechBox1");
-            if (checkBox.Checked == true)
-            {
-                ids += "," + GridView1.DataKeys[i].Value;
-            }
-        }
-        if (!String.IsNullOrEmpty(ids))
-        {
-            ids = ids.Substring(1);
-            Response.Redirect(Server.HtmlEncode("Patient_Del.aspx?GUIDS=" + ids));
-        }
-    }
-
-  
-
-  
 
     protected void OrderDDL_SelectedIndexChanged(object sender, EventArgs e)
-    {
-        MyDataBind();
-    }
-    protected void SearchDDL_SelectedIndexChanged(object sender, EventArgs e)
     {
         MyDataBind();
     }
@@ -155,52 +101,13 @@ public partial class Patient_List : System.Web.UI.Page
         MyDataBind();
     }
 
-
-
-
-
-
     protected void AddBtn_Click(object sender, EventArgs e)
     {
-        Response.Redirect(Server.HtmlEncode("Patient_Info.aspx"));
+        Response.Redirect(Server.HtmlEncode("../Patient_Info.aspx"));
     }
 
-
-
-
-    protected void StartTest_Click(object sender, EventArgs e)
+    protected void PageSizeDDL_SelectedIndexChanged(object sender, EventArgs e)
     {
-        string ids = "";
-        for (int i = 0; i <= GridView1.Rows.Count - 1; i++)
-        {
-            CheckBox checkBox = (CheckBox)GridView1.Rows[i].FindControl("ChechBox1");
-            if (checkBox.Checked == true)
-            {
-                ids += "," + GridView1.DataKeys[i].Value;
-            }
-        }
-        if (!String.IsNullOrEmpty(ids))
-        {
-            ids = ids.Substring(1);
-            Response.Redirect(Server.HtmlEncode("Test_Start.aspx?GUID=" + ids));
-        }
-    }
-
-    protected void TestPrint_Click(object sender, EventArgs e)
-    {
-        string ids = "";
-        for (int i = 0; i <= GridView1.Rows.Count - 1; i++)
-        {
-            CheckBox checkBox = (CheckBox)GridView1.Rows[i].FindControl("ChechBox1");
-            if (checkBox.Checked == true)
-            {
-                ids += "," + GridView1.DataKeys[i].Value;
-            }
-        }
-        if (!String.IsNullOrEmpty(ids))
-        {
-            ids = ids.Substring(1);
-            Response.Redirect(Server.HtmlEncode("Test_Select.aspx?GUID=" + ids));
-        }
+        MyDataBind();
     }
 }

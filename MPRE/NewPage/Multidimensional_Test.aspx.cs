@@ -36,7 +36,7 @@ public partial class NewPage_Multidimensional_Test : System.Web.UI.Page
 
     public void MyDataBind()
     {
-        AspNetPager1.PageSize = Convert.ToInt16(PageSizeDDL.SelectedValue);
+        AspNetPager1.PageSize = Convert.ToInt16(10);
         string param = SearchTB.Text;
         StringBuilder whereStr = new StringBuilder(" ");
         if (!String.IsNullOrEmpty(param))
@@ -93,10 +93,7 @@ public partial class NewPage_Multidimensional_Test : System.Web.UI.Page
     }
 
 
-    protected void PageSizeDDL_SelectedIndexChanged(object sender, EventArgs e)
-    {
-        MyDataBind();
-    }
+ 
     protected void OrderDDL_SelectedIndexChanged(object sender, EventArgs e)
     {
         MyDataBind();

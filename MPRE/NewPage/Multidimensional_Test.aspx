@@ -73,7 +73,7 @@
                                                     <div class="row"  >
 
                                                         <div class="col-lg-3 col-sm-6 col-xs-12">
-                                                            <a  >
+                                                            <a href="../T2.aspx" target="_blank" >
                                                                 <div class="databox">
                                                                     <div class="databox-left bg-palegreen">
                                                                         <div class="databox-piechart">
@@ -94,7 +94,7 @@
                                                             </a>
                                                         </div>
                                                         <div class="col-lg-3 col-sm-6 col-xs-12">
-                                                            <a  >
+                                                            <a href="../T3.aspx" target="_blank" >
                                                                 <div class="databox">
                                                                     <div class="databox-left bg-palegreen">
                                                                         <div class="databox-piechart">
@@ -117,7 +117,7 @@
                                                     </div>
                                                     <div class="row"  >
                                                         <div class="col-lg-3 col-sm-6 col-xs-12">
-                                                            <a>
+                                                            <a href="../T4.aspx" target="_blank">
                                                                 <div class="databox">
                                                                     <div class="databox-left bg-azure">
                                                                         <div class="databox-piechart">
@@ -139,7 +139,7 @@
                                                         </div>
 
                                                         <div class="col-lg-3 col-sm-6 col-xs-12">
-                                                            <a >
+                                                            <a href="../T5.aspx" target="_blank">
                                                                 <div class="databox">
                                                                     <div class="databox-left bg-azure">
                                                                         <div class="databox-piechart">
@@ -161,7 +161,7 @@
                                                         </div>
 
                                                         <div class="col-lg-3 col-sm-6 col-xs-12">
-                                                            <a >
+                                                            <a href="../T6.aspx" target="_blank">
                                                                 <div class="databox">
                                                                     <div class="databox-left bg-azure">
                                                                         <div class="databox-piechart">
@@ -183,7 +183,7 @@
                                                         </div>
 
                                                         <div class="col-lg-3 col-sm-6 col-xs-12">
-                                                            <a >
+                                                            <a href="../T7.aspx" target="_blank">
                                                                 <div class="databox">
                                                                     <div class="databox-left bg-azure">
                                                                         <div class="databox-piechart">
@@ -211,7 +211,7 @@
                                                     <hr />
                                                     <div class="row"  >
                                                         <div class="col-lg-3 col-sm-6 col-xs-12">
-                                                            <a >
+                                                            <a href="../T8.aspx" target="_blank">
                                                                 <div class="databox">
                                                                     <div class="databox-left bg-yellow">
                                                                         <div class="databox-piechart">
@@ -239,7 +239,7 @@
                                                     <hr />
                                                     <div class="row"  >
                                                         <div class="col-lg-3 col-sm-6 col-xs-12">
-                                                            <a >
+                                                            <a href="../T9.aspx" target="_blank">
                                                                 <div class="databox">
                                                                     <div class="databox-left bg-yellow">
                                                                         <div class="databox-piechart">
@@ -263,7 +263,7 @@
 
                                                     <div class="row"  >
                                                         <div class="col-lg-3 col-sm-6 col-xs-12">
-                                                            <a >
+                                                            <a href="../T10.aspx" target="_blank">
                                                                 <div class="databox">
                                                                     <div class="databox-left bg-palegreen">
                                                                         <div class="databox-piechart">
@@ -286,7 +286,7 @@
                                                     </div>
                                                     <div class="row"  >
                                                         <div class="col-lg-3 col-sm-6 col-xs-12">
-                                                            <a >
+                                                            <a href="../T11.aspx" target="_blank">
                                                                 <div class="databox">
                                                                     <div class="databox-left bg-azure">
                                                                         <div class="databox-piechart">
@@ -307,7 +307,7 @@
                                                             </a>
                                                         </div>
                                                         <div class="col-lg-3 col-sm-6 col-xs-12">
-                                                            <a >
+                                                            <a href="../T12.aspx" target="_blank">
                                                                 <div class="databox">
                                                                     <div class="databox-left bg-azure">
                                                                         <div class="databox-piechart">
@@ -328,7 +328,7 @@
                                                             </a>
                                                         </div>
                                                         <div class="col-lg-3 col-sm-6 col-xs-12">
-                                                            <a >
+                                                            <a href="../T13.aspx" target="_blank">
                                                                 <div class="databox">
                                                                     <div class="databox-left bg-azure">
                                                                         <div class="databox-piechart">
@@ -357,7 +357,7 @@
                                                     <hr />
                                                     <div class="row"  >
                                                         <div class="col-lg-3 col-sm-6 col-xs-12">
-                                                            <a >
+                                                            <a href="../T14.aspx" target="_blank">
                                                                 <div class="databox">
                                                                     <div class="databox-left bg-yellow">
                                                                         <div class="databox-piechart">
@@ -381,7 +381,7 @@
                                                     <div class="row"  >
 
                                                         <div class="col-lg-3 col-sm-6 col-xs-12">
-                                                            <a >
+                                                            <a href="../T15.aspx" target="_blank">
                                                                 <div class="databox">
                                                                     <div class="databox-left bg-palegreen">
                                                                         <div class="databox-piechart">
@@ -403,7 +403,7 @@
                                                         </div>
 
                                                         <div class="col-lg-3 col-sm-6 col-xs-12">
-                                                            <a > 
+                                                            <a href="../T16.aspx" target="_blank"> 
                                                                 <div class="databox">
                                                                     <div class="databox-left bg-palegreen">
                                                                         <div class="databox-piechart">
@@ -426,7 +426,7 @@
                                                     </div>
                                                     <div class="row"  >
                                                         <div class="col-lg-3 col-sm-6 col-xs-12">
-                                                            <a >
+                                                            <a href="../T17.aspx" target="_blank">
                                                                 <div class="databox">
                                                                     <div class="databox-left bg-azure">
                                                                         <div class="databox-piechart">
@@ -448,7 +448,7 @@
                                                         </div>
 
                                                         <div class="col-lg-3 col-sm-6 col-xs-12">
-                                                            <a>
+                                                            <a href="../T18.aspx" target="_blank">
                                                                 <div class="databox">
                                                                     <div class="databox-left bg-azure">
                                                                         <div class="databox-piechart">
@@ -469,7 +469,7 @@
                                                             </a>
                                                         </div>
                                                         <div class="col-lg-3 col-sm-6 col-xs-12">
-                                                            <a >
+                                                            <a href="../T19.aspx" target="_blank">
                                                                 <div class="databox">
                                                                     <div class="databox-left bg-azure">
                                                                         <div class="databox-piechart">
@@ -490,7 +490,7 @@
                                                             </a>
                                                         </div>
                                                         <div class="col-lg-3 col-sm-6 col-xs-12">
-                                                            <a >
+                                                            <a href="../T20.aspx" target="_blank">
                                                                 <div class="databox">
                                                                     <div class="databox-left bg-azure">
                                                                         <div class="databox-piechart">
@@ -511,7 +511,7 @@
                                                             </a>
                                                         </div>
                                                         <div class="col-lg-3 col-sm-6 col-xs-12">
-                                                            <a >
+                                                            <a href="../T21.aspx" target="_blank">
                                                                 <div class="databox">
                                                                     <div class="databox-left bg-azure">
                                                                         <div class="databox-piechart">
@@ -539,7 +539,7 @@
                                                     <hr />
                                                     <div class="row"  >
                                                         <div class="col-lg-3 col-sm-6 col-xs-12" >
-                                                            <a >
+                                                            <a href="../T22.aspx" target="_blank">
                                                                 <div class="databox">
                                                                     <div class="databox-left bg-yellow">
                                                                         <div class="databox-piechart">
@@ -561,7 +561,7 @@
                                                         </div>
 
                                                         <div class="col-lg-3 col-sm-6 col-xs-12">
-                                                            <a >
+                                                            <a href="../T23.aspx" target="_blank">
                                                                 <div class="databox">
                                                                     <div class="databox-left bg-yellow">
                                                                         <div class="databox-piechart">
@@ -584,7 +584,7 @@
                                                     </div>
                                                     <div class="row"  >
                                                         <div class="col-lg-3 col-sm-6 col-xs-12">
-                                                            <a >
+                                                            <a href="../T24.aspx" target="_blank">
                                                                 <div class="databox">
                                                                     <div class="databox-left bg-palegreen">
                                                                         <div class="databox-piechart">
@@ -617,7 +617,7 @@
                                                     <hr />
                                                     <div class="row"  >
                                                         <div class="col-lg-3 col-sm-6 col-xs-12">
-                                                            <a >
+                                                            <a href="../T25.aspx" target="_blank">
                                                                 <div class="databox">
                                                                     <div class="databox-left bg-yellow">
                                                                         <div class="databox-piechart">
@@ -641,7 +641,7 @@
                                                     </div>
                                                     <div class="row"  >
                                                         <div class="col-lg-3 col-sm-6 col-xs-12">
-                                                            <a >
+                                                            <a href="../T26.aspx" target="_blank">
                                                                 <div class="databox">
                                                                     <div class="databox-left bg-palegreen">
                                                                         <div class="databox-piechart">
@@ -662,7 +662,7 @@
                                                             </a>
                                                         </div>
                                                         <div class="col-lg-3 col-sm-6 col-xs-12">
-                                                            <a >
+                                                            <a href="../T27.aspx" target="_blank">
                                                                 <div class="databox">
                                                                     <div class="databox-left bg-palegreen">
                                                                         <div class="databox-piechart">
@@ -683,7 +683,7 @@
                                                             </a>
                                                         </div>
                                                         <div class="col-lg-3 col-sm-6 col-xs-12">
-                                                            <a > 
+                                                            <a href="../T28.aspx" target="_blank" > 
                                                                 <div class="databox">
                                                                     <div class="databox-left bg-palegreen">
                                                                         <div class="databox-piechart">
@@ -744,8 +744,8 @@
                                                                             <HeaderTemplate>
                                                                                 <div style="background-color:#F7F6F3; color:#333333;height:30px; width:98%;padding:5px" >
                                                                                     <div style="width:5%;float:left; text-align:center;"> 序</div>
-                                                                                    <div style="width:5%;float:left; text-align:center;"> </div>
-                                                                                     <div style="width:50%;float:left; text-align:center; "> 量表名称</div>
+                                                                                    <div style="width:5%;float:left; text-align:center;">&nbsp; </div>
+                                                                                     <div style="width:50%;float:left; text-align:left; "> 量表名称</div>
                                                                                      <div style="width:25%; float:left; text-align:center;"> 所属测试</div>
                                                                                      <div style="width:15%; float:left; text-align:center;"> 价格</div>
                                                                                 </div>
@@ -770,7 +770,7 @@
                                                                         <br />
                                                                         <asp:Label ID="Label8" runat="server" Text="" Visible="true"></asp:Label>
                                                                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                                                       <webdiyer:AspNetPager CssClass="pages" class="pagination" CurrentPageButtonClass="cpb" AlwaysShow="true" ID="AspNetPager3" runat="server" FirstPageText="首页" LastPageText="尾页" NextPageText="下一页" PrevPageText="上一页" OnPageChanged="AspNetPager3_PageChanged" LayoutType="Div">
+                                                                       <webdiyer:AspNetPager CssClass="pages" class="pagination" CurrentPageButtonClass="cpb" AlwaysShow="true"  Visible="false" ID="AspNetPager3" runat="server" FirstPageText="首页" LastPageText="尾页" NextPageText="下一页" PrevPageText="上一页" OnPageChanged="AspNetPager3_PageChanged" LayoutType="Div">
                                                                         </webdiyer:AspNetPager>
                                                                     </div>
                                                                         </ContentTemplate>
@@ -792,7 +792,7 @@
        <%--批量添加选项--%>
     <div class="modal fade" id="myModal4" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document"style="width: 80%;" >
-            <div class="modal-content" style="margin-top: 10%;">
+            <div class="modal-content" style="margin-top: 5%;">
                 <div class="modal-header" style="padding: 6px 16px 0px 20px;" >
                     <button type="button" class="close" data-dismiss="modal" data-toggle="modal" data-target="#myModal"><span aria-hidden="true">&times;</span></button>
                     <p><strong>选择病人</strong></p>
@@ -834,15 +834,6 @@
                                         <div class=" col-xs-12 col-md-12">
                                             <div style="float: right;">
                                                 总共：<asp:Label ID="Label1" runat="server" ForeColor="#5D7B9D" Font-Bold="true"></asp:Label>
-                                                条记录，每页显示：<asp:DropDownList ID="PageSizeDDL" runat="server" AutoPostBack="true" Font-Bold="true"
-                                                    OnSelectedIndexChanged="PageSizeDDL_SelectedIndexChanged" ForeColor="#5D7B9D">
-                                                    <asp:ListItem Value="5">5</asp:ListItem>
-                                                    <asp:ListItem Value="10">10</asp:ListItem>
-                                                    <asp:ListItem Value="20">20</asp:ListItem>
-                                                    <asp:ListItem Value="50" Selected="True">50</asp:ListItem>
-                                                    <asp:ListItem Value="100">100</asp:ListItem>
-                                                    <asp:ListItem Value="200">200</asp:ListItem>
-                                                </asp:DropDownList>
                                                 条记录，共<asp:Label ID="Label2" runat="server" ForeColor="#5D7B9D" Font-Bold="true"></asp:Label>页
                                    
                                             </div>
@@ -862,7 +853,7 @@
                                                         <th>性别</th>
                                                         <th>门诊号</th>
                                                         <th>联系电话</th>
-                                                        <th>日期</th>
+                                                        <th>出生日期</th>
                                                     </tr>
                                                 </HeaderTemplate>
                                                 <ItemTemplate>
@@ -872,10 +863,10 @@
                                                             <input type="radio" id="<%#"rdb"+Eval("ID") %>"  name="aa " value='<%# Eval("GUID") %>' />
                                                           </th>
                                                           <th><%# Eval("PatientName") %></th>
+                                                           <th><%# Eval("Sex") %></th>
                                                           <th><%# Eval("Num1") %></th>
                                                           <th><%# Eval("Phone1") %></th>
-                                                          <th><%# Eval("Marriage") %></th>
-                                                          <th><%# Eval("CDT","{0:yyyy年MM月dd日}") %></th>
+                                                          <th><%# Eval("Birthday","{0:yyyy年MM月dd日}") %></th>
 
                                                       </tr>
                                                 </ItemTemplate>  
@@ -923,8 +914,8 @@
             border-top:none;
         }
 
-        .table th:hover {
-            background: #ffffff;
+        .table tr:hover {
+            background: #F7F6F3;
         } 
     </style>
     <script type="text/javascript">
@@ -941,6 +932,7 @@
   
 
         function check(e) {
+          
             var New_TextGUID = [];
             var GUID = e.getAttribute("data-guid");
             var id = e.getAttribute("data-id");

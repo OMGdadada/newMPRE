@@ -187,7 +187,7 @@ public class Gtest : System.Web.Services.WebService {
             }
 
         }
-        Url = "TestList.aspx?TGUID=" + strGUID;
+        Url = "TestCart.aspx?TGUID=" + strGUID;
 
         return Url;
 
