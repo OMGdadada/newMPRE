@@ -22,22 +22,31 @@ public partial class T26 : System.Web.UI.Page
             }
             else
             {
-                StartDT.Text = DateTime.Now.ToString();
-                System.Guid guid = System.Guid.NewGuid();
-                string strGUID = System.Guid.NewGuid().ToString();
-                GUID.Text = strGUID;
-                TestName.Text = "家庭功能评定（FAD）";
-                PatientGUID.Text = Request.QueryString["GUID"].ToString();
-                DoctorGUID.Text = Session["DoctorGUID"].ToString();
-                if (Session["Code"] == null)
+                if (Request.QueryString["GUID"] != null)
                 {
-                    Cover.Style["display"] = "none";
-                    Cover1.Style["display"] = "none";
+                    StartDT.Text = DateTime.Now.ToString();
+                    System.Guid guid = System.Guid.NewGuid();
+                    string strGUID = System.Guid.NewGuid().ToString();
+                    GUID.Text = strGUID;
+                    TestName.Text = "家庭功能评定（FAD）";
+                    PatientGUID.Text = Request.QueryString["GUID"].ToString();
+                    DoctorGUID.Text = Session["DoctorGUID"].ToString();
+                    if (Session["Code"] == null)
+                    {
+                        Cover.Style["display"] = "none";
+                        Cover1.Style["display"] = "none";
+                    }
+                    else
+                    {
+                        Cover.Style["display"] = "block";
+                        Cover1.Style["display"] = "block";
+                    }
                 }
                 else
                 {
-                    Cover.Style["display"] = "block";
-                    Cover1.Style["display"] = "block";
+                    Button1.Visible = false;
+                    Button1.Enabled = false;
+
                 }
             }
 

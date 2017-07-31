@@ -23,6 +23,8 @@ public partial class T17 : System.Web.UI.Page
             }
             else
             {
+                if (Request.QueryString["GUID"] != null)
+                {
                 StartDT.Text = DateTime.Now.ToString();
                 System.Guid guid = System.Guid.NewGuid();
                 string strGUID = System.Guid.NewGuid().ToString();
@@ -40,6 +42,13 @@ public partial class T17 : System.Web.UI.Page
                 {
                     Cover.Style["display"] = "block";
                     Cover1.Style["display"] = "block";
+                }
+             }
+                 else
+                {
+                    Button1.Visible = false;
+                    Button1.Enabled = false;
+
                 }
             }
 

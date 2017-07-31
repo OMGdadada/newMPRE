@@ -23,42 +23,51 @@ public partial class T8 : System.Web.UI.Page
             }
             else
             {
-            StartDT.Text = DateTime.Now.ToString();
-            System.Guid guid = System.Guid.NewGuid();
-            string strGUID = System.Guid.NewGuid().ToString();
-            GUID.Text = strGUID;
-            TestName.Text = "躯体健康维度 (PH)";
-            PatientGUID.Text = Request.QueryString["GUID"].ToString();
-            DoctorGUID.Text = Session["DoctorGUID"].ToString();
-            if (Session["Code"] == null)
-            {
-                Cover.Style["display"] = "none";
-                Cover1.Style["display"] = "none";
-            }
-            else
-            {
-                Cover.Style["display"] = "block";
-                Cover1.Style["display"] = "block";
-            }
 
-            using (SqlConnection conn = new DB().GetConnection())
-            {
-                SqlCommand cmd = conn.CreateCommand();
-                cmd.CommandText = "select * from Patient where GUID=@GUID";
-                conn.Open();
-                cmd.Parameters.AddWithValue("@GUID", PatientGUID.Text);
-                SqlDataReader rd = null;
-                rd = cmd.ExecuteReader();
-                if (rd.Read())
+                if (Request.QueryString["GUID"] != null)
                 {
-                    Sex.Text = rd["Sex"].ToString().Trim();
-                }
-                rd.Close();
+                    StartDT.Text = DateTime.Now.ToString();
+                    System.Guid guid = System.Guid.NewGuid();
+                    string strGUID = System.Guid.NewGuid().ToString();
+                    GUID.Text = strGUID;
+                    TestName.Text = "躯体健康维度 (PH)";
+                    PatientGUID.Text = Request.QueryString["GUID"].ToString();
+                    DoctorGUID.Text = Session["DoctorGUID"].ToString();
+                    if (Session["Code"] == null)
+                    {
+                        Cover.Style["display"] = "none";
+                        Cover1.Style["display"] = "none";
+                    }
+                    else
+                    {
+                        Cover.Style["display"] = "block";
+                        Cover1.Style["display"] = "block";
+                    }
 
-            }
-            if (Sex.Text == "男") { QTCBoy.Visible = true; QTCGirl.Visible = false; }
-            if (Sex.Text == "女") { QTCGirl.Visible = true; QTCBoy.Visible = false; }
-     
+                    using (SqlConnection conn = new DB().GetConnection())
+                    {
+                        SqlCommand cmd = conn.CreateCommand();
+                        cmd.CommandText = "select * from Patient where GUID=@GUID";
+                        conn.Open();
+                        cmd.Parameters.AddWithValue("@GUID", PatientGUID.Text);
+                        SqlDataReader rd = null;
+                        rd = cmd.ExecuteReader();
+                        if (rd.Read())
+                        {
+                            Sex.Text = rd["Sex"].ToString().Trim();
+                        }
+                        rd.Close();
+
+                    }
+                    if (Sex.Text == "男") { QTCBoy.Visible = true; QTCGirl.Visible = false; }
+                    if (Sex.Text == "女") { QTCGirl.Visible = true; QTCBoy.Visible = false; }
+                }
+                else
+                {
+                    Button1.Visible = false;
+                    Button1.Enabled = false;
+
+                }
           
             }
 
