@@ -90,8 +90,8 @@ public partial class NewPage_Gauge_Library : System.Web.UI.Page
             //TestLabel.Text = sql;
             cmd.CommandText = sql;
             rd = cmd.ExecuteReader();
-            GridView1.DataSource = rd;
-            GridView1.DataBind();
+            Repeater1.DataSource = rd;
+            Repeater1.DataBind();
             rd.Close();
         }
     }
@@ -102,22 +102,7 @@ public partial class NewPage_Gauge_Library : System.Web.UI.Page
         MyDataBind();
     }
 
-    protected void UpdateBtn_Click(object sender, EventArgs e)
-    {
-        string ids = "";
-        for (int i = 0; i <= GridView1.Rows.Count - 1; i++)
-        {
-            CheckBox checkBox = (CheckBox)GridView1.Rows[i].FindControl("ChechBox1");
-            if (checkBox.Checked == true)
-            {
-                ids = GridView1.DataKeys[i].Value.ToString();
-            }
-        }
-        if (!String.IsNullOrEmpty(ids))
-        {
-            Response.Redirect(Server.HtmlEncode("Gauge_Add.aspx?GUID=" + ids));
-        }
-    }
+
     protected void OrderDDL_SelectedIndexChanged(object sender, EventArgs e)
     {
         MyDataBind();
@@ -142,23 +127,6 @@ public partial class NewPage_Gauge_Library : System.Web.UI.Page
         Response.Redirect(Server.HtmlEncode("Gauge_Add.aspx"));
     }
     
-    protected void DelBtn_Click(object sender, EventArgs e)
-    {
-        string ids = "";
-        for (int i = 0; i <= GridView1.Rows.Count - 1; i++)
-        {
-            CheckBox checkBox = (CheckBox)GridView1.Rows[i].FindControl("ChechBox1");
-            if (checkBox.Checked == true)
-            {
-                ids += "," + GridView1.DataKeys[i].Value;
-            }
-        }
-        if (!String.IsNullOrEmpty(ids))
-        {
-            ids = ids.Substring(1);
-            Response.Redirect(Server.HtmlEncode("Patient_Del.aspx?IDS=" + ids));
-        }
-    }
 
 
 }

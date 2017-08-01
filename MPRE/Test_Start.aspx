@@ -112,6 +112,7 @@
                 </div>
 
             </div>
+            <hr  style="clear:both"/>
             <div class="profile-container">
                 <div class="profile-body">
                     <div class="col-lg-12">
@@ -131,7 +132,7 @@
                                 </li>
 
                             </ul>
-                            <div class="tab-content tabs-flat" style="margin-top: 40px; padding: 0px; box-shadow: 0px 0 0px 0px rgba(256,256,256,.3);">
+                            <div class="tab-content tabs-flat" style=" margin-top:5px; padding: 0px; box-shadow: 0px 0 0px 0px rgba(256,256,256,.3);">
                                 <div id="overview" class="tab-pane active">
                                     <div class="row">
                                         <div class="col-xs-12 col-md-12">

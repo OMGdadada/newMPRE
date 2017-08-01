@@ -4,7 +4,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
-     <div id="CurrentPosition">当前位置：<a href="Dashboard.aspx">后台首页</a>>><a href="#">报告单列表</a> >>  </div>
+     <div id="CurrentPosition">当前位置：<a href="Dashboard.aspx">后台首页</a>>><a href="#">报告单列表</a>   </div>
          <div class="page-body">
                 <div class="row">
                     <div class="col-xs-12 col-md-12">

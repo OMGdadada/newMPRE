@@ -58,10 +58,10 @@
                     </div>
 
                     <div class="widget-body">
-                        <div id="Man_Nav" style="margin-left: 2%;">
+                        <div id="Man_Nav" style="margin-left: 1%;">
                             <div class="row">
                                 <%--左边--%>
-                                <div class="col-xs-4 col-md-4" style="-webkit-box-shadow: 0 0 10px rgb(128, 128, 128); -moz-box-shadow: 0 0 10px rgb(128, 128, 128); box-shadow: 0 0 10px rgb(128, 128, 128);">
+                                <div class="col-xs-5 col-md-5" style="-webkit-box-shadow: 0 0 10px rgb(128, 128, 128); -moz-box-shadow: 0 0 10px rgb(128, 128, 128); box-shadow: 0 0 10px rgb(128, 128, 128);">
                            
                                     <div class="row" >
                                           <div class="Div1" style="width: 10%;">
@@ -90,16 +90,16 @@
                                                     <p><%#Eval("Serial") %>. </p>
                                                 </div>
                                                 <div class="Div2" style="width: 50%;">                                              
-                                                        <a ID="LinkButton1" class="Read" onclick="a(this)"  data-guid="<%#Eval("GUID")%>"  style="overflow: hidden; cursor:pointer; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; text-align: left; color: #22aff7;"><%# ReturninnerText(Eval("QuestionText").ToString()) %></a>
+                                                     <p><a ID="LinkButton1" class="Read" onclick="a(this)"  data-guid="<%#Eval("GUID")%>"  style="overflow: hidden; cursor:pointer; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; text-align: left; color: #22aff7;"><%# ReturninnerText(Eval("QuestionText").ToString()) %></a></p>  
                                                 </div>
                                                 <div class="Div2" style="width: 15%;">
                                                       <p><%# Eval("Weight") %></p>
                                                 </div>
                                                 <div class="Div2" style="width: 25%; letter-spacing:5px; text-align:center;">
-                                                    <a href="#" id="<%#"Qcancel"+Eval("ID") %>" onclick="Qcancel(this)"  data-id='<%#Eval("ID") %>' data-qguid='<%#Eval("GUID") %>' data-guid='<%#Eval("TestGUID") %>' title="删除" class="subitem_update2"><i  class="glyphicon glyphicon-remove"></i></a>
+                                                   <p> <a href="#" id="<%#"Qcancel"+Eval("ID") %>" onclick="Qcancel(this)"  data-id='<%#Eval("ID") %>' data-qguid='<%#Eval("GUID") %>' data-guid='<%#Eval("TestGUID") %>' title="删除" class="subitem_update2"><i  class="glyphicon glyphicon-remove"></i></a>
                                                          <a  onclick="OrderUp(this)" data-id='<%#Eval("ID") %>' data-order='<%#Eval("Serial") %>' title="上移"  style="cursor: pointer;"> <i  class="glyphicon glyphicon-arrow-up"></i></a>
                                                           <a  onclick="OrderDown(this)" data-id='<%#Eval("ID") %>' data-order='<%#Eval("Serial") %>'  title="下移"  style="cursor: pointer;"> <i  class="glyphicon glyphicon-arrow-down"></i></a>
-                                                      
+                                                     </p> 
                                                       </div>
                                                     </il>
                                                         </ItemTemplate>
@@ -112,7 +112,7 @@
                                 </div>
                                 <%--/左边--%>
                                 <%--右边--%>
-                                <div class="col-xs-8 col-md-8">
+                                <div class="col-xs-7 col-md-7">
 
                                     <div class="Div1" style="width: 100%;">
                                         <p>添加试题</p>

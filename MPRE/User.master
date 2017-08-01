@@ -381,7 +381,7 @@
                               <!--药物管理-->
                         <li>
                             <a href="#" class="menu-dropdown">
-                                <i class="menu-icon fa fa-foldert"></i>
+                                <i class="menu-icon fa fa-folder"></i>
                                 <span class="menu-text">试题库
                                 </span>
                                 <i class="menu-expand"></i>
@@ -699,6 +699,22 @@
                     </div>
 
                  <iframe width=0   height=0   src="SessionKeeper.aspx">   </iframe>         
+                    <script>
+                        var int = self.setInterval("refresh()", 300000);
+                        function refresh() {
+                            $.ajax({
+                                url: 'User.master',
+                                type: 'POST',
+                                dataType: 'json',
+                                error: function () {
+
+                                },
+                                success: function (rs) {
+                                    //刷新成功
+                                }
+                            });
+                        }
+                    </script>
     </form>
 </body>
 </html>

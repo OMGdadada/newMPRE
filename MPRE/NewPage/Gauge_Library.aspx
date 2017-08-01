@@ -51,10 +51,8 @@
                                <div class=" col-xs-10 col-md-10">
                                     <asp:Button ID="AddBtn" runat="server" Text="增加新量表" class="btn btn-info"
                                         OnClick="AddBtn_Click" />&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <asp:Button ID="UpdateBtn" runat="server" Text="修改信息" class="btn btn-info"
-                                        OnClick="UpdateBtn_Click" />&nbsp;&nbsp;&nbsp;&nbsp;                       
-                                    <asp:Button ID="DelBtn" runat="server" Text="删除量表" class="btn btn-warning"
-                                         OnClick="DelBtn_Click"  />&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <span class="btn  btn-danger btn-new" onclick="UpdataPatient()" > 修改信息</span>&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <span  id="StartTest" class="btn btn-success btn-new" >删除量表</span>&nbsp;&nbsp;&nbsp;
                                 </div>
 
                                 <asp:UpdatePanel ID="UpdatePanel2" runat="server">
@@ -77,44 +75,47 @@
                                 </div>
                                 <br />
 
-                           <div id="RightContent">
-                                    <asp:GridView ID="GridView1" runat="server" DataKeyNames="GUID" AutoGenerateColumns="false" class="table table-striped table-bordered table-hover"
-                                        GridLines="Horizontal" Style="text-align: center;" ForeColor="#333333" HeaderStyle-HorizontalAlign="Center" Width="99%">
-                                        <RowStyle BackColor="#F7F6F3" ForeColor="#333333" Height="30px" HorizontalAlign="Center" />
-                                        <HeaderStyle HorizontalAlign="Center" />
-                                        <Columns>
-                                            <asp:BoundField DataField="Orders" HeaderText="排序" ItemStyle-Width="30" Visible="false" />
-                                            <asp:TemplateField HeaderText="序" HeaderStyle-HorizontalAlign="Center">
+                     
+
+                                <table class="table">
+                                            <asp:Repeater ID="Repeater1" runat="server">
+                                               
+                                                <HeaderTemplate>
+                                                    <tr> 
+                                                        <th >序</th>
+                                                        <th ></th>
+                                                        <th>量表名</th>
+                                                        <th>价格</th>
+                                                        <th>排序</th>
+                                                        <th>所属测试</th>
+                                                        <th>有效性</th>
+                                                    </tr>
+                                                </HeaderTemplate>
                                                 <ItemTemplate>
-                                                    <asp:Label ID="lblNo" runat="server" Text='<%# Container.DataItemIndex+1 %>'></asp:Label>
-                                                </ItemTemplate>
-                                                <ItemStyle Width="30px" HorizontalAlign="center" />
-                                                <HeaderStyle Width="30px" />
-                                            </asp:TemplateField>
-                                            <asp:TemplateField>
-                                                <ItemTemplate>
-                                                    <asp:CheckBox ID="ChechBox1" runat="server" />
-                                                </ItemTemplate>
-                                                <ItemStyle Width="30px" HorizontalAlign="Left" />
-                                            </asp:TemplateField>
-                
-                                          <asp:HyperLinkField DataNavigateUrlFields="GUID"
-                                                DataNavigateUrlFormatString="Gauge_Add.aspx?GUID={0}" DataTextField="TestName"
-                                                HeaderText="量表名" ItemStyle-Width="200" HeaderStyle-HorizontalAlign="Left" ItemStyle-HorizontalAlign="Left" Target="_blank"></asp:HyperLinkField>
-                                           <asp:BoundField DataField="Price" HeaderText="价格" />
-                                   
-                                            <asp:BoundField DataField="Serial" HeaderText="序号"  />                                        
-                                            <asp:BoundField DataField="Dimension1name" HeaderText="所属测试" ></asp:BoundField>
-                                            <asp:BoundField DataField="Valid" HeaderText="有效性"  />
-                                    
-                                        </Columns>
-                                    </asp:GridView>
+                                                      <tr data-guid='<%#Eval("GUID") %>' data-id='<%#Eval("ID") %>'  onclick="Radio(this)" style="cursor:pointer" > 
+                                                          <th ><%# Container.ItemIndex + 1 %></th>
+                                                          <th >
+                                                            <input type="radio" id="<%#"rdb"+Eval("ID") %>"  name="aa " value='<%# Eval("GUID") %>' />
+                                                          </th>
+                                                          <th ><%# Eval("TestName") %></th>
+                                                           <th><%# Eval("Price") %></th>
+                                                          <th><%# Eval("Serial") %></th>
+                                                          <th><%# Eval("Dimension1name") %></th>
+                                                          <th><%# Eval("Valid") %></th>
+
+                                                      </tr>
+                                                </ItemTemplate>  
+
+                                             
+                                            </asp:Repeater>
+                                            </table>
+
+
                                     <br />
                                     <asp:Label ID="TestLabel" runat="server" Text="" Visible="true"></asp:Label>
                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                     <webdiyer:AspNetPager CssClass="pages" class="pagination" CurrentPageButtonClass="cpb" AlwaysShow="true" ID="AspNetPager1" runat="server" FirstPageText="首页" LastPageText="尾页" NextPageText="下一页" PrevPageText="上一页" OnPageChanged="AspNetPager1_PageChanged" LayoutType="Div">
                                     </webdiyer:AspNetPager>
-                                </div>
 
                                          </ContentTemplate>
     </asp:UpdatePanel>
@@ -125,7 +126,56 @@
                     </div>
                 </div>
             </div>
- 
+   <style>
+        .table th {
+            height:30px;
+            text-align: center;
+        }
 
+        .table td, .table th {
+            border:1px solid #cad9ea;
+            padding: 0 1em 0;
+            border-top:none;
+        }
+        .table tr:nth-child(even){
+        background: #F9F9F9;
+                }  
+            .table tr:nth-child(odd){
+        background:  #F7F6F3;
+                }
+        .table tr:hover {
+            background: #E8E8E8;
+        } 
+            
+    </style>
+
+    <script>
+        var TestGUID = "";
+
+
+        function Radio(e) {
+            var GUID = e.getAttribute("data-guid");
+            var id = e.getAttribute("data-id");
+            if (document.getElementById("rdb" + id).checked == false) {
+                document.getElementById("rdb" + id).checked = true;
+                TestGUID = document.getElementById("rdb" + id).value;
+            }
+            else {
+                document.getElementById("rdb" + id).checked = false;
+                TestGUID = "";
+            }
+        }
+
+        function UpdataPatient() {
+            if (TestGUID != "") {
+                window.open("../NewPage/Question_Add.aspx?TestGUID=" + TestGUID)
+            }
+            else {
+                alert("请选择测试卷");
+            }
+
+        }
+
+    </script>
 </asp:Content>
 

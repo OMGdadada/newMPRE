@@ -79,7 +79,7 @@
                                                 </HeaderTemplate>
                                                 <ItemTemplate>
                                                       <tr data-guid='<%#Eval("GUID") %>' data-id='<%#Eval("ID") %>'  onclick="Radio(this)" style="cursor:pointer" > 
-                                                          <th><%# Container.ItemIndex + 1 %></th>
+                                                          <th ><%# Container.ItemIndex + 1 %></th>
                                                           <th>
                                                             <input type="radio" id="<%#"rdb"+Eval("ID") %>"  name="aa " value='<%# Eval("GUID") %>' />
                                                           </th>
@@ -87,7 +87,7 @@
                                                            <th><%# Eval("Sex") %></th>
                                                           <th><%# Eval("Num1") %></th>
                                                           <th><%# Eval("Phone1") %></th>
-                                                          <th><%# Eval("Birthday","{0:yyyy年MM月dd日}") %></th>
+                                                          <th><%# Eval("Birthday","{0:yyyy-MM-dd}") %></th>
 
                                                       </tr>
                                                 </ItemTemplate>  
@@ -129,10 +129,16 @@
             padding: 0 1em 0;
             border-top:none;
         }
-
+        .table tr:nth-child(even){
+        background: #F9F9F9;
+                }  
+            .table tr:nth-child(odd){
+        background:  #F7F6F3;
+                }
         .table tr:hover {
-            background: #F7F6F3;
+            background: #E8E8E8;
         } 
+            
     </style>
 
     <script>
