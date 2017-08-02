@@ -732,7 +732,7 @@
                                                                              <span   class="btn btn-info" id="SearchTextBtn"  onclick="SearchTextBtn()" >搜索</span>
                                                                         <asp:Button ID="SearchBtnText" runat="server" style="display:none" OnClick="SearchBtnText_Click" />&nbsp;&nbsp;&nbsp;&nbsp;
                                                                         <span class="btn btn-warning" data-dismiss="modal" data-toggle="modal" data-target="#myModal4">选择病人</span>
-                                                                      <span onclick="test()">测试</span>
+                                                          
                                                                    
                                                                            </ContentTemplate></asp:UpdatePanel>
                                                                     <br />
@@ -813,7 +813,7 @@
                                             </div>
                                         
                                             <asp:Button ID="SearchBtn" runat="server" Text="搜索" class="btn btn-info"  OnClick="SearchBtn_Click" />&nbsp;&nbsp;  &nbsp;&nbsp;
-                                     <span onclick="test()">测试</span>
+                   
 
                                             <asp:DropDownList ID="OrderDDL" runat="server"
                                                 OnSelectedIndexChanged="OrderDDL_SelectedIndexChanged" AutoPostBack="True">
@@ -1017,11 +1017,8 @@
             }
 
         }
-        function test() {
-            alert("病人："+ PatientGUID + "量表："+ TestGUID);
-        }
+ 
     </script>
 
-   
 </asp:Content>
 

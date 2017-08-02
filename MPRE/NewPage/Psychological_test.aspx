@@ -7,7 +7,7 @@
     <script src="../assets/js/vue.js"></script>
     <div class="tab-pane active">
 
-
+        <div style="margin-top:-10px">
           <div class="row" id="Patient" v-if="CanShow">
                         <div class="col-md-12">
                             <div class="widget" style="margin:0px;">
@@ -91,7 +91,7 @@
         <div class="row">
             <div class="col-xs-12 col-md-12">
                 <div class="widget" style="margin: 0px;">
-                    <div class="widget-header bg-blueberry">
+                    <div class="widget-header bg-blue">
                         <i class="widget-icon fa fa-arrow-right"></i>
                         <span class="widget-caption" style="font-size: 15px;"><strong>心理测试</strong></span>
                     </div>
@@ -189,7 +189,7 @@
             </div>
         </div>
     </div>
-
+        </div>
      <div class="modal fade" id="example" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                         <div class="modal-dialog " id="Patientlist" role="document" style="width: 800px;">
                             <div class="modal-content" style="margin-top: 5%;">

@@ -341,35 +341,44 @@ public class QuestionAdd_WebService : System.Web.Services.WebService {
         string[] itemjumps = itemjump.Split(',');
         int flag = 0;
         string sql = "";
-        for (int i = 0; i < ids.Length; i++)
+        if (id.Length > 0)
         {
-            for (int j = 0; j < itemtexts.Length; j++)
+            for (int i = 0; i < ids.Length; i++)
             {
-                if (i == j)
+                for (int j = 0; j < itemtexts.Length; j++)
                 {
-                    sql += "update QuestionItem set ItemText='" + itemtexts[j] + " ', Score=" + itemscores[j] + ", HasTextBox=" + itemHass[j] + ", Jump=" + itemjumps[j] + " where ID='" + ids[i] + "';";
-                    flag = 1;
+                    if (i == j)
+                    {
+                        sql += "update QuestionItem set ItemText='" + itemtexts[j] + " ', Score=" + itemscores[j] + ", HasTextBox=" + itemHass[j] + ", Jump=" + itemjumps[j] + " where ID='" + ids[i] + "';";
+                        flag = 1;
+                    }
                 }
             }
         }
-        if (flag == 1)
-        {
-            using (SqlConnection conn = new DB().GetConnection())
-            {
-                SqlCommand cmd = conn.CreateCommand();
-                cmd.CommandText = sql;
-                conn.Open();
-                cmd.ExecuteNonQuery();
-                cmd.Dispose();
-                conn.Close();
-            }
-            return "Success!";
-        }
         else
-        {
-            return "Failure!";
+        { 
+            return "Failure!"; 
         }
-       
+        
+
+          if (flag == 1)
+            {
+                using (SqlConnection conn = new DB().GetConnection())
+                {
+                    SqlCommand cmd = conn.CreateCommand();
+                    cmd.CommandText = sql;
+                    conn.Open();
+                    cmd.ExecuteNonQuery();
+                    cmd.Dispose();
+                    conn.Close();
+                }
+                return "Success!";
+            }
+            else
+            {
+                return "Failure!";
+            }
+      
     }
   /// <summary>  
   /// 删除试题选项

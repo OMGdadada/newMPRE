@@ -517,9 +517,9 @@
                     document.getElementById('<%=QGUID.ClientID %>').innerText = guid;
                     document.getElementById('<%=ita_hidf.ClientID %>').value = guid;
                     document.getElementById('<%=Sure1.ClientID %>').click();
-                    UpdataItem();
+                   
                     alert("操作成功!");
-
+                    UpdataItem();
                     //sign1=1;
 
                 },
@@ -594,6 +594,7 @@
                  }
                  else { Has += 0 + ","; }
             }
+          
 
             $.ajax({
                 type: "post",
