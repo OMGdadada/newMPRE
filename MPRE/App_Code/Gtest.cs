@@ -15,10 +15,10 @@ using System.Text;
 [WebService(Namespace = "http://tempuri.org/")]
 [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
 // 若要允许使用 ASP.NET AJAX 从脚本中调用此 Web 服务，请取消注释以下行。 
-
 [System.Web.Script.Services.ScriptService]
-
-public class Gtest : System.Web.Services.WebService {
+public class Gtest : System.Web.Services.WebService
+{
+    public static int a;
     public Gtest()
     {
 
@@ -38,19 +38,58 @@ public class Gtest : System.Web.Services.WebService {
         DataSet ds = new DataSet();
         using (SqlConnection conn = new DB().GetConnection())
         {
-            SqlCommand cmd = conn.CreateCommand();
+            SqlConnection con = new SqlConnection();
+            SqlCommand cmd = con.CreateCommand();
             String Q_GUID = GetQUID(TGUID, v);
             cmd.CommandText = "SELECT * FROM [IView] WHERE QuestionGUID ='" + Q_GUID + "' ORDER BY [Serial]";
-            conn.Open();
+
             SqlDataAdapter da = new SqlDataAdapter(cmd.CommandText, conn);
+            ds = new DataSet();
             da.Fill(ds);
-            conn.Close();
         }
-        return Dtb2Json(ds.Tables[0]); 
+        return Dtb2Json(ds.Tables[0]);
+
+    }
+    [WebMethod]
+    public string GetTestName(String GUID, String TGUID)
+    {
+        DataSet ds = new DataSet();
+        using (SqlConnection conn = new DB().GetConnection())
+        {
+            
+            SqlConnection con = new SqlConnection();
+            SqlCommand cmd = con.CreateCommand();
+            cmd.CommandText = "SELECT count(*) as row FROM [TestCart] WHERE GUID ='" + TGUID + "' And TestGUID='"+ GUID + "'and IsPaid='true'";
+            SqlCommand daa = new SqlCommand(cmd.CommandText, conn);
+            conn.Open();
+            SqlDataReader rd = daa.ExecuteReader();
+            if (rd.Read())
+            {
+                 a = Convert.ToInt16(rd["row"].ToString());
+            }
+            conn.Close();
+            if (a == 0)
+            {
+                return "0";
+            }
+            else
+            {
+                cmd.CommandText = "SELECT * FROM [Test] WHERE GUID ='" + GUID + "'";
+                conn.Open();
+                SqlDataAdapter da = new SqlDataAdapter(cmd.CommandText, conn);
+                da.Fill(ds);
+                conn.Close();
+            }
+        }
+        //String TGUID = "527021f6-f278-42ef-8d18-fc7e3e03e4fd";
+        
+        
+        return Dtb2Json(ds.Tables[0]);
 
     }
     private string Dtb2Json(DataTable dtb)
     {
+
         JavaScriptSerializer jss = new JavaScriptSerializer();
         System.Collections.ArrayList dic = new System.Collections.ArrayList();
         foreach (DataRow dr in dtb.Rows)
@@ -64,15 +103,16 @@ public class Gtest : System.Web.Services.WebService {
         }
         return jss.Serialize(dic);
     }
-    private string GetQUID(string tGUID, int v)
+    private string GetQUID(string TGUID, int v)
     {
         string QUID = "";
-        string TGUID = GetTGUID(tGUID);
+
+        //string TGUID = GetTGUID(tGUID);
         using (SqlConnection conn = new DB().GetConnection())
         {
 
             SqlCommand cmd = conn.CreateCommand();
-            cmd.CommandText = "SELECT TOP (1) * FROM (SELECT Top (@QSerial) * FROM [Question] WHERE TestGUID =@TGUID ORDER BY Serial) [Question] ORDER BY Serial desc";
+            cmd.CommandText = "SELECT * FROM (SELECT Top (@QSerial) * FROM [Question] WHERE TestGUID =@TGUID ORDER BY Serial) [Question] ORDER BY Serial desc";
             cmd.Parameters.AddWithValue("@TGUID", TGUID);
             cmd.Parameters.AddWithValue("@QSerial", v);
             conn.Open();//打开数据库连接 
@@ -117,7 +157,7 @@ public class Gtest : System.Web.Services.WebService {
 
             SqlCommand cmd = conn.CreateCommand();
             cmd.CommandText = "SELECT * FROM [Test] WHERE Dimension0name = 2 ORDER BY Serial";
-
+            
             conn.Open();//打开数据库连接 
             SqlDataAdapter da = new SqlDataAdapter(cmd.CommandText, conn);
             da.Fill(ds);
@@ -162,7 +202,7 @@ public class Gtest : System.Web.Services.WebService {
 
     }
     [WebMethod]
-    public string Insert(string Pguid, string Tdata)
+    public string Insert(string Pguid,string Tdata)
     {
         string[] Tdatalist = Tdata.Split('&');
         var Url = "";
@@ -170,7 +210,7 @@ public class Gtest : System.Web.Services.WebService {
         string strGUID = System.Guid.NewGuid().ToString();
         DateTime current = DateTime.Now;
         string time = current.ToString();
-        for (int i = 0; i < Tdatalist.Length; i++)
+        for (int i=0; i<Tdatalist.Length;i++ )
         {
             using (SqlConnection conn = new DB().GetConnection())
             {
@@ -180,7 +220,7 @@ public class Gtest : System.Web.Services.WebService {
                 cmd.Parameters.AddWithValue("@GUID", strGUID);
                 cmd.Parameters.AddWithValue("@PatientGUID", Pguid);
                 cmd.Parameters.AddWithValue("@TestGUID", Tdatalist[i]);
-                cmd.Parameters.AddWithValue("@Time", time);
+                cmd.Parameters.AddWithValue("@Time",time);
                 conn.Open();//打开数据库连接 
                 cmd.ExecuteNonQuery();
                 conn.Close();
@@ -210,15 +250,126 @@ public class Gtest : System.Web.Services.WebService {
     }
 
     [WebMethod]
+    public string InsertTest(string GUID, string TGUID)
+    {
+
+        var Text = "";
+        //System.Guid guid = System.Guid.NewGuid();
+        string strGUID = System.Guid.NewGuid().ToString();
+        DateTime current = DateTime.Now;
+        string time = current.ToString();
+        using (SqlConnection conn = new DB().GetConnection())
+        {
+            
+            SqlCommand cmd = conn.CreateCommand();
+            cmd.CommandText = "SELECT count(*) as row FROM [AnswerItem] WHERE CartGUID ='" + TGUID + "' And TestGUID='" + GUID + "'";
+            SqlCommand daa = new SqlCommand(cmd.CommandText, conn);
+            conn.Open();
+            SqlDataReader rd = daa.ExecuteReader();
+            if (rd.Read())
+            {
+                a = Convert.ToInt16(rd["row"].ToString());
+            }
+            conn.Close();
+            if (a == 0)
+            {
+                cmd.CommandText = "SELECT count(*) as row FROM [Question] WHERE TestGUID='" + GUID + "'";
+                daa = new SqlCommand(cmd.CommandText, conn);
+                conn.Open();
+                rd = daa.ExecuteReader();
+                if (rd.Read())
+                {
+                    a = Convert.ToInt16(rd["row"].ToString());
+                }
+                conn.Close();
+                var Pguid = GetPGUID(TGUID);
+                for (int i = 0; i < a ; i++)
+                {
+                    var QUID =GetQUID(GUID,i+1);
+                    cmd.CommandText = "INSERT INTO AnswerItem (GUID,CartGUID,PatientGUID,TestGUID,QuestionGUID,IsFinished) VALUES ('"+ strGUID + "','" + TGUID + "','" + Pguid + "','" + GUID + "','" + QUID + "',0)";
+                    
+                    conn.Open();//打开数据库连接 
+                    cmd.ExecuteNonQuery();
+                    conn.Close();
+                }
+                Text = "数据插入";
+            }else
+            {
+                Text = "已有数据";
+            }
+        }
+
+        
+        
+
+        return Text;
+
+    }
+
+
+    [WebMethod]
+    public string InsertItemSerial(int v, string TGUID,string GUID,int ItemSerial)
+    {
+
+        var Text = "成功修改";
+        DateTime current = DateTime.Now;
+        string time = current.ToString();
+        using (SqlConnection conn = new DB().GetConnection())
+        {
+            var QUID = GetQUID(GUID, v);
+            SqlCommand cmd = conn.CreateCommand();
+            cmd.CommandText = "UPDATE [AnswerItem] SET ItemSerial = '"+ ItemSerial + "',CDT='" + time + "',IsFinished = 'True' WHERE CartGUID='"+ TGUID + "' AND QuestionGUID='"+ QUID + "'";
+            SqlCommand daa = new SqlCommand(cmd.CommandText, conn);
+            conn.Open();
+            cmd.ExecuteNonQuery();//执行Sql
+            conn.Close();//关闭
+        }
+
+        
+        using (SqlConnection conn = new DB().GetConnection())
+        {
+
+            SqlCommand cmd = conn.CreateCommand();
+            cmd.CommandText = "SELECT count(*) as row FROM [AnswerItem] WHERE TestGUID='" + GUID + "' AND CartGUID='" + TGUID + "' AND IsFinished = 'False'";
+            conn.Open();
+            SqlDataReader rd = cmd.ExecuteReader();
+            if (rd.Read())
+            {
+                a = Convert.ToInt16(rd["row"].ToString());
+            }
+            conn.Close();
+        }
+
+        if (a==0)
+        {
+            using (SqlConnection conn = new DB().GetConnection())
+            {
+                SqlCommand cmd = conn.CreateCommand();
+                cmd.CommandText = "UPDATE [TestCart] SET IsFinished = 'True' WHERE GUID='" + TGUID + "' AND TestGUID='" + GUID + "'";
+                SqlCommand daa = new SqlCommand(cmd.CommandText, conn);
+                conn.Open();
+                cmd.ExecuteNonQuery();//执行Sql
+                conn.Close();//关闭
+            }
+            Text = "所有题完成成功";
+        }
+
+
+        return Text;
+
+    }
+
+
+    [WebMethod]
     public string GetPatient(string Tguid)
     {
         string PGUID = GetPGUID(Tguid);
         DataSet ds = new DataSet();
         using (SqlConnection conn = new DB().GetConnection())
         {
-
+            
             SqlCommand cmd = conn.CreateCommand();
-            cmd.CommandText = "SELECT * FROM [Patient] WHERE GUID= '" + PGUID + "'";
+            cmd.CommandText = "SELECT * FROM [Patient] WHERE GUID= '"+ PGUID+"'";
             //cmd.Parameters.AddWithValue("@GUID", PGUID);
             conn.Open();//打开数据库连接 
             SqlDataAdapter da = new SqlDataAdapter(cmd.CommandText, conn);
@@ -231,7 +382,7 @@ public class Gtest : System.Web.Services.WebService {
     [WebMethod]
     public string Get_Patient(string PGUID)
     {
-
+        
         DataSet ds = new DataSet();
         using (SqlConnection conn = new DB().GetConnection())
         {
@@ -247,8 +398,6 @@ public class Gtest : System.Web.Services.WebService {
         return Dtb2Json(ds.Tables[0]);
 
     }
-
-
 
     [WebMethod]
     public string GetTestList(string Tguid)
@@ -277,7 +426,7 @@ public class Gtest : System.Web.Services.WebService {
         {
 
             SqlCommand cmd = conn.CreateCommand();
-            cmd.CommandText = "SELECT TOP (1) * FROM [TestCart] Where GUID=@tGUID and IsPaid ='True' and IsFinished ='False' ORDER BY TestGUID";
+            cmd.CommandText = "SELECT TOP (1) * FROM [TestCart] Where GUID=@tGUID and IsPaid ='True' ORDER BY TestGUID";
             cmd.Parameters.AddWithValue("@TGUID", tGUID);
             conn.Open();//打开数据库连接 
             SqlDataReader sda = cmd.ExecuteReader();
@@ -289,6 +438,53 @@ public class Gtest : System.Web.Services.WebService {
         }
 
         return PGUID;
+    }
+
+
+
+    [WebMethod]
+    public string RQAnswer(string GUID, string TGUID,int v)
+    {
+        DataSet ds = new DataSet();
+        var QUID = GetQUID(GUID, v);
+        //System.Guid guid = System.Guid.NewGuid();
+        using (SqlConnection conn = new DB().GetConnection())
+        {
+
+            SqlCommand cmd = conn.CreateCommand();
+            cmd.CommandText = "SELECT * FROM [AnswerItem] WHERE CartGUID ='" + TGUID + "' And TestGUID='" + GUID + "'And QuestionGUID='" + QUID + "'";
+            conn.Open();//打开数据库连接 
+            SqlDataAdapter da = new SqlDataAdapter(cmd.CommandText, conn);
+            da.Fill(ds);
+            conn.Close();
+        }
+        return Dtb2Json(ds.Tables[0]);
+
+        
+
+    }
+
+
+    [WebMethod]
+    public string AwrTest(string GUID)
+    {
+
+        DataSet ds = new DataSet();
+        using (SqlConnection conn = new DB().GetConnection())
+        {
+
+            SqlCommand cmd = conn.CreateCommand();
+            cmd.CommandText = "SELECT count(*) as row FROM [Question] WHERE TestGUID='" + GUID + "'";
+            conn.Open();
+            SqlDataReader rd = cmd.ExecuteReader();
+            if (rd.Read())
+            {
+                a = Convert.ToInt16(rd["row"].ToString());
+            }
+            conn.Close();
+        }
+        return ""+a+"";
+
     }
 
 }

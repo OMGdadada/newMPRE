@@ -158,7 +158,7 @@
                 methods: {
                     Start: function (val) {
                         //alert(val);
-                        var Url="Test_Start.aspx?GUID="+val;
+                        var Url = "Test_Start.aspx?TGUID=" + newsid + "&GUID=" + val;
                         window.open(Url, '_blank', 'top=0,left=0,width=' + (screen.availWidth - 5) + ',height=' + (screen.availHeight - 50) + ',menubar=no,toolbar=no,location=no,directories=no,status=no,scrollbars=no,resizable=yes');
 
                     }
