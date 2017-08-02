@@ -168,7 +168,7 @@
 
         function UpdataPatient() {
             if (TestGUID != "") {
-                window.open("../NewPage/Question_Add.aspx?TestGUID=" + TestGUID)
+                window.open("../NewPage/Gauge_Add.aspx?GUID=" + TestGUID)
             }
             else {
                 alert("请选择测试卷");

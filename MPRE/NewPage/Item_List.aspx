@@ -90,7 +90,7 @@
                 </div>
 
                 <div class="modal-footer">
-                     <button onclick="ItemList()" class="btn btn-info" data-dismiss="modal" data-toggle="modal" data-target="#myModal">确认添加</button>
+                     <button onclick="ItemList()" class="btn btn-info" data-dismiss="modal" data-toggle="modal" data-target="#myModal">确认</button>
                     <button  onclick="Cancel()" type="button" class="btn btn-default" data-dismiss="modal" data-toggle="modal" data-target="#myModal">取消</button>
                 </div>
             </div>

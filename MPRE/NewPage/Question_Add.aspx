@@ -604,7 +604,7 @@
 
                 },
                 error: function (msg) {
-                    alert("操作失败!");
+                    alert("注意该题目尚无选项!");
 
                 }
             });
