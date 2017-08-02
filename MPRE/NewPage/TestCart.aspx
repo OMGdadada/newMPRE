@@ -84,9 +84,9 @@
                                             <td>{{test.IsFinished}}</td>
                                             <td>{{test.Price}}</td>
                                             <td><i v-if="!test.Finished" id="StartBtn" style="cursor:pointer;" class="glyphicon glyphicon-hand-right" v-on:click="Start(test.TestGUID)"></i>
-                                                <i v-if="test.Finished" id="FinishBtn" class="glyphicon glyphicon-ok" ></i>
+                                                <i v-if="test.Finished" id="ReportBtn"  style="cursor:pointer;"  class="glyphicon glyphicon-list-alt" :data-TestGUID="test.TestGUID"  :data-PatientGUID="test.PatientGUID"  :data-CatGUID="test.GUID"  onclick="Report(this)"></i>
                                             </td>
-                                            <td> <i class="glyphicon glyphicon-remove" :data-id="test.ID" onclick="Delete(this)" style="cursor:pointer"></i></td>
+                                            <td> <i v-if="!test.Finished"   class="glyphicon glyphicon-remove" :data-id="test.ID" onclick="Delete(this)" style="cursor:pointer"></i></td>
                                         </tr>
                                     </tbody>
                                     <tfoot>
@@ -150,13 +150,22 @@
                     url: "Gtest.asmx/Delete",
                     data: { ID: id },
                     success: function (Nums) {
-                        alert("删除成功!");
+                     
                         ajax1();
                     },
                     error: function (Num) {
                         alert("删除失败");
                 },
                 });
+            }
+            function Report(e) {
+                var TestGUID = e.getAttribute("data-TestGUID");
+                var PatientGUID = e.getAttribute("data-PatientGUID");
+                var CatGUID = e.getAttribute("data-CatGUID");
+                alert(TestGUID + PatientGUID + CatGUID);
+                var Url = "Psychological_Report.aspx?TestGUID=" + TestGUID + "&PatientGUID=" + PatientGUID + "&CatGUID=" + CatGUID;
+                window.open(Url, '_blank');
+
             }
             function ajax1() {
                 $.ajax({

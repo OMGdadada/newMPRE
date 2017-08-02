@@ -47,7 +47,7 @@ public partial class Test_Start : System.Web.UI.Page
             if (rd.Read())
             {
                 Patient.Text = rd["PatientName"].ToString();
-                GUID.Text = rd["GUID"].ToString();
+                CardID.Text = rd["CertificatesNum"].ToString();
                 Sex.Text = rd["Sex"].ToString();
                 Birthday.Text = String.Format("{0:yyyy年MM月dd日}", rd["Birthday"]);
                 Num1.Text = rd["Num1"].ToString();
@@ -213,7 +213,7 @@ public partial class Test_Start : System.Web.UI.Page
 
     protected void PrintBtn_Click(object sender, EventArgs e)
     {
-        Response.Redirect(Server.HtmlEncode("Test_select.aspx?GUID=" + GUID.Text));
+        Response.Redirect(Server.HtmlEncode("Test_select.aspx?GUID=" + Request.QueryString["GUID"].ToString()));
     }
     protected void CreateSelfT1_Click(object sender, EventArgs e)
     {
@@ -397,7 +397,7 @@ public partial class Test_Start : System.Web.UI.Page
 
             cmd.Parameters.AddWithValue("@TestNum", TestNum);
             cmd.Parameters.AddWithValue("@TestName", TestName);
-            cmd.Parameters.AddWithValue("@PatientGUID", GUID.Text);
+            cmd.Parameters.AddWithValue("@PatientGUID", Request.QueryString["GUID"].ToString());
             cmd.Parameters.AddWithValue("@PatientName", Patient.Text);
             cmd.Parameters.AddWithValue("@CreateDate", date);
             cmd.Parameters.AddWithValue("@Code", Code.ToString());

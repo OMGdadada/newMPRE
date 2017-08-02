@@ -76,9 +76,9 @@
                                         </a>
                                     </th>
 
-                                    <th>编号</th>
+                                    <th>身份证</th>
                                     <th>
-                                        <asp:Label ID="GUID" runat="server"></asp:Label></th>
+                                        <asp:Label ID="CardID" runat="server"></asp:Label></th>
                                 </tr>
 
                                 <tr>

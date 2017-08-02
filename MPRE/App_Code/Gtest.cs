@@ -19,7 +19,6 @@ using System.Text;
 [System.Web.Script.Services.ScriptService]
 
 public class Gtest : System.Web.Services.WebService {
-
     public Gtest()
     {
 
@@ -35,6 +34,7 @@ public class Gtest : System.Web.Services.WebService {
     [WebMethod]
     public string GetNums(int v, String TGUID)
     {
+
         DataSet ds = new DataSet();
         using (SqlConnection conn = new DB().GetConnection())
         {
@@ -45,7 +45,7 @@ public class Gtest : System.Web.Services.WebService {
             SqlDataAdapter da = new SqlDataAdapter(cmd.CommandText, conn);
             da.Fill(ds);
             conn.Close();
-       }
+        }
         return Dtb2Json(ds.Tables[0]); 
 
     }
@@ -192,13 +192,13 @@ public class Gtest : System.Web.Services.WebService {
         return Url;
 
     }
-        [WebMethod]
+    [WebMethod]
     public string Delete(string ID)
     {
-        int i= 0;
+        int i = 0;
         using (SqlConnection conn = new DB().GetConnection())
         {
-            StringBuilder sb = new StringBuilder("Delete from TestCart where ID="+ ID );
+            StringBuilder sb = new StringBuilder("Delete from TestCart where ID=" + ID);
             SqlCommand cmd = new SqlCommand(sb.ToString(), conn);
             conn.Open();
             cmd.ExecuteNonQuery();
@@ -208,6 +208,7 @@ public class Gtest : System.Web.Services.WebService {
         if (i == 1) return "1";
         else return "";
     }
+
     [WebMethod]
     public string GetPatient(string Tguid)
     {
@@ -227,6 +228,27 @@ public class Gtest : System.Web.Services.WebService {
         return Dtb2Json(ds.Tables[0]);
 
     }
+    [WebMethod]
+    public string Get_Patient(string PGUID)
+    {
+
+        DataSet ds = new DataSet();
+        using (SqlConnection conn = new DB().GetConnection())
+        {
+
+            SqlCommand cmd = conn.CreateCommand();
+            cmd.CommandText = "SELECT * FROM [Patient] WHERE GUID= '" + PGUID + "'";
+            //cmd.Parameters.AddWithValue("@GUID", PGUID);
+            conn.Open();//打开数据库连接 
+            SqlDataAdapter da = new SqlDataAdapter(cmd.CommandText, conn);
+            da.Fill(ds);
+            conn.Close();
+        }
+        return Dtb2Json(ds.Tables[0]);
+
+    }
+
+
 
     [WebMethod]
     public string GetTestList(string Tguid)
@@ -268,4 +290,5 @@ public class Gtest : System.Web.Services.WebService {
 
         return PGUID;
     }
+
 }
