@@ -130,7 +130,7 @@ public partial class T5 : System.Web.UI.Page
         RS3 = D5 + D6 + D25 + D27 + D28 + D29 + D32 + D34 + D35 + D36 + D37 + D38;
         RS4 = D10 + D12 + D13 + D14 + D15 + D16 + D23 + D24 + D26 + D30;
         RS5 = D17 + D18 + D19 + D31 + D33;
-        RawScore = RS1 + RS2 + RS3 + RS4;
+        RawScore = RS1 + RS2 + RS3 + RS4 + RS5;
 
         //***插入数据库***
         //动态生成数组

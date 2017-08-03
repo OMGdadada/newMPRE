@@ -156,7 +156,7 @@ public class Gtest : System.Web.Services.WebService
         {
 
             SqlCommand cmd = conn.CreateCommand();
-            cmd.CommandText = "SELECT * FROM [Test] WHERE Dimension0name = 2 ORDER BY Serial";
+            cmd.CommandText = "SELECT * FROM [Test] WHERE Dimension0name = 2 and Valid=1 ORDER BY Serial";
             
             conn.Open();//打开数据库连接 
             SqlDataAdapter da = new SqlDataAdapter(cmd.CommandText, conn);

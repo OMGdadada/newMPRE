@@ -746,7 +746,7 @@
         }
         function ajax3(Tdata, Pguid) {
             var Url = "";
-            Tdata = Tdata.substring(0, Tdata.length - 1);
+           // Tdata = Tdata.substring(0, Tdata.length - 1);
             $.ajax({
                 type: "post",
                 url: "Gtest.asmx/Insert", //服务端处理程序   

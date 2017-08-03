@@ -144,7 +144,6 @@
             }
             function Delete(e) {
                 var id = e.getAttribute("data-id");
-                alert(id);
                 $.ajax({
                     type: "post",
                     url: "Gtest.asmx/Delete",
@@ -162,7 +161,6 @@
                 var TestGUID = e.getAttribute("data-TestGUID");
                 var PatientGUID = e.getAttribute("data-PatientGUID");
                 var CatGUID = e.getAttribute("data-CatGUID");
-                alert(TestGUID + PatientGUID + CatGUID);
                 var Url = "Psychological_Report.aspx?TestGUID=" + TestGUID + "&PatientGUID=" + PatientGUID + "&CatGUID=" + CatGUID;
                 window.open(Url, '_blank');
 
