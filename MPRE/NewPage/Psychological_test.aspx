@@ -440,8 +440,19 @@
                     }
                 },
                 click: function (val) {
-                    val -= 1;
-                    Tc.Testlist.push(vm.testlist[val]);
+                    var ch = document.getElementsByName("Test");
+                    for (var i in ch) {
+                        if (i == val - 1) {
+                            if (ch[i].checked) {
+                                Tc.Testlist.push(vm.testlist[i]);
+                            } else {
+                                for (var x in Tc.Testlist) {
+                                    if (Tc.Testlist[x].GUID == vm.testlist[i].GUID)
+                                        Tc.Testlist.splice(x, 1);
+                                }
+                            }
+                        }
+                    }
                 }
             }
         })
