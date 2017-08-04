@@ -698,19 +698,17 @@
                         </asp:ContentPlaceHolder>
                     </div>
 
-                 <iframe width=0   height=0   src="SessionKeeper.aspx">   </iframe>         
                     <script>
-                        var int = self.setInterval("refresh()", 300000);
+                        var int = self.setInterval("refresh()", 20000);
                         function refresh() {
                             $.ajax({
-                                url: 'User.master',
+                                url: 'Session.asmx/HelloWorld',
                                 type: 'POST',
-                                dataType: 'json',
                                 error: function () {
-
+                                   
                                 },
                                 success: function (rs) {
-                                    //刷新成功
+                               
                                 }
                             });
                         }

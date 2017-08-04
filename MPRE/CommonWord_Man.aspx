@@ -43,11 +43,11 @@
                                      
                                     <asp:Button ID="UpdateBtn" runat="server" Text="修改常用语" class="btn btn-info" OnClick="UpdateBtn_Click" />
                                     &nbsp;&nbsp;&nbsp;&nbsp;
-                                    <asp:Button ID="DelAr" runat="server" Text="删除常用语" class="btn btn-danger" OnClick="DelAr_Click" />
+                                    <asp:Button ID="DelAr" runat="server" Text="删除常用语" class="btn btn-danger" OnClick="DelAr_Click"   OnClientClick="return confirm('确定删除所选常用语?');" />
                                     &nbsp;&nbsp;&nbsp;&nbsp;
                                     
                                 </div>
-                                <div style="margin-top: 60px;"></div>
+                                <div style="margin-top: 60px;"> <asp:Label ID="ResultLabel" runat="server"  ></asp:Label></div>
                                 <div class=" col-xs-12 col-md-12">
                                     <%--<asp:CheckBox ID="SelectAllCheckBox" runat="server" Text=" 全选 " AutoPostBack="true" OnCheckedChanged="SelectAllCheckBox_CheckedChanged" />--%>
                                     &nbsp;&nbsp; 

@@ -193,7 +193,33 @@ public partial class CommonWord_Man : System.Web.UI.Page
         if (!String.IsNullOrEmpty(ids))
         {
             ids = ids.Substring(1);
-            Response.Redirect(Server.HtmlEncode("CommonWord_Del.aspx?IDS=" + ids));
+            int i = 0;
+            string sqlCon = "";
+            using (SqlConnection conn = new DB().GetConnection())
+            {
+                SqlCommand cmd = conn.CreateCommand();
+                {
+                    sqlCon = "Delete from CommonWord where ID in (" + ids + ")";
+                    cmd.CommandText = sqlCon;
+                    conn.Open();
+                    i = cmd.ExecuteNonQuery();
+                    cmd.Dispose();
+                    conn.Close();
+                }
+
+            }
+            if (i > 0)
+            {
+                ResultLabel.Text = "成功删除" + i + "个科室！";
+                ResultLabel.ForeColor = System.Drawing.Color.Green;
+
+            }
+            else
+            {
+                ResultLabel.Text = "操作失败，请重试！";
+                ResultLabel.ForeColor = System.Drawing.Color.Red;
+            }
+            MyDataBind();
         }
 
     }
