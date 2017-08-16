@@ -152,7 +152,12 @@
     <script>
         var TestGUID = "";
 
-
+        $(function () {
+            $(":radio").click(function () {
+                event.stopPropagation();
+                TestGUID = $(this).val();
+            });
+        });
         function Radio(e) {
             var GUID = e.getAttribute("data-guid");
             var id = e.getAttribute("data-id");

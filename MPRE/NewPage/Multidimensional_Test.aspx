@@ -789,7 +789,7 @@
                                 </div>
 
 
-       <%--批量添加选项--%>
+       <%--病人模态框弹出--%>
     <div class="modal fade" id="myModal4" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document"style="width: 80%;" >
             <div class="modal-content" style="margin-top: 5%;">
@@ -896,8 +896,8 @@
                 </div>
 
                 <div class="modal-footer">
-                     <button onclick="ItemList()" class="btn btn-info" data-dismiss="modal" data-toggle="modal" data-target="#myModal">确认添加</button>
-                    <button type="button" class="btn btn-default" data-dismiss="modal" data-toggle="modal" data-target="#myModal">取消</button>
+                  
+                  
                 </div>
             </div>
         </div>
@@ -968,7 +968,12 @@
                 PatientGUID = "";
             }
         }
-
+        $(function () {
+            $(":radio").click(function () {
+                event.stopPropagation();
+                PatientGUID = $(this).val();
+            });
+        });
         function UpdataPatient() {
             if (PatientGUID != "") {
                 window.open("../Patient_Info.aspx?GUID=" + PatientGUID)

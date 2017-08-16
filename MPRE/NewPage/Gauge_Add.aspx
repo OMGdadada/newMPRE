@@ -48,7 +48,7 @@
                           <tr>
                             <th id="td1">描述：</th>
                             <th id="td2" colspan="3">
-                              <asp:TextBox ID="Description" runat="server"  class="form-control" TextMode="MultiLine" ></asp:TextBox></th> 
+                              <asp:TextBox ID="Description" runat="server"  class="form-control" TextMode="MultiLine"  Height="100px"></asp:TextBox></th> 
                         </tr>
                         <tr>
 

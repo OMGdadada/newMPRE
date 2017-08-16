@@ -81,7 +81,7 @@
                                                       <tr data-guid='<%#Eval("GUID") %>' data-id='<%#Eval("ID") %>'  onclick="Radio(this)" style="cursor:pointer" > 
                                                           <th ><%# Container.ItemIndex + 1 %></th>
                                                           <th>
-                                                            <input type="radio" id="<%#"rdb"+Eval("ID") %>"  name="aa " value='<%# Eval("GUID") %>' />
+                                                            <input type="radio" id="<%#"rdb"+Eval("ID") %>"  name="aa" value='<%# Eval("GUID") %>' />
                                                           </th>
                                                           <th><%# Eval("PatientName") %></th>
                                                            <th><%# Eval("Sex") %></th>
@@ -142,6 +142,7 @@
     </style>
 
     <script>
+   
         var PatientGUID = "";
 
         function Radio(e) {
@@ -157,6 +158,12 @@
             }
         }
 
+        $(function () {
+            $(":radio").click(function () {
+                event.stopPropagation();
+                PatientGUID = $(this).val();
+            });
+        });
         function UpdataPatient() {
             if (PatientGUID != "") {
                 window.open("../Patient_Info.aspx?GUID=" + PatientGUID)
