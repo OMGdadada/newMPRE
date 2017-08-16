@@ -124,7 +124,7 @@
                   <%--<Triggers>
                       <asp:AsyncPostBackTrigger ControlID="btnouttg" />
                   </Triggers>--%>
-                <div class="page-sidebar menu-compact" id="sidebar">
+                <div class="page-sidebar" id="sidebar">
                     <!-- Page Sidebar Header-->
                       <%--<div class="sidebar-header-wrapper">
                         <asp:TextBox ID="searchTextBox" Runat="server" class="searchinput" placeholder="编号或姓名搜索" />

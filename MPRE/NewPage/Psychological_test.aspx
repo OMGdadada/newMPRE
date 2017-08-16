@@ -12,7 +12,6 @@
     </div>
     <div id="content" style="display:none">
         <div class="tab-pane active">
-
         <div style="margin-top:-10px">
           <div class="row" id="Patient" v-if="CanShow">
                         <div class="col-md-12">
@@ -61,50 +60,17 @@
                             </div>
                         </div>
                     </div>
-
         <div class="row">
-                        <div class="col-md-12">
-                            <br />
-                            <div id="TestCart">
-                                <table class="table table-bordered table-hover" v-if="CanShow">
-                                    <thead>
-                                        <tr>
-                                            <th style="width:32px;">序</th>
-                                            <th>已选择量表</th>
-                                            <th style="width:80px;">价格</th>
-                                            <th style="width:30px;"></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr v-for="test in Testlist">
-                                            <th>{{test.SSerial}}</th>
-                                            <th>{{test.TestName}}<input type="checkbox" name="TestCart" :value="test.GUID" style="display:none" checked="checked" /></th>
-                                            <th>{{test.Price}}</th>
-                                            <th><i id="FinishBtn" class="glyphicon glyphicon-remove" v-on:click="Del(test.SSerial)" ></i></th>
-                                        </tr>
-                                    </tbody>
-                                    <tfoot>
-                                        <tr>
-                                            <th colspan="4">总价：{{count}}</th>
-                                        </tr>
-                                    </tfoot>
-                                </table>
-                            </div>
-                            <br />
-                        </div>
-                    </div>
-
-        <div class="row">
-            <div class="col-xs-12 col-md-12">
+            <div class="col-xs-9 col-md-9">
+                <br />
                 <div class="widget" style="margin: 0px;">
                     <div class="widget-header bg-blue">
                         <i class="widget-icon fa fa-arrow-right"></i>
                         <span class="widget-caption" style="font-size: 15px;"><strong>心理测试</strong></span>
                     </div>
-
-                    <div class="widget-body">
-          
-            <div class="row" id="Testlist">
+                </div>
+                <div class="widget-body">
+                    <div class="row" id="Testlist">
                         <div class="col-md-12">
                             <div class="row">
                                 <div class="form-group col-xs-3 col-md-3">
@@ -192,6 +158,43 @@
 
                 </div>
                     </div>
+            <div class="col-md-3">
+                <br />
+                <div class="widget" style="margin: 0px;">
+                    <div id="head" class="widget-header bg-gray">
+                        <i class="widget-icon fa fa-arrow-right"></i>
+                        <span class="widget-caption" style="font-size: 15px;"><strong>已选测试</strong></span>
+                    </div>
+                </div>
+                <div class="widget-body">
+                    <div id="TestCart" class="row">
+                        <div class="col-md-12">
+                            <table class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th style="width:32px;">序</th>
+                                        <th style="width:100px;">已选测试</th>
+                                        <th style="width:50px;">价格</th>
+                                        <th style="width:30px;"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr v-for="test in Testlist">
+                                        <th>{{test.SSerial}}</th>
+                                        <th>{{test.TestName}}<input type="checkbox" name="TestCart" :value="test.GUID" style="display:none" checked="checked" /></th>
+                                        <th>{{test.Price}}</th>
+                                        <th><i id="FinishBtn" class="glyphicon glyphicon-remove" v-on:click="Del(test.SSerial)" ></i></th>
+                                    </tr>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th colspan="4">总价：{{count}}</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -573,15 +576,16 @@
             el: '#TestCart',
             data: {
                 Testlist: [],
-                CanShow: false,
                 count: 0
             },
             watch: {
                 Testlist: function () {
                     if (this.Testlist.length > 0) {
-                        this.CanShow = true;
+                        $("#head").removeClass("bg-gray");
+                        $("#head").addClass("bg-gold");
                     } else {
-                        this.CanShow = false;
+                        $("#head").removeClass("bg-gold");
+                        $("#head").addClass("bg-gray");
                     }
                     this.count = 0;
                     for (z in Tc.Testlist) {
@@ -611,7 +615,7 @@
             Ptt.CanShow = true;
         }
         ajax1();
-        setTimeout("Show()", 100);
+        setTimeout("Show()", 500);
         function Show() {
             $(".loading").css("display", "none");
             $("#content").css("display", "block");

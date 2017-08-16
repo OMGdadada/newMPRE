@@ -5,7 +5,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
     <asp:Label ID="HospitalGUID" runat="server" Visible="false" Text=""></asp:Label>
     <!-- Page Body -->
-    <div class="page-body" style="padding:0px 0px 24px;margin-top: -32px;">
+    <div class="page-body" style="padding:0px 0px 24px">
         <div class="row">
             <div class="col-md-12">
                 <div class="profile-container">
@@ -24,24 +24,26 @@
                         </div>
 
                     </div>
-
-                    <div class="profile-header row">
-                       
-                           <div class="col-md-6 col-sm-6">
-                            <div class="divright" id="div1">
-                                  <a href="NewPage/Multidimensional_Test.aspx" target="_blank"><i class="fa fa-cogs"></i></a>
-                                  <h1>多维度精神康复</h1><h1>评估系统</h1>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="profile-header row">
+                                <div class="divright" id="div1">
+                                    <a href="NewPage/Multidimensional_Test.aspx" target="_blank"><i class="fa fa-cogs"></i></a>
+                                    <h1>多维度精神康复评估系统</h1>
+                                </div>
                             </div>
                         </div>
-
-                        <div class="col-md-6 col-sm-6">
-                            <div class="divright" id="div2">
-                                  <a  href="NewPage/Psychological_Test.aspx" target="_blank"><i class="fa fa-heart"></i></a>
-                                  <h1>心理测评系统</h1>
+                        <div class="col-sm-6">
+                            <div class="profile-header row">
+                                <div class="divright" id="div2">
+                                      <a  href="NewPage/Psychological_Test.aspx" target="_blank"><i class="fa fa-heart"></i></a>
+                                      <h1>心理测评系统</h1>
+                                </div>
                             </div>
                         </div>
-
                     </div>
+
+                    
 
                        <div class="profile-header row">
                         <div class="divbottom">
@@ -89,9 +91,9 @@
         }
         .divright{
             text-align:center;
-            margin-top: 35px !important;
-            width: 275px;
-            height: 270px;        
+            margin-top: 20px !important;
+            width: 320px;
+            height: 220px;        
         }
         .divright h1 {
             font-size: 28px;
@@ -130,7 +132,7 @@
         }
         .divbottom i {
             border-radius: 50%;
-            padding: 3px 3px;
+            padding: 4px 4px;
             color: #000;
             text-align: center;
             border: 1px solid #000;
