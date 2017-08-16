@@ -5,7 +5,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
     <asp:Label ID="HospitalGUID" runat="server" Visible="false" Text=""></asp:Label>
     <!-- Page Body -->
-    <div class="page-body" style="padding:0px 0px 24px">
+    <div class="page-body" style="padding:0px 0px 24px;margin-top: -32px;">
         <div class="row">
             <div class="col-md-12">
                 <div class="profile-container">
@@ -91,7 +91,7 @@
             text-align:center;
             margin-top: 35px !important;
             width: 275px;
-            height: 275px;        
+            height: 270px;        
         }
         .divright h1 {
             font-size: 28px;
@@ -130,7 +130,7 @@
         }
         .divbottom i {
             border-radius: 50%;
-            padding: 4px 4px;
+            padding: 3px 3px;
             color: #000;
             text-align: center;
             border: 1px solid #000;
