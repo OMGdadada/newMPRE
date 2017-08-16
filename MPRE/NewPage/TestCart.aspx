@@ -7,10 +7,16 @@
         th{
             text-align:center;
         }
-        
+        .bar { width: 100%; height: 20px; border: 1px solid #2980b9; border-radius: 3px; background-image: repeating-linear-gradient( -45deg, #2980b9, #2980b9 11px, #eee 10px, #eee 20px /* determines size */ ); background-size: 28px 28px; animation: move .5s linear infinite; } @keyframes move { 0% { background-position: 0 0; } 100% { background-position: 28px 0; } }
     </style>
-        <script src="../assets/js/vue.js"></script>
-        <div class="row">
+    <script src="../assets/js/vue.js"></script>
+    <div class="row loading" style="display:block">
+        <div class="col-md-3"></div>
+        <div class="col-md-6" style="margin-top:300px"><div class="bar"></div></div>
+        <div class="col-md-3"></div>
+    </div>
+    <div id="content" style="display:none">
+        <div class="row" >
                 <div class="col-md-12">
                     <div class="widget" style="margin:0px;">
                         <div class="widget-header bg-blueberry">
@@ -49,13 +55,11 @@
                     </div>
                 </div>
             </div>
-
-
-         <div class="row">
+        <div class="row">
                 <br />
                 <br />
             </div>
-            <div class="row">
+        <div class="row">
                 <div class="col-md-12">
                     <div class="widget" style="margin:0px;">
                         <div class="widget-header bg-blue">
@@ -105,6 +109,7 @@
                     </div>
                 </div>
             </div>
+    </div>
      <script>
             urlinfo = window.location.href; //获取当前页面的url
             len = urlinfo.length;//获取url的长度
@@ -137,6 +142,7 @@
             })
             if (newsname == "?TGUID") {
                 ajax1();
+                setTimeout("Show()", 500);
             } else if (newsname == "?GUID") {
                 ajax2();
             } else {
@@ -164,6 +170,10 @@
                 var Url = "Psychological_Report.aspx?TestGUID=" + TestGUID + "&PatientGUID=" + PatientGUID + "&CatGUID=" + CatGUID;
                 window.open(Url, '_blank');
 
+            }
+            function Show() {
+                $(".loading").css("display", "none");
+                $("#content").css("display", "block");
             }
             function ajax1() {
                 $.ajax({

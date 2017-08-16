@@ -5,7 +5,13 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
     <script src="../assets/js/vue.js"></script>
-    <div class="tab-pane active">
+    <div class="row loading" style="display:block">
+        <div class="col-md-3"></div>
+        <div class="col-md-6" style="margin-top:300px"><div class="bar"></div></div>
+        <div class="col-md-3"></div>
+    </div>
+    <div id="content" style="display:none">
+        <div class="tab-pane active">
 
         <div style="margin-top:-10px">
           <div class="row" id="Patient" v-if="CanShow">
@@ -190,7 +196,7 @@
         </div>
     </div>
         </div>
-     <div class="modal fade" id="example" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal fade" id="example" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                         <div class="modal-dialog " id="Patientlist" role="document" style="width: 800px;">
                             <div class="modal-content" style="margin-top: 5%;">
                                 <div class="modal-header">
@@ -279,8 +285,8 @@
                             </div>
                         </div>
                     </div>
-
-         <style>
+    </div>
+    <style>
         th{
              height:30px;
             text-align:center;
@@ -294,6 +300,7 @@
        .Label {
             width:100px ;
         }
+       .bar { width: 100%; height: 20px; border: 1px solid #2980b9; border-radius: 3px; background-image: repeating-linear-gradient( -45deg, #2980b9, #2980b9 11px, #eee 10px, #eee 20px /* determines size */ ); background-size: 28px 28px; animation: move .5s linear infinite; } @keyframes move { 0% { background-position: 0 0; } 100% { background-position: 28px 0; } }
     </style>
 
     <script>
@@ -604,6 +611,11 @@
             Ptt.CanShow = true;
         }
         ajax1();
+        setTimeout("Show()", 100);
+        function Show() {
+            $(".loading").css("display", "none");
+            $("#content").css("display", "block");
+        }
         $("#example").on("show.bs.modal", function () {
             var data = "";
             var ch = document.getElementsByName("TestCart");
