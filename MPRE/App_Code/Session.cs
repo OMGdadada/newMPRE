@@ -21,9 +21,19 @@ public class Session : System.Web.Services.WebService {
 
     [WebMethod(EnableSession=true)]
     public string HelloWorld() {
-       
-        Session["UserID"] = Session["UserID"];
-        return "1";
+        int OnLineUserCount;
+        if (Session["DoctorGUID"] != null)
+        {
+            Session["DoctorGUID"] = Session["DoctorGUID"];
+            OnLineUserCount = (int)Application["OnLineUserCount"];
+            return "" + OnLineUserCount + "";
+        }
+        else
+        {
+            return "Session丢失";
+        }
+            
+        
     }
     
 

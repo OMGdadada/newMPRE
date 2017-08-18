@@ -3,6 +3,48 @@
 <%@ Register Assembly="AspNetPager" Namespace="Wuqi.Webdiyer" TagPrefix="webdiyer" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
     <link href="assets/css/style.css" rel="stylesheet" />
+    <style type="text/css">
+        body, table {
+            font-size: 12px;
+        }
+
+        table {
+            table-layout: fixed;
+            empty-cells: show;
+            border-collapse: collapse;
+            margin: 0 auto;
+        }
+
+        td {
+            height: 40px;
+        }
+
+        .table {
+            border: 1px solid #cad9ea;
+            color: #666;
+        }
+
+            .table th {
+                height: 40px;
+                text-align: center;
+            }
+
+            .table td, .table th {
+                border: 1px solid #cad9ea;
+                padding: 0 1em 0;
+            }
+
+                .table th p {
+                    line-height: 18px;
+                    margin: auto;
+                }
+
+        @media(max-width:1199px) {
+            .profile-container .profile-body .nav-tabs.tabs-flat {
+                margin-top: 210px;
+            }
+        }
+    </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
 
@@ -1596,48 +1638,7 @@
 
 
 
-    <style type="text/css">
-        body, table {
-            font-size: 12px;
-        }
-
-        table {
-            table-layout: fixed;
-            empty-cells: show;
-            border-collapse: collapse;
-            margin: 0 auto;
-        }
-
-        td {
-            height: 40px;
-        }
-
-        .table {
-            border: 1px solid #cad9ea;
-            color: #666;
-        }
-
-            .table th {
-                height: 40px;
-                text-align: center;
-            }
-
-            .table td, .table th {
-                border: 1px solid #cad9ea;
-                padding: 0 1em 0;
-            }
-
-                .table th p {
-                    line-height: 18px;
-                    margin: auto;
-                }
-
-        @media(max-width:1199px) {
-            .profile-container .profile-body .nav-tabs.tabs-flat {
-                margin-top: 210px;
-            }
-        }
-    </style>
+    
 
     <script type="text/javascript">
         function InitiateWidgets()

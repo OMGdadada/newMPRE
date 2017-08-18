@@ -1,10 +1,86 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/User.master" AutoEventWireup="true" CodeFile="Psychological_Test.aspx.cs" Inherits="NewPage_Psychological_Test" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
-  
+    <script src="../assets/js/vue.js"></script>
+    <style>
+        th{
+             height:30px;
+            text-align:center;
+             padding: 0 1em 0;
+        }
+        td{
+              height:30px;
+             padding: 0 1em 0;
+            text-align:center;
+        }
+       .Label {
+            width:100px ;
+        }
+       .bar { 
+           width: 100%;
+           height: 20px;
+           border: 1px solid #2980b9;
+           border-radius: 3px;
+           background-image: repeating-linear-gradient( -45deg, #2980b9, #2980b9 11px, #eee 10px, #eee 20px /* determines size */ );
+           background-size: 28px 28px;
+           animation: move .5s linear infinite;
+           }
+       @keyframes move {
+           0%
+           {
+               background-position: 0 0;
+           }
+           100%
+           {
+               background-position: 28px 0;
+           }
+       }
+    </style>
+    <link href="assets/css/style.css" rel="stylesheet" />
+    <style type="text/css">
+        body, table {
+            font-size: 12px;
+        }
+
+        table {
+            table-layout: fixed;
+            empty-cells: show;
+            border-collapse: collapse;
+            margin: 0 auto;
+        }
+
+        td {
+            height: 40px;
+        }
+
+        .table {
+            border: 1px solid #cad9ea;
+            color: #666;
+        }
+
+            .table th {
+                height: 40px;
+                text-align: center;
+            }
+
+            .table td, .table th {
+                border: 1px solid #cad9ea;
+                padding: 0 1em 0;
+            }
+
+                .table th p {
+                    line-height: 18px;
+                    margin: auto;
+                }
+
+        @media(max-width:1199px) {
+            .profile-container .profile-body .nav-tabs.tabs-flat {
+                margin-top: 210px;
+            }
+        }
+    </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
-    <script src="../assets/js/vue.js"></script>
     <div class="row loading" style="display:block">
         <div class="col-md-3"></div>
         <div class="col-md-6" style="margin-top:300px"><div class="bar"></div></div>
@@ -12,192 +88,212 @@
     </div>
     <div id="content" style="display:none">
         <div class="tab-pane active">
-        <div style="margin-top:-10px">
-          <div class="row" id="Patient" v-if="CanShow">
-                        <div class="col-md-12">
-                            <div class="widget" style="margin:0px;">
-                                <div class="widget-header bg-blueberry">
-                                    <i class="widget-icon fa fa-arrow-right"></i>
-                                    <span class="widget-caption">患者资料信息</span>
-                                      <div class="widget-buttons" >
-
-                            <a style="cursor:pointer" v-on:click="PatientInFo(list[0].GUID)">
-                                <i class="fa fa-edit" style="font-size: 13px;">修改</i>
-                            </a>
-
-                        </div>
-                                </div>
-                                
-                            </div>
-            
-                            <div class="widget-body">
-                                <div style="width: 100%; margin: auto; text-align: center">
-                                    <div >
-                                        <table class="table table-bordered table-hover"  v-for="patient in list">
-                                            <tr>
-                                                <td style="width:25%">姓名</td>
-                                                <td style="width:25%">{{patient.PatientName}}</td>
-                                                <td style="width:25%">{{patient.Certificates}}</td>
-                                                <td style="width:25%">{{patient.CertificatesNum}}</td>
-                                            </tr>
-                                            <tr>
-                                                <td>性别</td>
-                                                <td>{{patient.Sex}}</td>
-                                                <td>出生日期</td>
-                                                <td>{{patient.Birthday}}</td>
-                                            </tr>
-                                            <tr>
-                                                <td>门诊号</td>
-                                                <td>{{patient.Num1}}</td>
-                                                <td>联系电话1</td>
-                                                <td>{{patient.Phone1}}</td>
-                                            </tr>
-                                        </table>
-
-                                    </div>
-                                    <code></code>
+            <div style="margin-top:-10px">
+                <div class="row" id="Patient" v-if="CanShow">
+                    <div class="col-md-12">
+                        <div class="widget" style="margin:0px;">
+                            <div class="widget-header bg-blueberry">
+                                <i class="widget-icon fa fa-arrow-right"></i>
+                                <span class="widget-caption">患者资料信息</span>
+                                <div class="widget-buttons" >
+                                    <a style="cursor:pointer" v-on:click="PatientInFo(list[0].GUID)">
+                                        <i class="fa fa-edit" style="font-size: 13px;">修改</i>
+                                    </a>
                                 </div>
                             </div>
                         </div>
-                    </div>
-        <div class="row">
-            <div class="col-xs-9 col-md-9">
-                <br />
-                <div class="widget" style="margin: 0px;">
-                    <div class="widget-header bg-blue">
-                        <i class="widget-icon fa fa-arrow-right"></i>
-                        <span class="widget-caption" style="font-size: 15px;"><strong>心理测试</strong></span>
+                        <div class="widget-body">
+                            <div style="width: 100%; margin: auto; text-align: center">
+                                <div >
+                                    <table class="table table-bordered table-hover"  v-for="patient in list">
+                                        <tr>
+                                            <td style="width:25%">姓名</td>
+                                            <td style="width:25%">{{patient.PatientName}}</td>
+                                            <td style="width:25%">{{patient.Certificates}}</td>
+                                            <td style="width:25%">{{patient.CertificatesNum}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>性别</td>
+                                            <td>{{patient.Sex}}</td>
+                                            <td>出生日期</td>
+                                            <td>{{patient.Birthday}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>门诊号</td>
+                                            <td>{{patient.Num1}}</td>
+                                            <td>联系电话1</td>
+                                            <td>{{patient.Phone1}}</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <code></code>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="widget-body">
-                    <div class="row" id="Testlist">
-                        <div class="col-md-12">
-                            <div class="row">
-                                <div class="form-group col-xs-3 col-md-3">
-                                    <span class="input-icon" style="float:right">
-                                        <input type="text" placeholder="搜索..." class="form-control input-sm" v-model="Search" /> 
-                                        <i class="glyphicon glyphicon-search danger circular"></i>
-                                    </span>
-                                </div>
-                                <div class="col-md-9">
-                                    <p class="text-right">
-                                        <a v-if="CanShow" id="mp" data-toggle="modal" href="#example" class="btn btn-warning">选择患者</a>
-                                        <a v-if="!CanShow" id="Start_Btn" class="btn btn-warning">开始测试</a>
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="pull-right">
-                                        <span>总共：{{testlistt.length}}条记录，每页显示：
-                                            <select v-model="Row">
-                                                <option value="5">5</option>
-                                                <option value="10">10</option>
-                                                <option value="20">20</option>
-                                                <option value="50">50</option>
-                                            </select>
-                                            条记录，共{{Math.ceil(testlistt.length/Row)}}页
-                                        </span>
+                <div class="row">
+                    <div class="col-xs-9 col-md-9">
+                        <br />
+                        <div class="tabbable">
+                            <ul class="nav nav-tabs tabs-flat  nav-justified" id="myTab11" style="box-shadow: 0px -1px 5px 0px rgba(0,0,0,0.2);margin-bottom: -6px !important;background-color:#fbfbfb">
+                                <li class="active">
+                                    <a data-toggle="tab" href="#overview">心理测评系统
+                                    </a>
+                                </li>
+                                <li class="tab-red">
+                                    <a data-toggle="tab" href="#timeline">以往测评
+                                    </a>
+                                </li>
+                                <li class="tab-palegreen">
+                                    <a data-toggle="tab" id="contacttab" href="#contacts">报告单
+                                    </a>
+                                </li>
+                            </ul>
+                            <div class="tab-content tabs-flat" style=" margin-top:5px; padding: 0px; box-shadow: 0px 0 0px 0px rgba(256,256,256,.3);">
+                                <div id="overview" class="tab-pane active">
+                                    <div class="row">
+                                        <div class="col-xs-12 col-md-12">
+                                            <div class="widget" style="margin: 0px;">
+                                                <div class="widget-header bg-blue">
+                                                    <i class="widget-icon fa fa-arrow-right"></i>
+                                                    <span class="widget-caption" style="font-size: 15px;"><strong>心理测评系统</strong></span>
+                                                </div>
+                                            </div>
+                                            <div class="widget-body">
+                                                <div class="row" id="Testlist">
+                                                    <div class="col-md-12">
+                                                        <div class="row">
+                                                            <div class="form-group col-xs-3 col-md-3">
+                                                                <span class="input-icon" style="float:right">
+                                                                    <input type="text" placeholder="搜索..." class="form-control input-sm" v-model="Search" /> 
+                                                                    <i class="glyphicon glyphicon-search danger circular"></i>
+                                                                </span>
+                                                            </div>
+                                                            <div class="col-md-9">
+                                                                <p class="text-right">
+                                                                    <a v-if="CanShow" id="mp" data-toggle="modal" href="#example" class="btn btn-warning">选择患者</a>
+                                                                    <a v-if="!CanShow" id="Start_Btn" class="btn btn-warning">开始测试</a>
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <div class="pull-right">
+                                                                    <span>总共：{{testlistt.length}}条记录，每页显示：
+                                                                        <select v-model="Row">
+                                                                            <option value="5">5</option>
+                                                                            <option value="10">10</option>
+                                                                            <option value="20">20</option>
+                                                                            <option value="50">50</option>
+                                                                        </select>
+                                                                        条记录，共{{Math.ceil(testlistt.length/Row)}}页
+                                                                    </span>
+                                                                </div>
+                                                                <br />
+                                                                <br />
+                                                                <br />
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <table class="table table-striped table-bordered table-hover">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th style="width:80px;">序</th>
+                                                                            <th style="width:30px;"></th>
+                                                                            <th>量表名称</th>
+                                                                            <th style="width:240px;">所属测试</th>
+                                                                            <th style="width:80px;">价格</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        <tr v-for="test in testlist" v-on:click="clickTest(test.GUID)">
+                                                                            <td>{{test.Serial}}</td>
+                                                                            <td><input type="checkbox" name="Test" :value="test.GUID" onclick="event.stopPropagation(); " v-on:click="click(test.Serial)" /></td>
+                                                                            <td><a href="####">{{test.TestName}}</a></td>
+                                                                            <td>{{test.Dimension1name}}</td>
+                                                                            <td>{{test.Price}}</td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                                <br />
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <div class="pages">
+                                                                    <a class="pages" v-on:click="JumpPage(first)" style="cursor:pointer">首页</a>
+                                                                    <a class="pages" v-on:click="JumpPage(up)" style="cursor:pointer">上一页</a>
+                                                                    <span v-for="pages in Page" >
+                                                                        <a v-if="!pages.Isthis" class="pages" v-on:click="JumpPage(pages.val)" style="cursor:pointer">{{pages.page}}</a>
+                                                                        <span v-if="pages.Isthis" class="cpb" style="margin-right:5px;">{{pages.page}}</span>
+                                                                    </span>
+                            
+                                                                    <a class="pages" v-on:click="JumpPage(next)" style="cursor:pointer">下一页</a>
+                                                                    <a class="pages" v-on:click="JumpPage(last)" style="cursor:pointer">尾页</a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <br />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <br />
-                                    <br />
-                                    <br />
+                                </div>
+                                <div id="timeline" class="tab-pane">
+                                    123
                                 </div>
                             </div>
-                            <div class="row">
+                        </div>
+                        
+                        <br />
+                    </div>
+                    <div class="col-md-3">
+                        <br />
+                        <div class="widget" style="margin: 0px;">
+                            <div id="head" class="widget-header bg-gray">
+                                <i class="widget-icon fa fa-arrow-right"></i>
+                                <span class="widget-caption" style="font-size: 15px;"><strong>已选测试</strong></span>
+                            </div>
+                        </div>
+                        <div class="widget-body">
+                            <div id="TestCart" class="row">
                                 <div class="col-md-12">
-                                    <table class="table table-striped table-bordered table-hover">
+                                    <table class="table table-bordered table-hover">
                                         <thead>
                                             <tr>
-                                                <th style="width:80px;">序</th>
+                                                <th style="width:32px;">序</th>
+                                                <th style="width:100px;">已选测试</th>
+                                                <th style="width:50px;">价格</th>
                                                 <th style="width:30px;"></th>
-                                                <th>量表名称</th>
-                                                <th style="width:240px;">所属测试</th>
-                                                <th style="width:80px;">价格</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr v-for="test in testlist" v-on:click="clickTest(test.GUID)">
-                                                <td>{{test.Serial}}</td>
-                                                <td><input type="checkbox" name="Test" :value="test.GUID" onclick="event.stopPropagation(); " v-on:click="click(test.Serial)" /></td>
-                                                <td><a href="####">{{test.TestName}}</a></td>
-                                                <td>{{test.Dimension1name}}</td>
-                                                <td>{{test.Price}}</td>
+                                            <tr v-for="test in Testlist">
+                                                <th>{{test.SSerial}}</th>
+                                                <th>{{test.TestName}}<input type="checkbox" name="TestCart" :value="test.GUID" style="display:none" checked="checked" /></th>
+                                                <th>{{test.Price}}</th>
+                                                <th><i id="FinishBtn" class="glyphicon glyphicon-remove" v-on:click="Del(test.SSerial)" ></i></th>
                                             </tr>
                                         </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <th colspan="4">总价：{{count}}</th>
+                                            </tr>
+                                        </tfoot>
                                     </table>
-                                    <br />
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="pages">
-                                        <a class="pages" v-on:click="JumpPage(first)" style="cursor:pointer">首页</a>
-                                        <a class="pages" v-on:click="JumpPage(up)" style="cursor:pointer">上一页</a>
-                                        <span v-for="pages in Page" >
-                                            <a v-if="!pages.Isthis" class="pages" v-on:click="JumpPage(pages.val)" style="cursor:pointer">{{pages.page}}</a>
-                                            <span v-if="pages.Isthis" class="cpb" style="margin-right:5px;">{{pages.page}}</span>
-                                        </span>
-                            
-                                        <a class="pages" v-on:click="JumpPage(next)" style="cursor:pointer">下一页</a>
-                                        <a class="pages" v-on:click="JumpPage(last)" style="cursor:pointer">尾页</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <br />
                                 </div>
                             </div>
                         </div>
-                    </div>
-
-                        
-                 
-
-
-                </div>
-                    </div>
-            <div class="col-md-3">
-                <br />
-                <div class="widget" style="margin: 0px;">
-                    <div id="head" class="widget-header bg-gray">
-                        <i class="widget-icon fa fa-arrow-right"></i>
-                        <span class="widget-caption" style="font-size: 15px;"><strong>已选测试</strong></span>
-                    </div>
-                </div>
-                <div class="widget-body">
-                    <div id="TestCart" class="row">
-                        <div class="col-md-12">
-                            <table class="table table-bordered table-hover">
-                                <thead>
-                                    <tr>
-                                        <th style="width:32px;">序</th>
-                                        <th style="width:100px;">已选测试</th>
-                                        <th style="width:50px;">价格</th>
-                                        <th style="width:30px;"></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr v-for="test in Testlist">
-                                        <th>{{test.SSerial}}</th>
-                                        <th>{{test.TestName}}<input type="checkbox" name="TestCart" :value="test.GUID" style="display:none" checked="checked" /></th>
-                                        <th>{{test.Price}}</th>
-                                        <th><i id="FinishBtn" class="glyphicon glyphicon-remove" v-on:click="Del(test.SSerial)" ></i></th>
-                                    </tr>
-                                </tbody>
-                                <tfoot>
-                                    <tr>
-                                        <th colspan="4">总价：{{count}}</th>
-                                    </tr>
-                                </tfoot>
-                            </table>
-                        </div>
+                        <br />
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
         </div>
         <div class="modal fade" id="example" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                         <div class="modal-dialog " id="Patientlist" role="document" style="width: 800px;">
@@ -289,22 +385,7 @@
                         </div>
                     </div>
     </div>
-    <style>
-        th{
-             height:30px;
-            text-align:center;
-             padding: 0 1em 0;
-        }
-        td{
-              height:30px;
-             padding: 0 1em 0;
-            text-align:center;
-        }
-       .Label {
-            width:100px ;
-        }
-       .bar { width: 100%; height: 20px; border: 1px solid #2980b9; border-radius: 3px; background-image: repeating-linear-gradient( -45deg, #2980b9, #2980b9 11px, #eee 10px, #eee 20px /* determines size */ ); background-size: 28px 28px; animation: move .5s linear infinite; } @keyframes move { 0% { background-position: 0 0; } 100% { background-position: 28px 0; } }
-    </style>
+    
 
     <script>
         urlinfo = window.location.href; //获取当前页面的url

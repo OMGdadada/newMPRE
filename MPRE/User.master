@@ -702,13 +702,13 @@
                         var int = self.setInterval("refresh()", 20000);
                         function refresh() {
                             $.ajax({
-                                url: 'Session.asmx/HelloWorld',
+                                url: '/Session.asmx/HelloWorld',
                                 type: 'POST',
                                 error: function () {
-                                   
                                 },
                                 success: function (rs) {
-                               
+                                    list = $(rs).find("string").text();
+                                    console.log("Session刷新！客户端数为" + list);
                                 }
                             });
                         }
