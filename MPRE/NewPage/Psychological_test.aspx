@@ -287,7 +287,7 @@
                                                                             <td>{{test.Situation}}</td>
                                                                             <td>{{test.row}}</td>
                                                                             <td><i id="Into_Btn" style="cursor:pointer;" class="glyphicon glyphicon-hand-right" v-on:click="Into(test.GUID)" ></i></td>
-                                                                            <td><i v-if="test.Situation !='已完成'"   class="glyphicon glyphicon-remove" style="cursor:pointer" v-on:click="Del(test.GUID)"></i></td>
+                                                                            <td><i v-if="test.Situation !='完成'"   class="glyphicon glyphicon-remove" style="cursor:pointer" v-on:click="Del(test.GUID)"></i></td>
                                                                         </tr>
                                                                     </tbody>
                                                                 </table>
@@ -308,6 +308,45 @@
                                                 <div class="widget-header bg-green">
                                                     <i class="widget-icon fa fa-arrow-right"></i>
                                                     <span class="widget-caption" style="font-size: 15px;"><strong>报告单</strong></span>
+                                                </div>
+                                                <div class="widget-body">
+                                                    <div class="row" id="Report">
+                                                        <div class="col-md-12">
+                                                            <div class="row">
+                                                                <div class="form-group col-xs-3 col-md-3">
+                                                                    <span class="input-icon" style="float:right">
+                                                                        <input type="text" placeholder="搜索..." class="form-control input-sm"/> 
+                                                                        <i class="glyphicon glyphicon-search danger circular"></i>
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-md-12">
+                                                                    <table class="table table-striped table-bordered table-hover">
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th style="width:80px;">序</th>
+                                                                                <th style="width:120px;">购买时间</th>
+                                                                                <th>测试名称</th>
+                                                                                <th style="width:120px;">所属患者</th>
+                                                                                <th style="width:80px;"></th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            <tr v-for="test in Report">
+                                                                                <td>{{test.Serial}}</td>
+                                                                                <td>{{test.CDT}}</td>
+                                                                                <td>{{test.TestName}}</td>
+                                                                                <td>{{test.PatientName}}</td>
+                                                                                <td><i id="IntoReport_Btn" style="cursor:pointer;" class="glyphicon glyphicon-list-alt" v-on:click="IntoReport(test.TestGUID,test.PatientGUID,test.GUID)" ></i></td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                    <br />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -795,6 +834,19 @@
             }
         })
 
+        var Rp = new Vue({
+            el: "#Report",
+            data: {
+                Report: [],
+            },
+            methods: {
+                IntoReport: function (val1, val2, val3) {
+                    
+                    var Url = "Psychological_Report.aspx?TestGUID=" + val1 + "&PatientGUID=" + val2 + "&CatGUID=" + val3;
+                    window.open(Url, '_blank');
+                }
+            }
+        })
 
         if (newsname == "?GUID") {
             ajax4();
@@ -805,6 +857,7 @@
         }
         ajax1();
         ajax5();
+        ajax6();
         setTimeout("Show()", 500);
         function Show() {
             $(".loading").css("display", "none");
@@ -1047,6 +1100,39 @@
                 var result = date.getFullYear() + '年' + date.getMonth() + '月' + date.getDate() + '日';
                 TC.TestCarts[x].CDT = result;
                 
+            }
+        }
+
+        function ajax6() {
+            $.ajax({
+                type: "post",
+                url: "Gtest.asmx/GetReport", //服务端处理程序   
+                data: { "PGUID": newsid },
+                dataType: 'xml', //返回的类型为XML ，和前面的Json，不一样了
+                async: false,//设置为同步操作就可以给全局变量赋值成功 
+                success: function (Nums) {
+                    try {
+
+                        list = $(Nums).find("string").text();
+                        //alert(list);
+                        Rp.Report = eval('(' + list + ')');
+                    }
+                    catch (e) {
+                        alert(e);
+                        return;
+                    }
+                },
+                error: function (Num) {
+                    console.log('0');
+                },
+            })
+            for (x = 0; x < Rp.Report.length; x++) {
+                Rp.Report[x].Serial = x + 1;
+                var a = Rp.Report[x].CDT;
+                var date = new Date(parseInt(a.slice(6)));
+                var result = date.getFullYear() + '年' + date.getMonth() + '月' + date.getDate() + '日';
+                Rp.Report[x].CDT = result;
+
             }
         }
 

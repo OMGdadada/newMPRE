@@ -527,7 +527,7 @@ public class Gtest : System.Web.Services.WebService
         int i = 0;
         using (SqlConnection conn = new DB().GetConnection())
         {
-            StringBuilder sb = new StringBuilder("Delete from TestCart where GUID='" + TGUID+"'");
+            StringBuilder sb = new StringBuilder("Delete from TestCart where GUID='" + TGUID+ "'");
             SqlCommand cmd = new SqlCommand(sb.ToString(), conn);
             conn.Open();
             i = cmd.ExecuteNonQuery();
@@ -535,8 +535,53 @@ public class Gtest : System.Web.Services.WebService
             conn.Close();
 
         }
+        using (SqlConnection conn = new DB().GetConnection())
+        {
+            StringBuilder sb = new StringBuilder("Delete from AnswerItem where CartGUID='" + TGUID + "'");
+            SqlCommand cmd = new SqlCommand(sb.ToString(), conn);
+            conn.Open();
+            cmd.ExecuteNonQuery();
+            cmd.Dispose();
+            conn.Close();
+
+        }
         if (i >= 1) return "删除成功";
         else return "删除失败";
+    }
+
+
+    [WebMethod]
+    public string GetReport(string PGUID)
+    {
+        DataSet ds = new DataSet();
+        if (PGUID == "NULL")
+        {
+            using (SqlConnection conn = new DB().GetConnection())
+            {
+
+                SqlCommand cmd = conn.CreateCommand();
+                cmd.CommandText = "select ID,PatientName,CDT,TestGUID,GUID,PatientGUID,TestName from [TPCView] Where IsFinished=1";
+                conn.Open();//打开数据库连接 
+                SqlDataAdapter da = new SqlDataAdapter(cmd.CommandText, conn);
+                da.Fill(ds);
+                conn.Close();
+            }
+        }
+        else
+        {
+            using (SqlConnection conn = new DB().GetConnection())
+            {
+
+                SqlCommand cmd = conn.CreateCommand();
+                cmd.CommandText = "select ID,PatientName,CDT,TestGUID,GUID,PatientGUID,TestName from [TPCView] Where IsFinished=1 AND PatientGUID ='" + PGUID + "'";
+                conn.Open();//打开数据库连接 
+                SqlDataAdapter da = new SqlDataAdapter(cmd.CommandText, conn);
+                da.Fill(ds);
+                conn.Close();
+            }
+        }
+
+        return Dtb2Json(ds.Tables[0]);
     }
 
 
