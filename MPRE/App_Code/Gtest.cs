@@ -487,4 +487,57 @@ public class Gtest : System.Web.Services.WebService
 
     }
 
+    [WebMethod]
+    public string GetTestCart(string PGUID)
+    {
+        DataSet ds = new DataSet();
+        if (PGUID == "NULL")
+        {
+            using (SqlConnection conn = new DB().GetConnection())
+            {
+
+                SqlCommand cmd = conn.CreateCommand();
+                cmd.CommandText = "select min(ID) as ID,min(PatientName) as PatientName,min(CDT) as CDT, GUID,count(*) as row,max(Situation) as Situation from (select ID,PatientName,CDT,GUID,Case When IsPaid = 'false' Then '未购买' When IsFinished = 'True'  Then '完成' when IsFinished = 'false' Then '未完成' END Situation from [TPCView])[P] group by GUID ORDER BY GUID, Situation desc";
+                conn.Open();//打开数据库连接 
+                SqlDataAdapter da = new SqlDataAdapter(cmd.CommandText, conn);
+                da.Fill(ds);
+                conn.Close();
+            }
+        }
+        else
+        {
+            using (SqlConnection conn = new DB().GetConnection())
+            {
+
+                SqlCommand cmd = conn.CreateCommand();
+                cmd.CommandText = "select min(ID) as ID,min(PatientName) as PatientName,min(CDT) as CDT, GUID,count(*) as row,max(Situation) as Situation from (select ID,PatientName,CDT,GUID,Case When IsPaid = 'false' Then '未购买' When IsFinished = 'True'  Then '完成' when IsFinished = 'false' Then '未完成' END Situation from [TPCView] WHERE PatientGUID ='"+PGUID+"')[P] group by GUID ORDER BY GUID, Situation desc";
+                conn.Open();//打开数据库连接 
+                SqlDataAdapter da = new SqlDataAdapter(cmd.CommandText, conn);
+                da.Fill(ds);
+                conn.Close();
+            }
+        }
+
+        return Dtb2Json(ds.Tables[0]);
+    }
+    [WebMethod]
+    public string DelTestCart(string TGUID)
+    {
+
+        int i = 0;
+        using (SqlConnection conn = new DB().GetConnection())
+        {
+            StringBuilder sb = new StringBuilder("Delete from TestCart where GUID='" + TGUID+"'");
+            SqlCommand cmd = new SqlCommand(sb.ToString(), conn);
+            conn.Open();
+            i = cmd.ExecuteNonQuery();
+            cmd.Dispose();
+            conn.Close();
+
+        }
+        if (i >= 1) return "删除成功";
+        else return "删除失败";
+    }
+
+
 }

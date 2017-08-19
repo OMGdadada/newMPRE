@@ -141,7 +141,7 @@
                                     </a>
                                 </li>
                                 <li class="tab-red">
-                                    <a data-toggle="tab" href="#timeline">以往测评
+                                    <a data-toggle="tab" href="#timeline" onclick="ajax5()">以往测评
                                     </a>
                                 </li>
                                 <li class="tab-palegreen">
@@ -152,7 +152,7 @@
                             <div class="tab-content tabs-flat" style=" margin-top:5px; padding: 0px; box-shadow: 0px 0 0px 0px rgba(256,256,256,.3);">
                                 <div id="overview" class="tab-pane active">
                                     <div class="row">
-                                        <div class="col-xs-12 col-md-12">
+                                        <div class="col-md-12">
                                             <div class="widget" style="margin: 0px;">
                                                 <div class="widget-header bg-blue">
                                                     <i class="widget-icon fa fa-arrow-right"></i>
@@ -246,7 +246,72 @@
                                     </div>
                                 </div>
                                 <div id="timeline" class="tab-pane">
-                                    123
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="widget" style="margin: 0px;">
+                                                <div class="widget-header bg-red">
+                                                    <i class="widget-icon fa fa-arrow-right"></i>
+                                                    <span class="widget-caption" style="font-size: 15px;"><strong>以往测评</strong></span>
+                                                </div>
+                                            </div>
+                                            <div class="widget-body">
+                                                <div class="row" id="TestCarts">
+                                                    <div class="col-md-12">
+                                                        <div class="row">
+                                                            <div class="form-group col-xs-3 col-md-3">
+                                                                <span class="input-icon" style="float:right">
+                                                                    <input type="text" placeholder="搜索..." class="form-control input-sm"/> 
+                                                                    <i class="glyphicon glyphicon-search danger circular"></i>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <table class="table table-striped table-bordered table-hover">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th style="width:80px;">序</th>
+                                                                            <th style="width:120px;">购买时间</th>
+                                                                            <th>所属患者</th>
+                                                                            <th style="width:120px;">测试情况</th>
+                                                                            <th style="width:120px;">测试数量</th>
+                                                                            <th style="width:80px;"></th>
+                                                                            <th style="width:80px;">删除</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        <tr v-for="test in TestCarts">
+                                                                            <td>{{test.Serial}}</td>
+                                                                            <td>{{test.CDT}}</td>
+                                                                            <td>{{test.PatientName}}</td>
+                                                                            <td>{{test.Situation}}</td>
+                                                                            <td>{{test.row}}</td>
+                                                                            <td><i id="Into_Btn" style="cursor:pointer;" class="glyphicon glyphicon-hand-right" v-on:click="Into(test.GUID)" ></i></td>
+                                                                            <td><i v-if="test.Situation !='已完成'"   class="glyphicon glyphicon-remove" style="cursor:pointer" v-on:click="Del(test.GUID)"></i></td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                                <br />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div id="contacts" class="tab-pane">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="widget" style="margin: 0px;">
+                                                <div class="widget-header bg-green">
+                                                    <i class="widget-icon fa fa-arrow-right"></i>
+                                                    <span class="widget-caption" style="font-size: 15px;"><strong>报告单</strong></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -255,7 +320,7 @@
                     </div>
                     <div class="col-md-3">
                         <br />
-                        <div class="widget" style="margin: 0px;">
+                        <div class="widget" style="margin: 0px;margin-top:35px">
                             <div id="head" class="widget-header bg-gray">
                                 <i class="widget-icon fa fa-arrow-right"></i>
                                 <span class="widget-caption" style="font-size: 15px;"><strong>已选测试</strong></span>
@@ -690,12 +755,56 @@
                 }
             }
         })
+
+        var TC = new Vue({
+            el: "#TestCarts",
+            data: {
+                TestCarts: [],
+            },
+            methods: {
+                Into: function (val) {
+                    var Url = "TestCart.aspx?TGUID=" + val;
+                    window.open(Url, '_blank');
+                },
+                Del: function (val) {
+                    $.ajax({
+                        type: "post",
+                        url: "Gtest.asmx/DelTestCart", //服务端处理程序   
+                        data: { "TGUID": val },
+                        dataType: 'xml', //返回的类型为XML ，和前面的Json，不一样了
+                        async: false,//设置为同步操作就可以给全局变量赋值成功 
+                        success: function (Nums) {
+                            try {
+                                var Text = $(Nums).find("string").text();
+                                alert(Text);
+                                ajax5();
+                                
+                                
+                            }
+                            catch (e) {
+                                alert(e);
+                                return;
+                            }
+                        },
+                        error: function (Num) {
+                            alert("出现错误，删除失败！");
+                            console.log('0');
+                        },
+                    })
+                }
+            }
+        })
+
+
         if (newsname == "?GUID") {
             ajax4();
             vm.CanShow = false;
             Ptt.CanShow = true;
+        } else {
+            newsid = "NULL";
         }
         ajax1();
+        ajax5();
         setTimeout("Show()", 500);
         function Show() {
             $(".loading").css("display", "none");
@@ -908,6 +1017,40 @@
             //alert(result);
             Ptt.list[0].Birthday = result;
         }
+        function ajax5() {
+            $.ajax({
+                type: "post",
+                url: "Gtest.asmx/GetTestCart", //服务端处理程序   
+                data: { "PGUID": newsid },
+                dataType: 'xml', //返回的类型为XML ，和前面的Json，不一样了
+                async: false,//设置为同步操作就可以给全局变量赋值成功 
+                success: function (Nums) {
+                    try {
+                        
+                        list = $(Nums).find("string").text();
+                        //alert(list);
+                        TC.TestCarts = eval('(' + list + ')');
+                    }
+                    catch (e) {
+                        alert(e);
+                        return;
+                    }
+                },
+                error: function (Num) {
+                    console.log('0');
+                },
+            })
+            for (x = 0; x < TC.TestCarts.length; x++) {
+                TC.TestCarts[x].Serial = x + 1;
+                var a = TC.TestCarts[x].CDT;
+                var date = new Date(parseInt(a.slice(6)));
+                var result = date.getFullYear() + '年' + date.getMonth() + '月' + date.getDate() + '日';
+                TC.TestCarts[x].CDT = result;
+                
+            }
+        }
+
+
         </script>
 
 
