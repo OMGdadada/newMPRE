@@ -14,7 +14,7 @@
     <link rel="shortcut icon" href="#" type="image/x-icon" />
     
     <!--Basic Styles-->
-    <link href="../assets/css/bootstrap2.min.css" rel="stylesheet" />
+    <link href="../assets/css/bootstrap.min.css" rel="stylesheet" />
     <link href="../assets/css/font-awesome.min.css" rel="stylesheet" />
     <link href="../assets/css/weather-icons.min.css" rel="stylesheet" />
 
@@ -59,7 +59,7 @@
                     心理测评系统
                 </div>
             <asp:Label ID="TestGUID" runat="server" style="display:none" ></asp:Label>
-            
+             <asp:Label ID="CartGUID" runat="server" style="display:none" ></asp:Label>
             <div class="widget-body bordered-bottom">
                 <div style="margin:2px 20px">
                     <div class="row" style="text-align:center;">
@@ -139,6 +139,40 @@
 
                        </table>
                     </div>
+                        <hr  />
+                                  <div class="row" style="margin:4px 0px">
+                        <p style="font-weight:600;">补充说明：</p>
+                        <p>
+                            <asp:TextBox ID="Remark" runat="server" TextMode="MultiLine" Rows="6" class="form-control myTextBox" placeholder="无" ></asp:TextBox>
+                        </p>
+                    </div>
+                     <asp:Button ID="Button4" class="btn btn-info login noprint" runat="server" Text="常用语"   />
+                  
+                    <div class="myHr"></div>
+                    <div class="row" style="margin:4px 0px">
+                        <div style="float:left;font-weight:600;">
+                            医生签名：_______________________
+                        </div>
+                        <div style="float:right;margin-right:20px;">
+                            <strong>打印日期：</strong>
+                            <asp:Label ID="RSTime" runat="server" Text="Label"></asp:Label>
+                        </div>
+                    </div>
+                    <div  class="footHr">
+                        <hr />
+                    </div>
+                    <div class="noprint" style="margin:50px 0px"></div>
+
+                    <div class="row noprint" style="margin:4px 0px;text-align:center;">
+                        <asp:Button ID="Button1" runat="server" Text="保 存" class="btn btn-success"  />
+                        &nbsp;&nbsp;
+                        <a href="javascript:window.print()" target="_self" class="btn btn-info">打印</a> 
+
+                         &nbsp;&nbsp;
+                      
+                        <asp:Button ID="Button3" runat="server" Text="返回测试选择页" class="btn btn-default"/>
+                    </div>
+
                           <div style="margin:4px -2px">
                         <hr  />
                               <div  style=" clear:both; float:right;">
@@ -160,6 +194,9 @@
                 </div>
         </div>
         </div>
+        <span id="Score" style="display:none"></span>
+     
+
         <style type="text/css">
         #UserTag_Select th, #table1 th {
             height: 30px;
@@ -180,25 +217,64 @@
                 }
             });
 
+            var Vm = new Vue({
+                data: {
+                    list:[]
+                }
+            })
 
+            var a="";
+            var count = "";
             (function ($) {
-
-                var QuestionGUID = document.getElementById('<%=TestGUID.ClientID %>').innerText;
+                var TGUID = document.getElementById('<%=TestGUID.ClientID %>').innerText;
+                var CGUID = document.getElementById('<%=CartGUID.ClientID %>').innerText;
+                $.ajax({
+                    type: "post",
+                    url: "QuestionAdd_WebService.asmx/ScoreList",
+                    async: false,//设置为同步操作就可以给全局变量赋值成功 
+                    data: { CartGUID: CGUID, TestGUID: TGUID },
+                    success: function (str) {
+                        var data1 = $(str).find("string").text();
+                        $("#Score").text(data1);
+                    }
+                })
+                
+               
               $.ajax({
                   type: "post",
                   url: "QuestionAdd_WebService.asmx/ReportList",
-                  data: { QGUID: QuestionGUID },
+                  data: { QGUID: TGUID },
                   success: function (str) {
                       var data1 = $(str).find("string").text();
-
                       nv.items = eval('(' + data1 + ')');
 
 
+                      for (var i = 0; i < nv.items.length; i++) {
+                          for (var j = 0; j < nv.items[0].ItemListNumb.length; j++)
+                          {
+                              var b = nv.items[i].ItemListNumb[j].Content.substring(0, 1);
+                             if (b == "=") {
+                               
+                                 var YZScore =nv.items[i].ItemListNumb[j].Content.substring(1, nv.items[i].ItemListNumb[j].Content.length);
+                                 var Scorelist = $("#Score").text();
+                                 
+                                 eval(Scorelist);
+                                 nv.items[i].ItemListNumb[j].Content = eval(YZScore);
+                              }
+
+                          }
+                      }
+                  
+
                   }
               });
+              
+           
+            })(jQuery)
 
+           
 
-          })(jQuery)
+           
 
         </script>
     </form>

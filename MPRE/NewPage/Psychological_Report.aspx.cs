@@ -25,7 +25,7 @@ public partial class NewPage_Psychological_Report : System.Web.UI.Page
             }
             else
             {
-               
+                RSTime.Text = DateTime.Now.ToString("yyyy 年 MM 月 dd 日");
                     using (SqlConnection conn = new DB().GetConnection())
                     {
                         SqlCommand cmd = conn.CreateCommand();
@@ -58,6 +58,26 @@ public partial class NewPage_Psychological_Report : System.Web.UI.Page
 
                         }
                         rd.Close();
+
+                        cmd.CommandText = "select * from [Hospital] where [GUID] = @HospitalGUID";
+                        cmd.Parameters.AddWithValue("@HospitalGUID", Session["HospitalGUID"].ToString());
+                        rd = cmd.ExecuteReader();
+                        if (rd.Read())
+                        {
+                            HospitalName.Text = rd["HospitalName"].ToString();
+                        }
+                        rd.Close();
+
+
+                        cmd.CommandText = "select * from [Test] where [GUID] = @TestGUID";
+                        cmd.Parameters.AddWithValue("@TestGUID", Request.QueryString["TestGUID"].ToString());
+                        rd = cmd.ExecuteReader();
+                        if (rd.Read())
+                        {
+                            TestName.Text = rd["TestName"].ToString();
+                        }
+                        rd.Close();
+
 
                         cmd.CommandText = "select * from Patient where GUID=@PatientGUID";
                         cmd.Parameters.AddWithValue("@PatientGUID", Request.QueryString["PatientGUID"].ToString());
@@ -224,6 +244,7 @@ public partial class NewPage_Psychological_Report : System.Web.UI.Page
                     }
                     Header();
                     TestGUID.Text = Request.QueryString["TestGUID"].ToString();
+                    CartGUID.Text=Request.QueryString["CatGUID"].ToString();
             }
 
         }

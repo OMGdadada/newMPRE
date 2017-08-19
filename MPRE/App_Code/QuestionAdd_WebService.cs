@@ -849,4 +849,60 @@ public class QuestionAdd_WebService : System.Web.Services.WebService {
        if (i == 1) return "1";
        else return "";
    }
+
+   [WebMethod]
+   public string ScoreList(string CartGUID, string TestGUID)
+   {
+      
+         string  score="";
+         int i = 1;
+           using (SqlConnection conn = new DB().GetConnection())
+           {
+               SqlCommand cmd = conn.CreateCommand();
+               conn.Open();
+               cmd.CommandText = "select * from ReportView where CartGUID=@CartGUID and TestGUID=@TestGUID order by Serial";
+               cmd.Parameters.AddWithValue("@CartGUID", CartGUID);
+               cmd.Parameters.AddWithValue("@TestGUID", TestGUID);
+               SqlDataReader rd = cmd.ExecuteReader();
+               while(rd.Read())
+               {
+                   score += "var Q"+i+"="+rd["Score"].ToString()+";";
+                   i++;
+
+               }
+               rd.Close();
+
+               cmd.CommandText = "select * from Question where TestGUID=@TestGUID order by Serial ";
+               i = 1;
+               rd = cmd.ExecuteReader();
+               while (rd.Read())
+               {
+                   score += "var w" + i + "=" + rd["Weight"].ToString() + ";";
+                   i++;
+
+               }
+               rd.Close();
+
+           }
+       
+       return score;
+   }
+
+   private string Dtb2Json(DataTable dtb)
+   {
+
+       JavaScriptSerializer jss = new JavaScriptSerializer();
+       System.Collections.ArrayList dic = new System.Collections.ArrayList();
+       foreach (DataRow dr in dtb.Rows)
+       {
+           System.Collections.Generic.Dictionary<string, object> drow = new System.Collections.Generic.Dictionary<string, object>();
+           foreach (DataColumn dc in dtb.Columns)
+           {
+               drow.Add(dc.ColumnName, dr[dc.ColumnName]);
+           }
+           dic.Add(drow);
+       }
+       return jss.Serialize(dic);
+   }
+
 }

@@ -198,7 +198,7 @@
 
                         }
                     });
-
+                    alert("修改成功!");
                 },
                 error: function (msg) {
                     alert("操作失败!");
