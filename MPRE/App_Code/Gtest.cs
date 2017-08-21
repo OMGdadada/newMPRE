@@ -31,6 +31,11 @@ public class Gtest : System.Web.Services.WebService
     {
         return "HelloWorld";
     }
+
+    
+
+
+
     [WebMethod]
     public string GetNums(int v, String TGUID)
     {
@@ -308,7 +313,7 @@ public class Gtest : System.Web.Services.WebService
 
 
     [WebMethod]
-    public string InsertItemSerial(int v, string TGUID,string GUID,int ItemSerial)
+    public string InsertItemSerial(int v, string TGUID,string GUID,int ItemSerial,int Score,string InputText)
     {
 
         var Text = "成功修改";
@@ -318,7 +323,7 @@ public class Gtest : System.Web.Services.WebService
         {
             var QUID = GetQUID(GUID, v);
             SqlCommand cmd = conn.CreateCommand();
-            cmd.CommandText = "UPDATE [AnswerItem] SET ItemSerial = '"+ ItemSerial + "',CDT='" + time + "',IsFinished = 'True' WHERE CartGUID='"+ TGUID + "' AND QuestionGUID='"+ QUID + "'";
+            cmd.CommandText = "UPDATE [AnswerItem] SET Score = '"+ Score + "', ItemSerial = '"+ ItemSerial + "',CDT='" + time + "',InputText = '" + InputText + "',IsFinished = 'True' WHERE CartGUID='" + TGUID + "' AND QuestionGUID='"+ QUID + "'";
             SqlCommand daa = new SqlCommand(cmd.CommandText, conn);
             conn.Open();
             cmd.ExecuteNonQuery();//执行Sql
@@ -497,7 +502,7 @@ public class Gtest : System.Web.Services.WebService
             {
 
                 SqlCommand cmd = conn.CreateCommand();
-                cmd.CommandText = "select min(ID) as ID,min(PatientName) as PatientName,min(CDT) as CDT, GUID,count(*) as row,max(Situation) as Situation from (select ID,PatientName,CDT,GUID,Case When IsPaid = 'false' Then '未购买' When IsFinished = 'True'  Then '完成' when IsFinished = 'false' Then '未完成' END Situation from [TPCView])[P] group by GUID ORDER BY GUID, Situation desc";
+                cmd.CommandText = "select min(ID) as ID,min(PatientName) as PatientName,min(CDT) as CDT, GUID,count(*) as row,max(Situation) as Situation from (select ID,PatientName,CDT,GUID,Case When IsPaid = 'false' Then '未购买' When IsFinished = 'True'  Then '完成' when IsFinished = 'false' Then '未完成' END Situation from [TPCView] Where Dimension0name =2)[P] group by GUID ORDER BY GUID, Situation desc";
                 conn.Open();//打开数据库连接 
                 SqlDataAdapter da = new SqlDataAdapter(cmd.CommandText, conn);
                 da.Fill(ds);
@@ -510,7 +515,7 @@ public class Gtest : System.Web.Services.WebService
             {
 
                 SqlCommand cmd = conn.CreateCommand();
-                cmd.CommandText = "select min(ID) as ID,min(PatientName) as PatientName,min(CDT) as CDT, GUID,count(*) as row,max(Situation) as Situation from (select ID,PatientName,CDT,GUID,Case When IsPaid = 'false' Then '未购买' When IsFinished = 'True'  Then '完成' when IsFinished = 'false' Then '未完成' END Situation from [TPCView] WHERE PatientGUID ='"+PGUID+"')[P] group by GUID ORDER BY GUID, Situation desc";
+                cmd.CommandText = "select min(ID) as ID,min(PatientName) as PatientName,min(CDT) as CDT, GUID,count(*) as row,max(Situation) as Situation from (select ID,PatientName,CDT,GUID,Case When IsPaid = 'false' Then '未购买' When IsFinished = 'True'  Then '完成' when IsFinished = 'false' Then '未完成' END Situation from [TPCView] WHERE PatientGUID ='"+PGUID+ "' and Dimension0name =2)[P] group by GUID ORDER BY GUID, Situation desc";
                 conn.Open();//打开数据库连接 
                 SqlDataAdapter da = new SqlDataAdapter(cmd.CommandText, conn);
                 da.Fill(ds);
@@ -584,5 +589,23 @@ public class Gtest : System.Web.Services.WebService
         return Dtb2Json(ds.Tables[0]);
     }
 
+    [WebMethod]
+    public string GetTL(string GUID, string TGUID)
+    {
+
+        DataSet ds = new DataSet();
+        using (SqlConnection conn = new DB().GetConnection())
+        {
+
+            SqlCommand cmd = conn.CreateCommand();
+            cmd.CommandText = "SELECT [Serial],[IsFinished],[ItemSerial] FROM [RQ] WHERE CartGUID ='" + TGUID + "' And TestGUID='" + GUID + "'ORDER BY [Serial]";
+            conn.Open();//打开数据库连接 
+            SqlDataAdapter da = new SqlDataAdapter(cmd.CommandText, conn);
+            da.Fill(ds);
+            conn.Close();
+        }
+        return Dtb2Json(ds.Tables[0]);
+
+    }
 
 }
