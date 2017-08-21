@@ -12,7 +12,7 @@
                 <h6>常用语
                     <asp:Label ID="ErrorLabel" runat="server" Text="" ForeColor="Red"></asp:Label></h6>
                 <div>
-                    <asp:TextBox ID="CommonWord" class="form-control" placeholder="此字段不能为空" runat="server"></asp:TextBox>
+                    <asp:TextBox ID="CommonWord" class="form-control" placeholder="此字段不能为空" runat="server" TextMode="MultiLine"></asp:TextBox>
                     <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ErrorMessage="/*常用语必填*/" ControlToValidate="CommonWord"></asp:RequiredFieldValidator>
                 </div>
                 <p>

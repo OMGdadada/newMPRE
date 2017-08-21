@@ -19,7 +19,7 @@
     <link href="../assets/css/weather-icons.min.css" rel="stylesheet" />
 
     <!--Beyond styles-->
-    <link href="../assets/css/beyond2.min.css" rel="stylesheet" />
+    <link href="../assets/css/beyond.min.css" rel="stylesheet" />
     <link href="../assets/css/demo.min.css" rel="stylesheet" />
     <link href="../assets/css/typicons.min.css" rel="stylesheet" />
     <link href="../assets/css/animate.min.css" rel="stylesheet" />
@@ -44,7 +44,12 @@
         }
     </style>
     
-    <script src="../assets/js/jquery-1.4.2.min.js"></script>
+                    <!--Basic Scripts-->
+                    <script type="text/javascript" src="../assets/js/jquery-2.0.3.min.js"></script>
+                    <script type="text/javascript" src="../assets/js/bootstrap.min.js"></script>
+
+                    <!--Beyond Scripts-->
+                    <script type="text/javascript" src="../assets/js/beyond.min.js"></script>
 
       <script src="../assets/js/skins.min.js"></script>
       <script src="../assets/js/vue.js"></script>
@@ -146,16 +151,20 @@
                             <asp:TextBox ID="Remark" runat="server" TextMode="MultiLine" Rows="6" class="form-control myTextBox" placeholder="无" ></asp:TextBox>
                         </p>
                     </div>
-                     <asp:Button ID="Button4" class="btn btn-info login noprint" runat="server" Text="常用语"   />
-                  
+                      <span  class="btn btn-info login noprint"  style="cursor: pointer;" data-dismiss="modal" data-toggle="modal" data-target="#myModal4" >常用语</span>
+                        <br />
                     <div class="myHr"></div>
                     <div class="row" style="margin:4px 0px">
-                        <div style="float:left;font-weight:600;">
+                        <div style="float:left;font-weight:600; margin-top:45px;">
                             医生签名：_______________________
                         </div>
                         <div style="float:right;margin-right:20px;">
-                            <strong>打印日期：</strong>
+                             <p> <strong>测试日期：</strong>
+                            <asp:Label ID="TSTime" runat="server"></asp:Label>
+                           </p>
+                           <p> <strong>打印日期：</strong>
                             <asp:Label ID="RSTime" runat="server" Text="Label"></asp:Label>
+                           </p>
                         </div>
                     </div>
                     <div  class="footHr">
@@ -164,36 +173,61 @@
                     <div class="noprint" style="margin:50px 0px"></div>
 
                     <div class="row noprint" style="margin:4px 0px;text-align:center;">
-                        <asp:Button ID="Button1" runat="server" Text="保 存" class="btn btn-success"  />
+                        <asp:Button ID="Button1" runat="server" Text="保 存" class="btn btn-success"  OnClick="Button1_Click" />
                         &nbsp;&nbsp;
                         <a href="javascript:window.print()" target="_self" class="btn btn-info">打印</a> 
 
-                         &nbsp;&nbsp;
-                      
-                        <asp:Button ID="Button3" runat="server" Text="返回测试选择页" class="btn btn-default"/>
+                     
                     </div>
 
-                          <div style="margin:4px -2px">
-                        <hr  />
-                              <div  style=" clear:both; float:right;">
-                                  <p>测查员：**** </p>
-                                  <p>测查日期：****年**月**日</p>
-                                  <p>检查医院：北京大学第六医院</p>
-
-                              </div>
-                                 
-
-                               <hr  style=" clear:both; " />
-
-
-                    </div>
-                 
-
+                        
     </div>
          </div>
                 </div>
         </div>
+        </div><asp:ScriptManager ID="ScriptManager1" runat="server">
+        </asp:ScriptManager>
+        <div class="modal fade" id="myModal4" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document" style="width:50%; zoom: 1.3;">
+            <div class="modal-content" style="margin-top: 10%;">
+                <div class="modal-header">
+                    <strong>常用语</strong>
+                    <button type="button" class="close" data-dismiss="modal" data-toggle="modal" data-target="#myModal"><span aria-hidden="true">&times;</span></button>
+                    <br />
+                </div>
+                <div class="modal-body " style="padding-top:0px;">
+                    <p style=" zoom: 0.7;">&nbsp;</p>
+                     <asp:UpdatePanel ID="UpdatePanel1" runat="server">
+                <ContentTemplate>
+                      <asp:Label ID="Label1" runat="server" ></asp:Label>
+                        <div style="float: left; width: 100%;">
+                            <asp:TextBox ID="ArTagName" runat="server" Height="28px" Width="60%"></asp:TextBox>
+                            &nbsp;<asp:Button ID="AddArTag" runat="server" class="btn btn-info " Text="添加为常用语" OnClick="AddArTag_Click" />
+                            
+                           
+                        </div>
+                      
+                        <div runat="server" style="overflow: scroll; width: 100%; height: 200px; overflow-x: hidden;">
+                            <asp:CheckBoxList ID="TagsList" runat="server" Style="margin-left: 5px; margin-top: 0px; text-align: left; width: 100%" RepeatDirection="Horizontal"
+                                RepeatLayout="Table" RepeatColumns="1">
+                            </asp:CheckBoxList>
+                        </div>   
+                          </ContentTemplate>
+            </asp:UpdatePanel>
+                    </div>
+                
+
+                <div class="modal-footer">
+                    <asp:Button ID="Sure" runat="server" Text="确定"  class="btn btn-info" OnClick="Sure2_Click"   />
+                    <button type="button" class="btn btn-default" data-dismiss="modal" data-toggle="modal" data-target="#myModal">取消</button>
+                </div>
+            </div>
         </div>
+    </div>
+
+
+
+
         <span id="Score" style="display:none"></span>
      
 

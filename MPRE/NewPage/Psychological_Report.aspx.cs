@@ -69,12 +69,14 @@ public partial class NewPage_Psychological_Report : System.Web.UI.Page
                         rd.Close();
 
 
-                        cmd.CommandText = "select * from [Test] where [GUID] = @TestGUID";
-                        cmd.Parameters.AddWithValue("@TestGUID", Request.QueryString["TestGUID"].ToString());
+                        cmd.CommandText = "select * from [TPCView] where [GUID] = @CartGUID";
+                        cmd.Parameters.AddWithValue("@CartGUID", Request.QueryString["CatGUID"].ToString());
                         rd = cmd.ExecuteReader();
                         if (rd.Read())
                         {
                             TestName.Text = rd["TestName"].ToString();
+                            Remark.Text = rd["ReportRemark"].ToString();
+                            TSTime.Text = String.Format("{0:yyyy 年 MM 月 dd 日}", rd["CDT"]);
                         }
                         rd.Close();
 
@@ -243,12 +245,15 @@ public partial class NewPage_Psychological_Report : System.Web.UI.Page
 
                     }
                     Header();
+                    MyDataBind();
                     TestGUID.Text = Request.QueryString["TestGUID"].ToString();
                     CartGUID.Text=Request.QueryString["CatGUID"].ToString();
             }
 
         }
     }
+   
+
     private void Header()
     {
         using (SqlConnection conn = new DB().GetConnection())
@@ -266,5 +271,123 @@ public partial class NewPage_Psychological_Report : System.Web.UI.Page
         }
     }
 
+    protected void AddArTag_Click(object sender, EventArgs e)
+    {
+        if (ArTagName.Text == "")
+        {
+            Label1.Text = "请输入文字";
+            Label1.ForeColor = System.Drawing.Color.Red;
+        }
+        else { ArticleTag(); }
 
+    }
+    private void MyDataBind()
+    {
+        using (SqlConnection conn = new DB().GetConnection())
+        {
+            SqlCommand cmd = conn.CreateCommand();
+            conn.Open();
+            cmd.CommandText = "select * from  [CommonWord]  order by ID desc  ";
+
+            SqlDataReader rd = cmd.ExecuteReader();
+            TagsList.DataSource = rd;
+            TagsList.DataTextField = "CommonWord";
+            TagsList.DataValueField = "ID";
+            TagsList.DataBind();
+
+            rd.Close();
+
+        }
+
+    }
+
+    private void ArticleTag()
+    {
+
+        using (SqlConnection conn = new DB().GetConnection())
+        {
+
+            SqlCommand cmd = conn.CreateCommand();
+            conn.Open();
+            cmd.CommandText = "select * from  [CommonWord] where CommonWord=@CommonWord";
+            cmd.Parameters.AddWithValue("@CommonWord", ArTagName.Text);
+            SqlDataReader rd = cmd.ExecuteReader();
+
+            if (!rd.Read())
+            {
+                Label1.Text = "";
+                using (SqlConnection conn1 = new DB().GetConnection())
+                {
+                    StringBuilder sb = new StringBuilder("insert into CommonWord(CommonWord)");
+                    sb.Append(" values ( @CommonWord) ");
+                    SqlCommand cmd1 = new SqlCommand(sb.ToString(), conn1);
+                    cmd1.Parameters.AddWithValue("@CommonWord", ArTagName.Text);
+
+                    conn1.Open();
+                    cmd1.ExecuteNonQuery();
+
+                }
+                MyDataBind();
+                TagsList.Items[0].Selected = true;
+            }
+            else
+            {
+                Label1.Text = "该常用语已经存在，无需添加！";
+                Label1.ForeColor = System.Drawing.Color.Red;
+            }
+            rd.Close();
+            conn.Close();
+
+        }
+
+
+
+    }
+
+    private void ArticleTagAdd()
+    {
+        string tags = "";
+        for (int i = 0; i <= TagsList.Items.Count - 1; i++)
+        {
+            if (TagsList.Items[i].Selected == true)
+            {
+                tags += "，" + TagsList.Items[i].Text;
+            }
+
+        }
+        if (tags != "")
+        {
+            tags = tags.Substring(1);
+            Remark.Text = Remark.Text + tags;   ///选择的“文章标签”对应的ID
+            for (int i = 0; i <= TagsList.Items.Count - 1; i++)
+            {
+                if (TagsList.Items[i].Selected == true)
+                {
+                    TagsList.Items[i].Selected = false;
+                }
+
+            }
+        }
+    }
+
+    protected void Sure2_Click(object sender, EventArgs e)
+    {
+        ArticleTagAdd();
+       
+    }
+
+    protected void Button1_Click(object sender, EventArgs e)
+    {
+        using (SqlConnection conn = new DB().GetConnection())
+        {
+            SqlCommand cmd = conn.CreateCommand();
+            cmd.CommandText = "Update TestCart set ReportRemark = @Remark where GUID=@GUID";
+            cmd.Parameters.AddWithValue("@GUID", Request.QueryString["CatGUID"].ToString());
+            cmd.Parameters.AddWithValue("@Remark", Remark.Text);
+            conn.Open();
+            cmd.ExecuteNonQuery();
+            conn.Close();
+        }
+        Response.Write(" <script> alert(\"保存成功！\"); </script> ");
+    }
 }
