@@ -207,7 +207,7 @@ public class Gtest : System.Web.Services.WebService
 
     }
     [WebMethod]
-    public string Insert(string Pguid, string Tdata, string DoctorGUID)
+    public string Insert(string Pguid, string Tdata, string DoctorGUID, string HospitalGUID)
     {
         string[] Tdatalist = Tdata.Split('&');
         var Url = "";
@@ -237,11 +237,12 @@ public class Gtest : System.Web.Services.WebService
         {
             SqlCommand cmd = conn.CreateCommand();
             conn.Open();
-            cmd.CommandText = "INSERT INTO Code_Cart (CartGUID,Code,CreateDate,DoctorGUID) VALUES (@CartGUID,@Code,@Time1,@DoctorGUID)";
+            cmd.CommandText = "INSERT INTO Code_Cart (CartGUID,Code,CreateDate,DoctorGUID,HospitalGUID) VALUES (@CartGUID,@Code,@Time1,@DoctorGUID,@HospitalGUID)";
             cmd.Parameters.AddWithValue("@CartGUID", strGUID);
             cmd.Parameters.AddWithValue("@Code", Code);
             cmd.Parameters.AddWithValue("@Time1", time);        
             cmd.Parameters.AddWithValue("@DoctorGUID", DoctorGUID);
+            cmd.Parameters.AddWithValue("@HospitalGUID", HospitalGUID);
             cmd.ExecuteNonQuery();
             conn.Close();
         }

@@ -159,6 +159,7 @@ public partial class Login : System.Web.UI.Page
     {
         int flag = 0;
         string CartGUID = "";
+        string hospitalguid = "";
         //using (SqlConnection conn = new DB().GetConnection())
         //{
         //    SqlCommand cmd = conn.CreateCommand();
@@ -196,6 +197,7 @@ public partial class Login : System.Web.UI.Page
 
                 CartGUID = rd["CartGUID"].ToString();
                 DoctorGUID.Text = rd["DoctorGUID"].ToString();
+                hospitalguid = rd["HospitalGUID"].ToString();
                 flag = 1;
             }
             else
@@ -224,6 +226,7 @@ public partial class Login : System.Web.UI.Page
         {
             System.Web.HttpContext.Current.Session["DoctorGUID"] = DoctorGUID.Text;
             System.Web.HttpContext.Current.Session["Code"] = Code.Text;
+            System.Web.HttpContext.Current.Session["HospitalGUID"] = hospitalguid;
             Response.Redirect(Server.HtmlEncode("NewPage/TestList.aspx?TGUID=" + CartGUID + ""));
         }
         else if (flag == 2)

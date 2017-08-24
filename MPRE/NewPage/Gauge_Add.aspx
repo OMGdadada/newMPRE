@@ -62,9 +62,12 @@
                        
                       
                         <tr>
-                            <th id="td1">所属测试：</th>
+                            <th id="td1">是否允许看患者报告单</th>
                             <th id="td2">
-                                  心理测评量表
+                                 <asp:DropDownList ID="IsView" runat="server">
+                                    <asp:ListItem  Value="1">是</asp:ListItem>
+                                    <asp:ListItem Value="0">否</asp:ListItem>
+                                </asp:DropDownList>
 
                                </th> 
                             <th id="td1">有效性：</th>

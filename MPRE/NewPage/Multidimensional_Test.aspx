@@ -989,11 +989,12 @@
                 var Tdata = TestGUID.substring(0, TestGUID.length - 1);
                 var Pguid = PatientGUID;
                 var doctorguid = '<%=Session["DoctorGUID"] %>';
+                var hospitalguid = '<%=Session["HospitalGUID"] %>';
                 var Url = "";
                 $.ajax({
                     type: "post",
                     url: "Gtest.asmx/Insert", //服务端处理程序   
-                    data: { "Pguid": Pguid, "Tdata": Tdata, "DoctorGUID": doctorguid },
+                    data: { "Pguid": Pguid, "Tdata": Tdata, "DoctorGUID": doctorguid, "HospitalGUID": hospitalguid },
                     success: function (Nums) {
                         try {
                             Url = $(Nums).find("string").text();

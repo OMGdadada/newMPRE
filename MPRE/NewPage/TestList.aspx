@@ -113,7 +113,8 @@
                                             <td>{{test.IsFinished}}</td>
                                             <td>{{test.Price}}</td>
                                             <td><i v-if="!test.Finished" id="StartBtn" style="cursor:pointer;" class="glyphicon glyphicon-hand-right":data-test="test.TestGUID" :data-url="test.TestUrl" :data-pguid="test.PatientGUID" onclick="Start(this)" ></i>
-                                                <i v-if="test.Finished" id="FinishBtn" class="glyphicon glyphicon-ok" ></i>
+                                                 <i v-if="test.Finished && test.IsView" id="ReportBtn"  style="cursor:pointer;"  class="glyphicon glyphicon-list-alt" :data-TestGUID="test.TestGUID"  :data-PatientGUID="test.PatientGUID"  :data-CatGUID="test.GUID"  onclick="Report(this)"></i>
+                                                 <i v-if="test.Finished && !test.IsView" id="FinishBtn" class="glyphicon glyphicon-ok" ></i>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -128,11 +129,16 @@
                                 </table>
 
                             </div>
+                            <br />
+                            <span class="btn btn-info" onclick="Over(this)"> 结束测试</span>
                             <code></code>
+       
+
                         </div>
                     </div>
                 </div>
             </div>
+
         </div>
         <script>
             urlinfo = window.location.href; //获取当前页面的url
@@ -173,6 +179,19 @@
                     window.open(Url, '_blank', 'top=0,left=0,width=' + (screen.availWidth - 5) + ',height=' + (screen.availHeight - 50) + ',menubar=no,toolbar=no,location=no,directories=no,status=no,scrollbars=no,resizable=yes');
                 }
             }
+            function Report(e) {
+                var TestGUID = e.getAttribute("data-TestGUID");
+                var PatientGUID = e.getAttribute("data-PatientGUID");
+                var CatGUID = e.getAttribute("data-CatGUID");
+                var Url = "Psychological_Report.aspx?TestGUID=" + TestGUID + "&PatientGUID=" + PatientGUID + "&CatGUID=" + CatGUID;
+                window.open(Url, '_blank');
+
+            }
+            function Over(e) {
+                window.close();
+                window.open('../login.aspx', '_blank');
+            }
+
             if (newsname == "?TGUID") {
                 ajax1();
             } else if (newsname == "?GUID") {

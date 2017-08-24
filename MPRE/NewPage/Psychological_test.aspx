@@ -1017,11 +1017,12 @@
         function ajax3(Tdata, Pguid) {
             var Url = "";
             var doctorguid = '<%=Session["DoctorGUID"] %>';
+            var hospitalguid = '<%=Session["HospitalGUID"] %>';
            // Tdata = Tdata.substring(0, Tdata.length - 1);
             $.ajax({
                 type: "post",
                 url: "Gtest.asmx/Insert", //服务端处理程序   
-                data: { "Pguid": Pguid, "Tdata": Tdata, "DoctorGUID": doctorguid },
+                data: { "Pguid": Pguid, "Tdata": Tdata, "DoctorGUID": doctorguid, "HospitalGUID": hospitalguid },
                 dataType: 'xml', //返回的类型为XML ，和前面的Json，不一样了
                 async: false,//设置为同步操作就可以给全局变量赋值成功 
                 success: function (Nums) {
