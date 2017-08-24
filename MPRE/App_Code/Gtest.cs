@@ -207,7 +207,7 @@ public class Gtest : System.Web.Services.WebService
 
     }
     [WebMethod]
-    public string Insert(string Pguid,string Tdata)
+    public string Insert(string Pguid, string Tdata, string DoctorGUID)
     {
         string[] Tdatalist = Tdata.Split('&');
         var Url = "";
@@ -215,23 +215,38 @@ public class Gtest : System.Web.Services.WebService
         string strGUID = System.Guid.NewGuid().ToString();
         DateTime current = DateTime.Now;
         string time = current.ToString();
+        Random ran = new Random();
+        int Code = ran.Next(100000, 999999);
         for (int i=0; i<Tdatalist.Length;i++ )
         {
             using (SqlConnection conn = new DB().GetConnection())
             {
-
                 SqlCommand cmd = conn.CreateCommand();
                 cmd.CommandText = "INSERT INTO TestCart (GUID,PatientGUID,TestGUID,CDT,IsPaid,IsFinished) VALUES (@GUID,@PatientGUID,@TestGUID,@Time,1,0)";
                 cmd.Parameters.AddWithValue("@GUID", strGUID);
                 cmd.Parameters.AddWithValue("@PatientGUID", Pguid);
                 cmd.Parameters.AddWithValue("@TestGUID", Tdatalist[i]);
-                cmd.Parameters.AddWithValue("@Time",time);
+                cmd.Parameters.AddWithValue("@Time",time);          
                 conn.Open();//打开数据库连接 
                 cmd.ExecuteNonQuery();
                 conn.Close();
             }
 
         }
+        using (SqlConnection conn = new DB().GetConnection())
+        {
+            SqlCommand cmd = conn.CreateCommand();
+            conn.Open();
+            cmd.CommandText = "INSERT INTO Code_Cart (CartGUID,Code,CreateDate,DoctorGUID) VALUES (@CartGUID,@Code,@Time1,@DoctorGUID)";
+            cmd.Parameters.AddWithValue("@CartGUID", strGUID);
+            cmd.Parameters.AddWithValue("@Code", Code);
+            cmd.Parameters.AddWithValue("@Time1", time);        
+            cmd.Parameters.AddWithValue("@DoctorGUID", DoctorGUID);
+            cmd.ExecuteNonQuery();
+            conn.Close();
+        }
+
+
         Url = "TestCart.aspx?TGUID=" + strGUID;
 
         return Url;

@@ -158,19 +158,62 @@ public partial class Login : System.Web.UI.Page
     protected void Button2_Click(object sender, EventArgs e)
     {
         int flag = 0;
+        string CartGUID = "";
+        //using (SqlConnection conn = new DB().GetConnection())
+        //{
+        //    SqlCommand cmd = conn.CreateCommand();
+        //    cmd.CommandText = "select * from [Code] where [Code] = @Password";
+        //    cmd.Parameters.AddWithValue("@Password", Code.Text.Trim());
+        //    conn.Open();
+        //    SqlDataReader rd = cmd.ExecuteReader();
+        //    if (rd.Read())
+        //    {
+        //        TestNum.Text = rd["TestNum"].ToString();
+        //        PatientGUID.Text = rd["PatientGUID"].ToString();
+        //        DoctorGUID.Text = rd["DoctorGUID"].ToString();
+        //        flag = 1;
+        //    }
+        //    cmd.Dispose();
+        //    rd.Close();
+        //    conn.Close();
+
+        //}
+        //if (flag == 1)
+        //{
+        //    System.Web.HttpContext.Current.Session["DoctorGUID"] = DoctorGUID.Text;
+        //    System.Web.HttpContext.Current.Session["Code"] = Code.Text;
+        //    Response.Redirect(Server.HtmlEncode("T" + TestNum.Text + ".aspx?GUID=" + PatientGUID.Text + ""));
+        //}
         using (SqlConnection conn = new DB().GetConnection())
         {
             SqlCommand cmd = conn.CreateCommand();
-            cmd.CommandText = "select * from [Code] where [Code] = @Password";
+            cmd.CommandText = "select * from [Code_Cart] where [Code] = @Password";
             cmd.Parameters.AddWithValue("@Password", Code.Text.Trim());
             conn.Open();
             SqlDataReader rd = cmd.ExecuteReader();
             if (rd.Read())
             {
-                TestNum.Text = rd["TestNum"].ToString();
-                PatientGUID.Text = rd["PatientGUID"].ToString();
+
+                CartGUID = rd["CartGUID"].ToString();
                 DoctorGUID.Text = rd["DoctorGUID"].ToString();
                 flag = 1;
+            }
+            else
+            {
+                rd.Close();
+                cmd.CommandText = "select * from [Code] where [Code] = @Password1";
+                cmd.Parameters.AddWithValue("@Password1", Code.Text.Trim());
+                rd = cmd.ExecuteReader();
+                if (rd.Read())
+                {
+                    TestNum.Text = rd["TestNum"].ToString();
+                    PatientGUID.Text = rd["PatientGUID"].ToString();
+                    DoctorGUID.Text = rd["DoctorGUID"].ToString();
+                    flag = 2;
+                }
+                cmd.Dispose();
+                rd.Close();
+
             }
             cmd.Dispose();
             rd.Close();
@@ -181,8 +224,15 @@ public partial class Login : System.Web.UI.Page
         {
             System.Web.HttpContext.Current.Session["DoctorGUID"] = DoctorGUID.Text;
             System.Web.HttpContext.Current.Session["Code"] = Code.Text;
+            Response.Redirect(Server.HtmlEncode("NewPage/TestList.aspx?TGUID=" + CartGUID + ""));
+        }
+        else if (flag == 2)
+       {
+            System.Web.HttpContext.Current.Session["DoctorGUID"] = DoctorGUID.Text;
+            System.Web.HttpContext.Current.Session["Code"] = Code.Text;
             Response.Redirect(Server.HtmlEncode("T" + TestNum.Text + ".aspx?GUID=" + PatientGUID.Text + ""));
         }
+
         else
         {
             if (Code.Text.Trim().Length == 16)

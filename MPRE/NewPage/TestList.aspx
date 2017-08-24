@@ -112,7 +112,7 @@
                                             <td >{{test.TestName}}</td>
                                             <td>{{test.IsFinished}}</td>
                                             <td>{{test.Price}}</td>
-                                            <td><i v-if="!test.Finished" id="StartBtn" style="cursor:pointer;" class="glyphicon glyphicon-hand-right" v-on:click="Start(test.TestGUID)"></i>
+                                            <td><i v-if="!test.Finished" id="StartBtn" style="cursor:pointer;" class="glyphicon glyphicon-hand-right":data-test="test.TestGUID" :data-url="test.TestUrl" :data-pguid="test.PatientGUID" onclick="Start(this)" ></i>
                                                 <i v-if="test.Finished" id="FinishBtn" class="glyphicon glyphicon-ok" ></i>
                                             </td>
                                         </tr>
@@ -155,15 +155,24 @@
                     count: 0,
                     list: []
                 },
-                methods: {
-                    Start: function (val) {
-                        //alert(val);
-                        var Url = "Test_Start.aspx?TGUID=" + newsid + "&GUID=" + val;
-                        window.open(Url, '_blank', 'top=0,left=0,width=' + (screen.availWidth - 5) + ',height=' + (screen.availHeight - 50) + ',menubar=no,toolbar=no,location=no,directories=no,status=no,scrollbars=no,resizable=yes');
-
-                    }
-                }
+          
             })
+
+            function Start(e) {
+                var testurl = e.getAttribute("data-url");
+                var testguid = e.getAttribute("data-test");
+                var Patientguid = e.getAttribute("data-pguid");
+                if (testurl == null) {
+                    //alert(val);
+                    var Url = "Test_Start.aspx?TGUID=" + newsid + "&GUID=" + testguid;
+                    window.open(Url, '_blank', 'top=0,left=0,width=' + (screen.availWidth - 5) + ',height=' + (screen.availHeight - 50) + ',menubar=no,toolbar=no,location=no,directories=no,status=no,scrollbars=no,resizable=yes');
+
+                }
+                else {
+                    var Url = "..\\" + testurl + "?GUID=" + Patientguid;
+                    window.open(Url, '_blank', 'top=0,left=0,width=' + (screen.availWidth - 5) + ',height=' + (screen.availHeight - 50) + ',menubar=no,toolbar=no,location=no,directories=no,status=no,scrollbars=no,resizable=yes');
+                }
+            }
             if (newsname == "?TGUID") {
                 ajax1();
             } else if (newsname == "?GUID") {
