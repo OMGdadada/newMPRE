@@ -64,7 +64,9 @@
                     <div class="widget" style="margin:0px;">
                         <div class="widget-header bg-blue">
                             <i class="widget-caption glyphicon glyphicon-shopping-cart" style="float:left;margin-right:10px;"></i> 
-                            <span class="widget-caption">所购试题</span>
+                            <span class="widget-caption">测试集合</span>
+                            <span class="widget-caption" style=" font-size:larger"> &nbsp; &nbsp;| &nbsp; &nbsp; 自评码：<asp:Label runat="server" ID="CodeNum" Text=""></asp:Label> &nbsp; 有效期至：<asp:Label ID="Time" runat="server" Text=""></asp:Label> &nbsp; <asp:Button ID="Button1" runat="server" Text="重置自评码"  class="btn btn-default btn-xs " OnClick="Button1_Click"/></span>  
+                           
                         </div>
                     </div>
                     <div class="widget-body">
@@ -82,7 +84,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr v-for="test in list">
+                                        <tr v-for="test in list"> 
                                             <td>{{test.Serial}}</td>
                                             <td >{{test.TestName}}</td>
                                             <td>{{test.IsFinished}}</td>
@@ -104,7 +106,8 @@
                                 </table>
 
                             </div>
-                            <code></code>
+                            <br />
+                           确定
                         </div>
                     </div>
                 </div>
