@@ -293,7 +293,7 @@
                                  var Scorelist = $("#Score").text();
                                  
                                  eval(Scorelist);
-                                 nv.items[i].ItemListNumb[j].Content = eval(YZScore);
+                                 nv.items[i].ItemListNumb[j].Content = parseFloat(eval(YZScore)).toFixed(2);
                               }
 
                           }

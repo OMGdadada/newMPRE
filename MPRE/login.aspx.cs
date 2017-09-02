@@ -158,6 +158,7 @@ public partial class Login : System.Web.UI.Page
     protected void Button2_Click(object sender, EventArgs e)
     {
         int flag = 0;
+        int k = 0;
         string CartGUID = "";
         string hospitalguid = "";
         //using (SqlConnection conn = new DB().GetConnection())
@@ -198,7 +199,30 @@ public partial class Login : System.Web.UI.Page
                 CartGUID = rd["CartGUID"].ToString();
                 DoctorGUID.Text = rd["DoctorGUID"].ToString();
                 hospitalguid = rd["HospitalGUID"].ToString();
-                flag = 1;
+                string CDT = rd["CreateDate"].ToString();
+                rd.Close();
+                cmd.CommandText = "select * from [Hospital] where GUID = @HospitalGUID";
+                cmd.Parameters.AddWithValue("@HospitalGUID", hospitalguid);
+                rd = cmd.ExecuteReader();
+                if (rd.Read())
+                {
+                    k = Convert.ToInt16(rd["deadline"].ToString());
+                }
+                rd.Close();
+
+                System.DateTime Timers = System.DateTime.Parse(CDT);
+                DateTime T1 = Timers.AddHours(k);
+                DateTime TadayData = DateTime.Now;
+                TimeSpan span = TadayData.Subtract(T1);
+                int days = span.Seconds;
+                if (TadayData <= T1)
+                {
+                    flag = 1;
+                }
+                else
+                {
+                    flag = 3;
+                }
             }
             else
             {
@@ -218,7 +242,6 @@ public partial class Login : System.Web.UI.Page
 
             }
             cmd.Dispose();
-            rd.Close();
             conn.Close();
 
         }
@@ -234,6 +257,11 @@ public partial class Login : System.Web.UI.Page
             System.Web.HttpContext.Current.Session["DoctorGUID"] = DoctorGUID.Text;
             System.Web.HttpContext.Current.Session["Code"] = Code.Text;
             Response.Redirect(Server.HtmlEncode("T" + TestNum.Text + ".aspx?GUID=" + PatientGUID.Text + ""));
+        }
+        else if (flag == 3)
+        {
+            ErrorLabel2.Text = "自评码过期，请联系医生！";
+            //Response.Write("<Script Language=JavaScript>...alert('自评码过期，请联系医生！');</Script>");
         }
 
         else

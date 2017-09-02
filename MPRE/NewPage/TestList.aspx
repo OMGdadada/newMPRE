@@ -91,6 +91,8 @@
                         <div class="widget-header bg-blue">
                             <i class="widget-caption glyphicon glyphicon-shopping-cart" style="float:left;margin-right:10px;"></i> 
                             <span class="widget-caption">您所购试题</span>
+                              <span class="widget-caption" style=" font-size:larger"> &nbsp; &nbsp;| 有效期至：<asp:Label ID="Time" runat="server" Text=""></asp:Label></span>  
+                           
                         </div>
                     </div>
                     <div class="widget-body">

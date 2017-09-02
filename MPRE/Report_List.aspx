@@ -231,9 +231,27 @@
                                                             <div class="row">
                                                                 <div class="form-group col-xs-3 col-md-3">
                                                                     <span class="input-icon" style="float:right">
-                                                                        <input type="text" placeholder="搜索..." class="form-control input-sm"/> 
+                                                                        <input type="text" placeholder="搜索..." class="form-control input-sm" v-model="Search" /> 
                                                                         <i class="glyphicon glyphicon-search danger circular"></i>
                                                                     </span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-md-12">
+                                                                    <div class="pull-right">
+                                                                        <span>总共：{{Reportt.length}}条记录，每页显示：
+                                                                            <select v-model="Row">
+                                                                                <option value="5">5</option>
+                                                                                <option value="10">10</option>
+                                                                                <option value="20">20</option>
+                                                                                <option value="50">50</option>
+                                                                            </select>
+                                                                            条记录，共{{Math.ceil(Reportt.length/Row)}}页
+                                                                        </span>
+                                                                    </div>
+                                                                    <br />
+                                                                    <br />
+                                                                    <br />
                                                                 </div>
                                                             </div>
                                                             <div class="row">
@@ -242,24 +260,38 @@
                                                                         <thead>
                                                                             <tr>
                                                                                 <th style="width:80px;">序</th>
-                                                                                <th>报告单名称</th>
-                                                                                <th style="width:200px;">患者姓名</th>
-                                                                                <th style="width:200px;">日期</th>
+                                                                                <th style="width:120px;">购买时间</th>
+                                                                                <th>测试名称</th>
+                                                                                <th style="width:120px;">所属患者</th>
                                                                                 <th style="width:80px;"></th>
                                                                             </tr>
                                                                         </thead>
                                                                         <tbody>
                                                                             <tr v-for="test in Report">
                                                                                 <td>{{test.Serial}}</td>
-                                                                                <td><a v-on:click="IntoReport(test.TestGUID,test.PatientGUID,test.GUID)" style="cursor:pointer">{{test.TestName}}</a></td>
-                                                                                <td>{{test.PatientName}}</td>
                                                                                 <td>{{test.CDT}}</td>
-                                                                                
+                                                                                <td>{{test.TestName}}</td>
+                                                                                <td>{{test.PatientName}}</td>
                                                                                 <td><i id="IntoReport_Btn" style="cursor:pointer;" class="glyphicon glyphicon-list-alt" v-on:click="IntoReport(test.TestGUID,test.PatientGUID,test.GUID)" ></i></td>
                                                                             </tr>
                                                                         </tbody>
                                                                     </table>
                                                                     <br />
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-md-12">
+                                                                    <div class="pages">
+                                                                        <a class="pages" v-on:click="JumpPage(first)" style="cursor:pointer">首页</a>
+                                                                        <a class="pages" v-on:click="JumpPage(up)" style="cursor:pointer">上一页</a>
+                                                                        <span v-for="pages in Page" >
+                                                                            <a v-if="!pages.Isthis" class="pages" v-on:click="JumpPage(pages.val)" style="cursor:pointer">{{pages.page}}</a>
+                                                                            <span v-if="pages.Isthis" class="cpb" style="margin-right:5px;">{{pages.page}}</span>
+                                                                        </span>
+                            
+                                                                        <a class="pages" v-on:click="JumpPage(next)" style="cursor:pointer">下一页</a>
+                                                                        <a class="pages" v-on:click="JumpPage(last)" style="cursor:pointer">尾页</a>
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -275,12 +307,104 @@
         var Rp = new Vue({
             el: "#Report",
             data: {
-                Report: [],
+
+                Original: [
+                ],//原始
+                Reportt: [
+                ],
+                Report: [
+                ],
+                Search: "",
+                Row: 10,//初始行数
+                Page: [],
+                first: 1,
+                last: 0,
+                next: 0,
+                up: 0,
+                current: 0,
+                col: 10,
+            },
+            watch: {
+                Search: function () {
+                    if (this.Search.length > 0) {
+                        i = this.Search.length;
+                        var _this = this;
+                        var tab = this['Original'];
+                        if (this.Search) {
+                            _this['Reportt'] = [];
+                            _this['Report'] = [];
+
+                            for (i in tab) {
+                                if (tab[i].Serial == parseInt(_this.Search) || tab[i].PatientName.indexOf(_this.Search) >= 0 || tab[i].CDT.indexOf(_this.Search) >= 0 || tab[i].TestName.indexOf(_this.Search) >= 0) {
+                                    _this['Reportt'].push(tab[i]);
+                                };
+                            }
+                        }
+                    }
+                    if (i > 0 && this.Search.length == 0) {
+                        this.Reportt = this.Original;
+                    }
+                    this.Page = [];
+                    this.current = 0;
+                },
+                Row: function () {
+                    this.current = 0;
+                },
+                current: function () {
+                    if (this.current <= 0) {
+                        this.current = 1;
+                        return;
+                    }
+
+                    if (this.current > Math.ceil(this.Reportt.length / this.Row)) {
+                        //  alert("数据超出引索范围！");
+                        this.current = 1;
+                        return;
+                    }
+                    this.Report = [];
+                    this.Page = [];
+                    for (x = Math.floor(this.current - 1 / this.col) * this.Row; x < (Math.ceil(this.current - 1 / this.col) * this.Row > this.Reportt.length ? this.Reportt.length : Math.ceil(this.current - 1 / this.col) * this.Row) ; x++) {
+                        this.Report.push(this.Reportt[x]);
+                    }
+                    for (x = 0; x <= (Math.ceil(this.Reportt.length / this.Row) - (Math.floor((this.current - 1) / this.col) * this.col) > this.col ? this.col + 1 : (Math.ceil(this.Reportt.length / this.Row) - (Math.floor((this.current - 1) / this.col) * this.col))) ; x++) {
+
+                        if (x == 0) {
+                            if (this.current < (this.col + 1));
+                            else {
+                                this.Page.push({ "page": "...", "Isthis": false, "val": Math.floor((this.current - 1) / this.col) * this.col });
+                            }
+                        } else if (x == this.current % this.col || (x == this.col && (this.current % this.col) == 0 && this.current != 0)) {
+                            this.Page.push({ "page": "" + this.current + "", "Isthis": true, "val": Math.floor((this.current - 1) / this.col) * this.col + x });
+                        }
+                        else if (x == (this.col + 1)) {
+                            //alert(Math.ceil((vm.current) / 5) * vm.Row + 1);
+                            this.Page.push({ "page": "...", "Isthis": false, "val": Math.ceil(this.current / this.col) * this.col + 1 });
+                        } else {
+                            this.Page.push({ "page": "" + (Math.floor((this.current - 1) / this.col) * this.col + x) + "", "Isthis": false, "val": Math.floor((this.current - 1) / this.col) * this.col + x });
+                        }
+                    }
+                    this.last = Math.ceil(this.Reportt.length / this.Row);
+                    this.next = this.current >= this.Reportt.length ? this.Reportt.length : this.current + 1;
+                    this.up = this.current == 1 ? 1 : this.current - 1;
+                }
             },
             methods: {
+                JumpPage: function (val) {
+
+                    if (val >= Math.ceil(this.Reportt.length / this.Row) && this.current == Math.ceil(this.Reportt.length / this.Row) && val != 1) {
+                        alert("已经是最后一页了");
+                        return;
+                    } else if (val == 1 && this.current == 1) {
+                        alert("已经是第一页了");
+                        return;
+                    }
+                    this.current = 0;
+                    this.current = val;
+
+                },
                 IntoReport: function (val1, val2, val3) {
 
-                    var Url = "/NewPage/Psychological_Report.aspx?TestGUID=" + val1 + "&PatientGUID=" + val2 + "&CatGUID=" + val3;
+                    var Url = "NewPage/Psychological_Report.aspx?TestGUID=" + val1 + "&PatientGUID=" + val2 + "&CatGUID=" + val3;
                     window.open(Url, '_blank');
                 }
             }
@@ -300,7 +424,8 @@
 
                         list = $(Nums).find("string").text();
                        // alert(list);
-                        Rp.Report = eval('(' + list + ')');
+                        Rp.Original = eval('(' + list + ')');
+                        Rp.Reportt = eval('(' + list + ')');
 
                     }
                     catch (e) {
@@ -314,14 +439,16 @@
                 },
             })
 
-            for (x = 0; x < Rp.Report.length; x++) {
-                Rp.Report[x].Serial = x + 1;
-                var a = Rp.Report[x].CDT;
+            for (x = 0; x < Rp.Reportt.length; x++) {
+                Rp.Original[x].Serial = x + 1;
+                Rp.Reportt[x].Serial = x + 1;
+                var a = Rp.Reportt[x].CDT;
                 var date = new Date(parseInt(a.slice(6)));
                 var result = date.getFullYear() + '年' + date.getMonth() + '月' + date.getDate() + '日';
-                Rp.Report[x].CDT = result;
-
+                Rp.Original[x].CDT = result;
+                Rp.Reportt[x].CDT = result;
             }
+            Rp.current = 1;
 
                })(jQuery)
 

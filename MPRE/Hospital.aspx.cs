@@ -44,6 +44,7 @@ public partial class Hospital : System.Web.UI.Page
                 Image1.ImageUrl = rd["Avatar"].ToString();
                 HospitalName.Text = rd["HospitalName"].ToString();
                 Introduction.Text = rd["Introduction"].ToString();
+                DeadLine.Text = rd["deadline"].ToString();
             }
             rd.Close();
             conn.Close();
@@ -128,9 +129,10 @@ public partial class Hospital : System.Web.UI.Page
         using (SqlConnection conn = new DB().GetConnection())
         {
             SqlCommand cmd = (SqlCommand)conn.CreateCommand();
-            cmd.CommandText = "Update [Hospital] set HospitalName = @HospitalName,Introduction=@Introduction where GUID = @HospitalGUID";
+            cmd.CommandText = "Update [Hospital] set HospitalName = @HospitalName,Introduction=@Introduction,deadline=@deadline where GUID = @HospitalGUID";
             cmd.Parameters.AddWithValue("@HospitalName", HospitalName.Text);
             cmd.Parameters.AddWithValue("@Introduction", Introduction.Text);
+            cmd.Parameters.AddWithValue("@deadline", DeadLine.Text);
             cmd.Parameters.AddWithValue("@HospitalGUID", HospitalGUID.Text);
             conn.Open();
             int i = cmd.ExecuteNonQuery();

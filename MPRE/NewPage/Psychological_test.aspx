@@ -251,7 +251,7 @@
                                             <div class="widget" style="margin: 0px;">
                                                 <div class="widget-header bg-red">
                                                     <i class="widget-icon fa fa-arrow-right"></i>
-                                                    <span class="widget-caption" style="font-size: 15px;"><strong>以往测评</strong></span>
+                                                    <span class="widget-caption" style="font-size: 15px;"><strong>测试集合</strong></span>
                                                 </div>
                                             </div>
                                             <div class="widget-body">
@@ -260,9 +260,27 @@
                                                         <div class="row">
                                                             <div class="form-group col-xs-3 col-md-3">
                                                                 <span class="input-icon" style="float:right">
-                                                                    <input type="text" placeholder="搜索..." class="form-control input-sm"/> 
+                                                                    <input type="text" placeholder="搜索..." class="form-control input-sm" v-model="Search" /> 
                                                                     <i class="glyphicon glyphicon-search danger circular"></i>
                                                                 </span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <div class="pull-right">
+                                                                    <span>总共：{{TestCartss.length}}条记录，每页显示：
+                                                                        <select v-model="Row">
+                                                                            <option value="5">5</option>
+                                                                            <option value="10">10</option>
+                                                                            <option value="20">20</option>
+                                                                            <option value="50">50</option>
+                                                                        </select>
+                                                                        条记录，共{{Math.ceil(TestCartss.length/Row)}}页
+                                                                    </span>
+                                                                </div>
+                                                                <br />
+                                                                <br />
+                                                                <br />
                                                             </div>
                                                         </div>
                                                         <div class="row">
@@ -277,6 +295,7 @@
                                                                             <th style="width:120px;">测试数量</th>
                                                                             <th style="width:80px;"></th>
                                                                             <th style="width:80px;">删除</th>
+                                                                            <th style="width:80px;">自评码</th>
                                                                         </tr>
                                                                     </thead>
                                                                     <tbody>
@@ -288,10 +307,26 @@
                                                                             <td>{{test.row}}</td>
                                                                             <td><i id="Into_Btn" style="cursor:pointer;" class="glyphicon glyphicon-hand-right" v-on:click="Into(test.GUID)" ></i></td>
                                                                             <td><i v-if="test.Situation !='完成'"   class="glyphicon glyphicon-remove" style="cursor:pointer" v-on:click="Del(test.GUID)"></i></td>
+                                                                            <td>{{test.Code}}</td>
                                                                         </tr>
                                                                     </tbody>
                                                                 </table>
                                                                 <br />
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <div class="pages">
+                                                                    <a class="pages" v-on:click="JumpPage(first)" style="cursor:pointer">首页</a>
+                                                                    <a class="pages" v-on:click="JumpPage(up)" style="cursor:pointer">上一页</a>
+                                                                    <span v-for="pages in Page" >
+                                                                        <a v-if="!pages.Isthis" class="pages" v-on:click="JumpPage(pages.val)" style="cursor:pointer">{{pages.page}}</a>
+                                                                        <span v-if="pages.Isthis" class="cpb" style="margin-right:5px;">{{pages.page}}</span>
+                                                                    </span>
+                            
+                                                                    <a class="pages" v-on:click="JumpPage(next)" style="cursor:pointer">下一页</a>
+                                                                    <a class="pages" v-on:click="JumpPage(last)" style="cursor:pointer">尾页</a>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -315,9 +350,27 @@
                                                             <div class="row">
                                                                 <div class="form-group col-xs-3 col-md-3">
                                                                     <span class="input-icon" style="float:right">
-                                                                        <input type="text" placeholder="搜索..." class="form-control input-sm"/> 
+                                                                        <input type="text" placeholder="搜索..." class="form-control input-sm" v-model="Search" /> 
                                                                         <i class="glyphicon glyphicon-search danger circular"></i>
                                                                     </span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-md-12">
+                                                                    <div class="pull-right">
+                                                                        <span>总共：{{Reportt.length}}条记录，每页显示：
+                                                                            <select v-model="Row">
+                                                                                <option value="5">5</option>
+                                                                                <option value="10">10</option>
+                                                                                <option value="20">20</option>
+                                                                                <option value="50">50</option>
+                                                                            </select>
+                                                                            条记录，共{{Math.ceil(Reportt.length/Row)}}页
+                                                                        </span>
+                                                                    </div>
+                                                                    <br />
+                                                                    <br />
+                                                                    <br />
                                                                 </div>
                                                             </div>
                                                             <div class="row">
@@ -343,6 +396,21 @@
                                                                         </tbody>
                                                                     </table>
                                                                     <br />
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-md-12">
+                                                                    <div class="pages">
+                                                                        <a class="pages" v-on:click="JumpPage(first)" style="cursor:pointer">首页</a>
+                                                                        <a class="pages" v-on:click="JumpPage(up)" style="cursor:pointer">上一页</a>
+                                                                        <span v-for="pages in Page" >
+                                                                            <a v-if="!pages.Isthis" class="pages" v-on:click="JumpPage(pages.val)" style="cursor:pointer">{{pages.page}}</a>
+                                                                            <span v-if="pages.Isthis" class="cpb" style="margin-right:5px;">{{pages.page}}</span>
+                                                                        </span>
+                            
+                                                                        <a class="pages" v-on:click="JumpPage(next)" style="cursor:pointer">下一页</a>
+                                                                        <a class="pages" v-on:click="JumpPage(last)" style="cursor:pointer">尾页</a>
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -613,11 +681,6 @@
                     vm.current = 0;
                     vm.current = val;
                 },
-
-              
-                
-           
-
                 clickTest: function (val) {
                     var ch = document.getElementsByName("Test");
                     for (var i in ch) {
@@ -794,16 +857,106 @@
                 }
             }
         })
-
         var TC = new Vue({
             el: "#TestCarts",
             data: {
-                TestCarts: [],
+                Original: [
+                ],//原始
+                TestCartss: [
+                ],
+                TestCarts: [
+                ],
+                Search: "",
+                Row: 10,//初始行数
+                Page: [],
+                first: 1,
+                last: 0,
+                next: 0,
+                up: 0,
+                current: 0,
+                col: 10,
+            },
+            watch: {
+                Search: function () {
+                    if (this.Search.length > 0) {
+                        i = this.Search.length;
+                        var _this = this;
+                        var tab = this['Original'];
+                        if (this.Search) {
+                            _this['TestCartss'] = [];
+                            _this['TestCarts'] = [];
+
+                            for (i in tab) {
+                                if (tab[i].Serial == parseInt(_this.Search) || tab[i].PatientName.indexOf(_this.Search) >= 0 || tab[i].CDT.indexOf(_this.Search) >= 0 || tab[i].Situation.indexOf(_this.Search) >= 0) {
+                                    _this['TestCartss'].push(tab[i]);
+                                };
+                            }
+                        }
+                    }
+                    if (i > 0 && this.Search.length == 0) {
+                        this.TestCartss = this.Original;
+                    }
+                    this.Page = [];
+                    this.current = 0;
+                },
+                Row: function () {
+                    this.current = 0;
+                },
+                current: function () {
+                    if (this.current <= 0) {
+                        this.current = 1;
+                        return;
+                    }
+
+                    if (this.current > Math.ceil(this.TestCartss.length / this.Row)) {
+                        //  alert("数据超出引索范围！");
+                        this.current = 1;
+                        return;
+                    }
+                    this.TestCarts = [];
+                    this.Page = [];
+                    for (x = Math.floor(this.current - 1 / this.col) * this.Row; x < (Math.ceil(this.current - 1 / this.col) * this.Row > this.TestCartss.length ? this.TestCartss.length : Math.ceil(this.current - 1 / this.col) * this.Row) ; x++) {
+                        this.TestCarts.push(this.TestCartss[x]);
+                    }
+                    for (x = 0; x <= (Math.ceil(this.TestCartss.length / this.Row) - (Math.floor((this.current - 1) / this.col) * this.col) > this.col ? this.col + 1 : (Math.ceil(this.TestCartss.length / this.Row) - (Math.floor((this.current - 1) / this.col) * this.col))) ; x++) {
+
+                        if (x == 0) {
+                            if (this.current < (this.col + 1));
+                            else {
+                                this.Page.push({ "page": "...", "Isthis": false, "val": Math.floor((this.current - 1) / this.col) * this.col });
+                            }
+                        } else if (x == this.current % this.col || (x == this.col && (this.current % this.col) == 0 && this.current != 0)) {
+                            this.Page.push({ "page": "" + this.current + "", "Isthis": true, "val": Math.floor((this.current - 1) / this.col) * this.col + x });
+                        }
+                        else if (x == (this.col + 1)) {
+                            //alert(Math.ceil((vm.current) / 5) * vm.Row + 1);
+                            this.Page.push({ "page": "...", "Isthis": false, "val": Math.ceil(this.current / this.col) * this.col + 1 });
+                        } else {
+                            this.Page.push({ "page": "" + (Math.floor((this.current - 1) / this.col) * this.col + x) + "", "Isthis": false, "val": Math.floor((this.current - 1) / this.col) * this.col + x });
+                        }
+                    }
+                    this.last = Math.ceil(this.TestCartss.length / this.Row);
+                    this.next = this.current >= this.TestCartss.length ? this.TestCartss.length : this.current + 1;
+                    this.up = this.current == 1 ? 1 : this.current - 1;
+                }
             },
             methods: {
                 Into: function (val) {
                     var Url = "TestCart.aspx?TGUID=" + val;
                     window.open(Url, '_blank');
+                },
+                JumpPage: function (val) {
+
+                    if (val >= Math.ceil(this.TestCartss.length / this.Row) && this.current == Math.ceil(this.TestCartss.length / this.Row) && val != 1) {
+                        alert("已经是最后一页了");
+                        return;
+                    } else if (val == 1 && this.current == 1) {
+                        alert("已经是第一页了");
+                        return;
+                    }
+                    this.current = 0;
+                    this.current = val;
+
                 },
                 Del: function (val) {
                     $.ajax({
@@ -833,13 +986,104 @@
                 }
             }
         })
-
         var Rp = new Vue({
             el: "#Report",
             data: {
-                Report: [],
+                
+                Original: [
+                ],//原始
+                Reportt: [
+                ],
+                Report: [
+                ],
+                Search: "",
+                Row: 10,//初始行数
+                Page: [],
+                first: 1,
+                last: 0,
+                next: 0,
+                up: 0,
+                current: 0,
+                col: 10,
+            },
+            watch: {
+                Search: function () {
+                    if (this.Search.length > 0) {
+                        i = this.Search.length;
+                        var _this = this;
+                        var tab = this['Original'];
+                        if (this.Search) {
+                            _this['Reportt'] = [];
+                            _this['Report'] = [];
+
+                            for (i in tab) {
+                                if (tab[i].Serial == parseInt(_this.Search) || tab[i].PatientName.indexOf(_this.Search) >= 0 || tab[i].CDT.indexOf(_this.Search) >= 0 || tab[i].TestName.indexOf(_this.Search) >= 0) {
+                                    _this['Reportt'].push(tab[i]);
+                                };
+                            }
+                        }
+                    }
+                    if (i > 0 && this.Search.length == 0) {
+                        this.Reportt = this.Original;
+                    }
+                    this.Page = [];
+                    this.current = 0;
+                },
+                Row: function () {
+                    this.current = 0;
+                },
+                current: function () {
+                    if (this.current <= 0) {
+                        this.current = 1;
+                        return;
+                    }
+
+                    if (this.current > Math.ceil(this.Reportt.length / this.Row)) {
+                        //  alert("数据超出引索范围！");
+                        this.current = 1;
+                        return;
+                    }
+                    this.Report = [];
+                    this.Page = [];
+                    for (x = Math.floor(this.current - 1 / this.col) * this.Row; x < (Math.ceil(this.current - 1 / this.col) * this.Row > this.Reportt.length ? this.Reportt.length : Math.ceil(this.current - 1 / this.col) * this.Row) ; x++) {
+                        this.Report.push(this.Reportt[x]);
+                    }
+                    for (x = 0; x <= (Math.ceil(this.Reportt.length / this.Row) - (Math.floor((this.current - 1) / this.col) * this.col) > this.col ? this.col + 1 : (Math.ceil(this.Reportt.length / this.Row) - (Math.floor((this.current - 1) / this.col) * this.col))) ; x++) {
+
+                        if (x == 0) {
+                            if (this.current < (this.col + 1));
+                            else {
+                                this.Page.push({ "page": "...", "Isthis": false, "val": Math.floor((this.current - 1) / this.col) * this.col });
+                            }
+                        } else if (x == this.current % this.col || (x == this.col && (this.current % this.col) == 0 && this.current != 0)) {
+                            this.Page.push({ "page": "" + this.current + "", "Isthis": true, "val": Math.floor((this.current - 1) / this.col) * this.col + x });
+                        }
+                        else if (x == (this.col + 1)) {
+                            //alert(Math.ceil((vm.current) / 5) * vm.Row + 1);
+                            this.Page.push({ "page": "...", "Isthis": false, "val": Math.ceil(this.current / this.col) * this.col + 1 });
+                        } else {
+                            this.Page.push({ "page": "" + (Math.floor((this.current - 1) / this.col) * this.col + x) + "", "Isthis": false, "val": Math.floor((this.current - 1) / this.col) * this.col + x });
+                        }
+                    }
+                    this.last = Math.ceil(this.Reportt.length / this.Row);
+                    this.next = this.current >= this.Reportt.length ? this.Reportt.length : this.current + 1;
+                    this.up = this.current == 1 ? 1 : this.current - 1;
+                }
             },
             methods: {
+                JumpPage: function (val) {
+
+                    if (val >= Math.ceil(this.Reportt.length / this.Row) && this.current == Math.ceil(this.Reportt.length / this.Row) && val != 1) {
+                        alert("已经是最后一页了");
+                        return;
+                    } else if (val == 1 && this.current == 1) {
+                        alert("已经是第一页了");
+                        return;
+                    }
+                    this.current = 0;
+                    this.current = val;
+
+                },
                 IntoReport: function (val1, val2, val3) {
                     
                     var Url = "Psychological_Report.aspx?TestGUID=" + val1 + "&PatientGUID=" + val2 + "&CatGUID=" + val3;
@@ -924,7 +1168,6 @@
                 }
             })
         });
-
         function ch() {
             var ch = document.getElementsByName("Test");
             if (ch.length != vm.testlist.length) {
@@ -1018,7 +1261,7 @@
             var Url = "";
             var doctorguid = '<%=Session["DoctorGUID"] %>';
             var hospitalguid = '<%=Session["HospitalGUID"] %>';
-           // Tdata = Tdata.substring(0, Tdata.length - 1);
+            // Tdata = Tdata.substring(0, Tdata.length - 1);
             $.ajax({
                 type: "post",
                 url: "Gtest.asmx/Insert", //服务端处理程序   
@@ -1084,7 +1327,8 @@
                         
                         list = $(Nums).find("string").text();
                         //alert(list);
-                        TC.TestCarts = eval('(' + list + ')');
+                        TC.Original = eval('(' + list + ')');
+                        TC.TestCartss = eval('(' + list + ')');
                     }
                     catch (e) {
                         alert(e);
@@ -1095,16 +1339,17 @@
                     console.log('0');
                 },
             })
-            for (x = 0; x < TC.TestCarts.length; x++) {
-                TC.TestCarts[x].Serial = x + 1;
-                var a = TC.TestCarts[x].CDT;
+            for (x = 0; x < TC.TestCartss.length; x++) {
+                TC.Original[x].Serial = x + 1;
+                TC.TestCartss[x].Serial = x + 1;
+                var a = TC.TestCartss[x].CDT;
                 var date = new Date(parseInt(a.slice(6)));
                 var result = date.getFullYear() + '年' + date.getMonth() + '月' + date.getDate() + '日';
-                TC.TestCarts[x].CDT = result;
-                
+                TC.TestCartss[x].CDT = result;
+                TC.Original[x].CDT = result;
             }
+            TC.current = 1;
         }
-
         function ajax6() {
             $.ajax({
                 type: "post",
@@ -1117,7 +1362,8 @@
 
                         list = $(Nums).find("string").text();
                         //alert(list);
-                        Rp.Report = eval('(' + list + ')');
+                        Rp.Original = eval('(' + list + ')');
+                        Rp.Reportt = eval('(' + list + ')');
                     }
                     catch (e) {
                         alert(e);
@@ -1128,19 +1374,17 @@
                     console.log('0');
                 },
             })
-            for (x = 0; x < Rp.Report.length; x++) {
-                Rp.Report[x].Serial = x + 1;
-                var a = Rp.Report[x].CDT;
+            for (x = 0; x < Rp.Reportt.length; x++) {
+                Rp.Original[x].Serial = x + 1;
+                Rp.Reportt[x].Serial = x + 1;
+                var a = Rp.Reportt[x].CDT;
                 var date = new Date(parseInt(a.slice(6)));
                 var result = date.getFullYear() + '年' + date.getMonth() + '月' + date.getDate() + '日';
-                Rp.Report[x].CDT = result;
-
+                Rp.Original[x].CDT = result;
+                Rp.Reportt[x].CDT = result;
             }
+            Rp.current = 1;
         }
-
-
         </script>
-
-
 </asp:Content>
 

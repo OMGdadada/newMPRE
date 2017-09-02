@@ -518,7 +518,7 @@ public class Gtest : System.Web.Services.WebService
             {
 
                 SqlCommand cmd = conn.CreateCommand();
-                cmd.CommandText = "select min(ID) as ID,min(PatientName) as PatientName,min(CDT) as CDT, GUID,count(*) as row,max(Situation) as Situation from (select ID,PatientName,CDT,GUID,Case When IsPaid = 'false' Then '未购买' When IsFinished = 'True'  Then '完成' when IsFinished = 'false' Then '未完成' END Situation from [TPCView] Where Dimension0name =2)[P] group by GUID ORDER BY GUID, Situation desc";
+                cmd.CommandText = "select min(ID) as ID,min(PatientName) as PatientName,min(CDT) as CDT, GUID,count(*) as row,max(Situation) as Situation ,min(Code) as Code from (select ID,PatientName,CDT,Code,GUID,Case When IsPaid = 'false' Then '未购买' When IsFinished = 'True'  Then '完成' when IsFinished = 'false' Then '未完成' END Situation from [TPCView] Where Dimension0name =2)[P] group by GUID ORDER BY GUID, Situation desc";
                 conn.Open();//打开数据库连接 
                 SqlDataAdapter da = new SqlDataAdapter(cmd.CommandText, conn);
                 da.Fill(ds);
@@ -531,7 +531,7 @@ public class Gtest : System.Web.Services.WebService
             {
 
                 SqlCommand cmd = conn.CreateCommand();
-                cmd.CommandText = "select min(ID) as ID,min(PatientName) as PatientName,min(CDT) as CDT, GUID,count(*) as row,max(Situation) as Situation from (select ID,PatientName,CDT,GUID,Case When IsPaid = 'false' Then '未购买' When IsFinished = 'True'  Then '完成' when IsFinished = 'false' Then '未完成' END Situation from [TPCView] WHERE PatientGUID ='"+PGUID+ "' and Dimension0name =2)[P] group by GUID ORDER BY GUID, Situation desc";
+                cmd.CommandText = "select min(ID) as ID,min(PatientName) as PatientName,min(CDT) as CDT, GUID,count(*) as row,max(Situation) as Situation ,min(Code) as Code from (select ID,PatientName,CDT,Code,GUID,Case When IsPaid = 'false' Then '未购买' When IsFinished = 'True'  Then '完成' when IsFinished = 'false' Then '未完成' END Situation from [TPCView] WHERE PatientGUID ='" + PGUID+ "' and Dimension0name =2)[P] group by GUID ORDER BY GUID, Situation desc";
                 conn.Open();//打开数据库连接 
                 SqlDataAdapter da = new SqlDataAdapter(cmd.CommandText, conn);
                 da.Fill(ds);

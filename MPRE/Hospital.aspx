@@ -68,6 +68,14 @@
                                         </span>
                                     </div>
                                     
+                                    <div class="form-group">
+                                        <span class="text-primary">测评码有效期限：(小时)</span>
+                                        <span class="input-icon icon-right">
+                                         <asp:TextBox ID="DeadLine" class="form-control" runat="server"></asp:TextBox>
+
+                                        </span>
+                                    </div>
+
                                     <p>
                                         <asp:Button ID="Button2" class="btn btn-info" runat="server" Text="保存信息" OnClick="Button2_Click" />
                                     </p>
