@@ -597,8 +597,8 @@ public class QuestionAdd_WebService : System.Web.Services.WebService {
    public string UpdateReportList(string ID, string Content)
    {
 
-       string[] deptIds = ID.Split(',');
-       string[] NewContent = Content.Split(',');
+       string[] deptIds = ID.Split('￥');
+       string[] NewContent = Content.Split('￥');
        int flag = 0;
        string sql = "";
        for (int i = 0; i < deptIds.Length; i++)

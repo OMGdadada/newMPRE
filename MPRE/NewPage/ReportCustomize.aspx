@@ -62,7 +62,7 @@
                         <div id="page2"  style="width:80%; margin-left:10%; text-align:center; display:none" runat="server">
                            <h1>表格内容</h1>
                            <hr />
-                            <div style="text-align:left;width:100%;"><strong> 说明：</strong>输入框中的逗号必须为中文逗号</div>
+                            <div style="text-align:left;width:100%;"><strong> 说明：</strong>得分输入规则：=(Q1+Q2)/Q3+Q4*W4 +3（输入开头必须以“=”号开头；后面跟着计算公式，Q1表示第一道题目，W4表示第四道题的权重）</div>
                             <hr />
                             <table id="UserTag_Select" style="width:100%;" >
                                 <tr>
@@ -178,8 +178,8 @@
             var qguid = document.getElementById('<%=TextQUID.ClientID %>').innerText;
             var a = document.getElementById("UserTag_Select").getElementsByTagName("textarea");
             for (var i = 0; i < a.length; i++) {
-                id += a[i].id + ",";
-                text += document.getElementById(a[i].id).value + ",";
+                id += a[i].id + "￥";
+                text += document.getElementById(a[i].id).value + "￥";
             }
             $.ajax({
                 type: "post",
